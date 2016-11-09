@@ -45,13 +45,16 @@ Install Gradle
 git clone https://github.com/ribafish/pubcrawl-2.0-server
 ```
 ```
-Go to pcwebservice 
+Go to pubcrawl-2.0-server folder
 ```
 ```
 ./gradlew bootRun
 ```
 ```
 If everything works go to localhost:8080/ and you see a small admin page to test the API 
+```
+```
+You`ll need to login with username : user and a password : which is generated internally and you can copy it from the console output
 ```
 
 ## Running the tests
