@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html ng-app="pubApp">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="css/pccss.css">
+    <base href="/">
+</head>
+
+<body ng-cloak>
+<!--
+  Your HTML content here
+-->
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+
+<!-- Angular Material Library -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+
+<script src="js/application.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/homeController.js"></script>
+<script src="create/createController.js"></script>
+
+<nav>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo">Logo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/create">Sass</a></li>
+            <li><a href="#modal1" class="waves-effect waves-light btn">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row center">
+    <button data-target="modal1" class="btn modal-trigger">Modal</button>
+</div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+    </div>
+    <script>
+        $(document).ready(function(){
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal-trigger').modal2();
+        });
+    </script>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+    </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="username" type="username" class="validate">
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+
+<div ng-view></div>
+
+</body>
+
+</html>
