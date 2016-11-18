@@ -37,9 +37,9 @@ public class PcwebserviceApplication {
 			eventRepository.save(new Event("PubEvent3","01.12.216",repository.findByuserName("Michelle"),null));
 
 
-			pubRepository.save(new Pub("Molly Mallones",12.123,12.1231));
-			pubRepository.save(new Pub("Harfe",12.123,12.1231));
-			pubRepository.save(new Pub("Travellers Hostel",12.123,12.1231));
+			pubRepository.save(new Pub("Molly Mallones",52.525387, 13.385950));
+			pubRepository.save(new Pub("Harfe",52.523546, 13.385199));
+			pubRepository.save(new Pub("Travellers Hostel",52.522639, 13.387967));
 
 
 			// fetch all customers
