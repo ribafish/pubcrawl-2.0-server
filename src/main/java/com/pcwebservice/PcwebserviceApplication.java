@@ -1,17 +1,19 @@
 package com.pcwebservice;
 
-		import com.pcwebservice.model.Crawler;
-		import com.pcwebservice.model.CrawlerRepository;
-		import javafx.application.Application;
-		import org.slf4j.Logger;
-		import org.slf4j.LoggerFactory;
-		import org.springframework.boot.CommandLineRunner;
-		import org.springframework.boot.SpringApplication;
-		import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-		import org.springframework.boot.autoconfigure.SpringBootApplication;
-		import org.springframework.context.annotation.Bean;
+import com.pcwebservice.model.Crawler;
+import com.pcwebservice.model.CrawlerRepository;
+import javafx.application.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.context.annotation.Bean;
+
 
 @SpringBootApplication
+//@EnableOAuth2Sso
 public class PcwebserviceApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(Application.class);

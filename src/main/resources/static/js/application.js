@@ -1,4 +1,4 @@
-var pubApp = angular.module('pubApp', ['ngRoute', 'controllers']);
+var pubApp = angular.module('pubApp', ['ngResource','ngRoute']);
 
 pubApp.config(['$routeProvider', '$locationProvider', function ($routeProvider ,$locationProvider) {
     $routeProvider.

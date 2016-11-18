@@ -1,0 +1,20 @@
+{
+  "name": "pubcrawl-2.0-server",
+    "dependencies": {
+  },
+  "homepage": "https://github.com/ribafish/pubcrawl-2.0-server",
+  "authors": [
+    "leolileo <l.li@campus.tu-berlin.de>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

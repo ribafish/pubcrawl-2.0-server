@@ -3,7 +3,7 @@
 <html ng-app="pubApp">
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <link rel="stylesheet" href="css/pccss.css">
     <base href="/">
 </head>
@@ -14,22 +14,32 @@
 -->
 
 <!-- Angular Material requires Angular.js Libraries -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
 
-<!-- Angular Material Library -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="js/materialize/materialize.min.js"></script>
+
 
 
 <script src="js/application.js"></script>
-<script src="js/controllers.js"></script>
-<script src="js/homeController.js"></script>
+
+<!--Services-->
+<script src="js/services/crawlerService.js"></script>
+
+<!--Controllers-->
+
 <script src="create/createController.js"></script>
+<script src="home/homeController.js"></script>
+
+
 
 <nav>
     <div class="nav-wrapper">

@@ -4,7 +4,7 @@
 (function() {
     'use strict';
 
-    angular.module('controllers')
+    angular.module('pubApp')
         .controller('createController', ['$scope', '$http', function ($scope, $http) {
             $scope.currentNavItem = 'page1';
         }])
