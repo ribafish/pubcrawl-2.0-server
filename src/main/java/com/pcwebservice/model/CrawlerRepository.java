@@ -12,5 +12,6 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "crawlers", path = "crawlers")
 public interface CrawlerRepository extends PagingAndSortingRepository<Crawler, Long> {
-    List<Crawler> findByuserName(@Param("userName") String userName);
+    //List<Crawler> findByuserName2(@Param("userName") String userName);
+    Crawler findByuserName(@Param("userName") String userName);
 }

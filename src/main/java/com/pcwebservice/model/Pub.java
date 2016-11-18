@@ -30,6 +30,12 @@ public class Pub implements Serializable {
     @Column(name = "rating")
     private int rating;
 
+    @Column(name = "lat")
+    private double lat;
+
+    @Column(name = "lng")
+    private double lng;
+
     @Column(name = "description")
     private String description;
 
@@ -37,7 +43,7 @@ public class Pub implements Serializable {
     private int size;
 
     @ManyToMany
-    private List <Crawler> topsList;
+    private List<Crawler> topsList;
 
     @ManyToMany
     private List<Event> eventsList;
@@ -51,10 +57,10 @@ public class Pub implements Serializable {
     protected Pub() {
     }
 
-    public Pub(String pubName, int size, Crawler pubOwner) {
+    public Pub(String pubName, double lat, double lng) {
         this.pubName = pubName;
-        this.size = size;
-        this.pubOwner = pubOwner;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     @Override
@@ -65,6 +71,8 @@ public class Pub implements Serializable {
                 /*", timesList=" + timesList +*/
                 ", prices=" + prices +
                 ", rating=" + rating +
+                ", lat=" + lat +
+                ", lng=" + lng +
                 ", description='" + description + '\'' +
                 ", size=" + size +
                 ", topsList=" + topsList +
@@ -133,6 +141,22 @@ public class Pub implements Serializable {
 
     public List<Crawler> getTopsList() {
         return topsList;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(long lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(long lng) {
+        this.lng = lng;
     }
 
     public void setTopsList(List<Crawler> topsList) {
