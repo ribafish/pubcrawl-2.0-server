@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 @Entity
-public class Crawler implements Serializable{
+public class Crawler implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,13 +25,19 @@ public class Crawler implements Serializable{
     private String description;
 
     @ManyToMany
-    private List <Crawler> friendsList;
+    private List<Crawler> friendsList;
 
     @ManyToMany
-    private List <Event> eventsList;
+    private List<Event> eventsList;
 
-    @OneToMany
-    private List <Pub> pubsList;
+    @ManyToMany(mappedBy = "topsList")
+    private List<Pub> favourites;
+
+    @OneToMany(mappedBy = "pubOwner")
+    private List<Pub> ownPubs;
+
+    @OneToMany(mappedBy = "eventOwner")
+    private List <Event> ownEvents;
 
     /*Functions*/
 
@@ -93,11 +99,27 @@ public class Crawler implements Serializable{
         this.eventsList = eventsList;
     }
 
-    public List<Pub> getPubsList() {
-        return pubsList;
+    public List<Pub> getOwnPubs() {
+        return ownPubs;
     }
 
-    public void setPubsList(List<Pub> pubsList) {
-        this.pubsList = pubsList;
+    public void setOwnPubs(List<Pub> ownPubs) {
+        this.ownPubs = ownPubs;
+    }
+
+    public List<Pub> getFavourites() {
+        return favourites;
+    }
+
+    public void setFavourites(List<Pub> favourites) {
+        this.favourites = favourites;
+    }
+
+    public List<Event> getOwnEvents() {
+        return ownEvents;
+    }
+
+    public void setOwnEvents(List<Event> ownEvents) {
+        this.ownEvents = ownEvents;
     }
 }

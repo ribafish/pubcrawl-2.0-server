@@ -45,10 +45,10 @@ public class Pub implements Serializable {
     @ManyToMany
     private List<Crawler> topsList;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "pubsList")
     private List<Event> eventsList;
 
-    @OneToOne
+    @ManyToOne
     public Crawler pubOwner;
 
 
@@ -154,7 +154,6 @@ public class Pub implements Serializable {
     public double getLng() {
         return lng;
     }
-
     public void setLng(long lng) {
         this.lng = lng;
     }
@@ -169,6 +168,14 @@ public class Pub implements Serializable {
 
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public Crawler getPubOwner() {

@@ -27,7 +27,7 @@ public class Event implements Serializable {
     @Column(name = "tracked")
     private boolean tracked;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "eventsList")
     private List<Crawler> participantsList;
 
     @ManyToMany
