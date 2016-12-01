@@ -4,6 +4,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
 public interface CrawlerRepository extends PagingAndSortingRepository<Crawler, Long> {
     //List<Crawler> findByuserName2(@Param("userName") String userName);
     Crawler findByuserName(@Param("userName") String userName);
+    ArrayList <Crawler> findByTitleIs ();
 }

@@ -1,14 +1,23 @@
 package com.pcwebservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+
+import static org.hibernate.hql.internal.antlr.SqlTokenTypes.FROM;
+import static org.hibernate.hql.internal.antlr.SqlTokenTypes.WHERE;
 
 /**
  * Created by Leo on 05.11.2016.
  */
 
 @Entity
+@NamedQuery(name = "Crawler.findByTitleIs" ,
+        query = "SELECT c FROM Crawler c WHERE userName = 'Jack'"
+)
+@Table(name = "crawler")
 public class Crawler implements Serializable {
 
     @Id
@@ -115,6 +124,7 @@ public class Crawler implements Serializable {
         this.favourites = favourites;
     }
 
+    @JsonIgnore
     public List<Event> getOwnEvents() {
         return ownEvents;
     }
