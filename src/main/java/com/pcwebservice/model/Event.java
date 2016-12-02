@@ -2,6 +2,7 @@ package com.pcwebservice.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +27,10 @@ public class Event implements Serializable {
 
     @Column(name = "tracked")
     private boolean tracked;
+
+    @Column(name = "orderOfPubs")
+    private ArrayList<Integer> orderOfPubs;
+
 
     @ManyToMany(mappedBy = "eventsList")
     private List<Crawler> participantsList;
@@ -63,6 +68,18 @@ public class Event implements Serializable {
     }
 
     /*Getters and Setters*/
+
+    public ArrayList<Integer> getOrderOfPubs() {
+        return orderOfPubs;
+    }
+
+    public void setOrderOfPubs(ArrayList<Integer> orderOfPubs) {
+        this.orderOfPubs = orderOfPubs;
+    }
+
+    public void setEventOwner(Crawler eventOwner) {
+        this.eventOwner = eventOwner;
+    }
 
     public long getId() {
         return id;
