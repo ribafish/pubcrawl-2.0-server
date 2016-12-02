@@ -31,7 +31,6 @@ public class Event implements Serializable {
     @Column(name = "orderOfPubs")
     private ArrayList<Integer> orderOfPubs;
 
-
     @ManyToMany(mappedBy = "eventsList")
     private List<Crawler> participantsList;
 

@@ -2,3 +2,12 @@
 {{crawler._embedded.crawlers[0]}}
 <h2> Test </h2>
 {{greeting.data}}
+
+<form ng-submit="submit()" ng-controller="homeController">
+    <input type='file' ng-model='image' base-sixty-four-input>
+    <input type="submit" id="submit" value="Submit" />
+</form>
+
+{{image}}
+
+<img data-ng-src="data:image/jpeg;base64,{{image}}" data-err-src="images/png/avatar.png"/>

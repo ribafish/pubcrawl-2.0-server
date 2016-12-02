@@ -6,9 +6,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import static org.hibernate.hql.internal.antlr.SqlTokenTypes.FROM;
-import static org.hibernate.hql.internal.antlr.SqlTokenTypes.WHERE;
-
 /**
  * Created by Leo on 05.11.2016.
  */
@@ -32,6 +29,9 @@ public class Crawler implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "userImage")
+    private byte [] userImage;
 
     @ManyToMany
     private List<Crawler> friendsList;
@@ -134,5 +134,13 @@ public class Crawler implements Serializable {
 
     public void setOwnEvents(List<Event> ownEvents) {
         this.ownEvents = ownEvents;
+    }
+
+    public byte[] getUserImage() {
+        return  userImage;
+    }
+
+    public void setUserImage(byte[] userImage) {
+        this.userImage = userImage;
     }
 }

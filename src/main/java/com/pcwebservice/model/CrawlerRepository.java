@@ -19,6 +19,9 @@ import java.util.concurrent.Future;
 public interface CrawlerRepository extends PagingAndSortingRepository<Crawler, Long> {
     //List<Crawler> findByuserName2(@Param("userName") String userName);
     Crawler findByuserName(@Param("userName") String userName);
+
+    Crawler findByid(@Param("id") Long id);
+
     ArrayList <Crawler> findByTitleIs ();
 
     @Query("SELECT t.userName FROM Crawler t where t.id = :id")
