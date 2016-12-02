@@ -40,6 +40,17 @@ public class PcwebserviceApplication {
 			pubRepository.save(new Pub("Harfe",52.523546, 13.385199));
 			pubRepository.save(new Pub("Travellers Hostel",52.522639, 13.387967));
 
+			pubRepository.save(new Pub("Diagon Alley",52.528282, 13.393073));
+			pubRepository.save(new Pub("Nordbahnhof",52.531591, 13.387613));
+			pubRepository.save(new Pub("Phuket Pub",52.527409, 13.382590));
+			pubRepository.save(new Pub("37min drive",52.522017, 13.381914));
+			pubRepository.save(new Pub("Grimm Center", 52.521500, 13.391271));
+
+
+			eventRepository.save(new Event("PubEvent1","01.12.216",repository.findByuserName("Jack"),null));
+			eventRepository.save(new Event("PubEvent2","01.12.216",repository.findByuserName("Kim"),null));
+			eventRepository.save(new Event("PubEvent3","01.12.216",repository.findByuserName("Michelle"),null));
+
 
 			// fetch all customers
 			log.info("Customers found with findAll():");
