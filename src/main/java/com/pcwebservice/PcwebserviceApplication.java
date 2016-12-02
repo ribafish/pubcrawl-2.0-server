@@ -18,7 +18,8 @@ public class PcwebserviceApplication {
 	private static final Logger log = LoggerFactory.getLogger(Application.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(PcwebserviceApplication.class, args);
+
+				SpringApplication.run(PcwebserviceApplication.class, args);
 	}
 
 

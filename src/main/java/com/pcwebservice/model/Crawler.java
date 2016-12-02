@@ -100,6 +100,7 @@ public class Crawler implements Serializable {
         this.friendsList = friendsList;
     }
 
+    @JsonIgnore
     public List<Event> getEventsList() {
         return eventsList;
     }
@@ -108,6 +109,7 @@ public class Crawler implements Serializable {
         this.eventsList = eventsList;
     }
 
+    @JsonIgnore
     public List<Pub> getOwnPubs() {
         return ownPubs;
     }
@@ -116,6 +118,7 @@ public class Crawler implements Serializable {
         this.ownPubs = ownPubs;
     }
 
+    @JsonIgnore
     public List<Pub> getFavourites() {
         return favourites;
     }
