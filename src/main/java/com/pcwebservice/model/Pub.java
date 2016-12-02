@@ -40,6 +40,9 @@ public class Pub implements Serializable {
     @Column(name = "size")
     private int size;
 
+    @Column(name = "closingTime")
+    private Timeslot closingTime;
+
     @ManyToMany
     private List<Crawler> topsList;
 
@@ -176,5 +179,13 @@ public class Pub implements Serializable {
 
     public void setPubOwner(Crawler pubOwner) {
         this.pubOwner = pubOwner;
+    }
+
+    public Timeslot getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(Timeslot closingTime) {
+        this.closingTime = closingTime;
     }
 }
