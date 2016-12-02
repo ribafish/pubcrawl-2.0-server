@@ -57,6 +57,54 @@ If everything works go to localhost:8080/ and you see a small admin page to test
 You`ll need to login with username : user and a password : which is generated internally and you can copy it from the console output
 ```
 
+## REST API
+
+```
+Main Objects: 
+Crawler 
+Event 
+Pub
+```
+Create new Main :
+POST http://localhost:8080/crawlers 
+
+{
+  "userName": "Username"
+}
+
+=> 
+
+{
+  "userName": "Username",
+  "email": null,
+  "description": null,
+  "userImage": null,
+  "_links": {
+    "self": {
+      "href": "http://localhost:8080/crawlers/19"
+    },
+    "crawler": {
+      "href": "http://localhost:8080/crawlers/19"
+    },
+    "ownPubs": {
+      "href": "http://localhost:8080/crawlers/19/ownPubs"
+    },
+    "favourites": {
+      "href": "http://localhost:8080/crawlers/19/favourites"
+    },
+    "eventsList": {
+      "href": "http://localhost:8080/crawlers/19/eventsList"
+    },
+    "ownEvents": {
+      "href": "http://localhost:8080/crawlers/19/ownEvents"
+    },
+    "friendsList": {
+      "href": "http://localhost:8080/crawlers/19/friendsList"
+    }
+  }
+}
+
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
