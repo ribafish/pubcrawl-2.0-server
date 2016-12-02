@@ -1,8 +1,8 @@
 package com.pcwebservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,9 +21,11 @@ public class Crawler implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     @Column(name = "userName")
     private String userName;
 
+    /*@NotNull*/
     @Column(name = "email")
     private String email;
 

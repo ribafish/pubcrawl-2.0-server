@@ -22,7 +22,7 @@ public interface CrawlerRepository extends PagingAndSortingRepository<Crawler, L
 
     Crawler findByid(@Param("id") Long id);
 
-    ArrayList <Crawler> findByTitleIs ();
+    ArrayList <Crawler> findByTitleIs();
 
     @Query("SELECT t.userName FROM Crawler t where t.id = :id")
     String findTitleById(@Param("id") Long id);

@@ -21,7 +21,7 @@ public class PcwebserviceApplication {
 	}
 
 
-	/*@Bean
+	@Bean
 	public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
 		return (args) -> {
 			// save a couple of customers
@@ -56,13 +56,13 @@ public class PcwebserviceApplication {
 			log.info(Crawler.toString());
 			log.info("");
 
-*//*			// fetch customers by last name
+			// fetch customers by last name
 			log.info("Customer found with findByLastName('Bauer'):");
 			log.info("--------------------------------------------");
-			for (Crawler bauer : repository.findByuserName("Bauer")) {
+			/*for (Crawler bauer : repository.findByuserName("Bauer")) {
 				log.info(bauer.toString());
-			}
-			log.info("");*//*
+			}*/
+			log.info("");
 		};
-	}*/
+	}
 }

@@ -23,18 +23,12 @@
             url: 'http://localhost:8080/image/1'
         }).then(function successCallback(response) {
             $scope.image = response.data;
-            //console.log(response.data);
-/*            var imageBase64 = response.data;
-            var blob = new Blob([imageBase64], {type: 'image/jpeg'});
-            $scope.image = new File([blob], 'thumb.jpeg');*/
         }, function errorCallback(response) {
             console.log("Help");
         });
 
 
         $scope.submit = function () {
-            console.log($scope.image);
-            /*+ $scope.username*/
             $http({
                 method: 'POST',
                 url: 'http://localhost:8080/image/1',

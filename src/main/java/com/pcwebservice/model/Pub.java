@@ -1,6 +1,7 @@
 package com.pcwebservice.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,14 +16,9 @@ public class Pub implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     @Column(name = "pubName")
     private String pubName;
-
-/*
-    @Column(name = "timesList")
-    @ManyToMany(targetEntity=TSlot.class, mappedBy="TSlot.id", fetch=FetchType.EAGER)
-    private List<TSlot> timesList;
-*/
 
     @Column(name = "prices")
     private int prices;
@@ -30,9 +26,11 @@ public class Pub implements Serializable {
     @Column(name = "rating")
     private int rating;
 
+    /*@NotNull*/
     @Column(name = "lat")
     private double lat;
 
+    /*@NotNull*/
     @Column(name = "lng")
     private double lng;
 
@@ -48,6 +46,7 @@ public class Pub implements Serializable {
     @ManyToMany(mappedBy = "pubsList")
     private List<Event> eventsList;
 
+    /*@NotNull*/
     @ManyToOne
     public Crawler pubOwner;
 
@@ -99,14 +98,6 @@ public class Pub implements Serializable {
         this.pubName = pubName;
     }
 
-/*    public List<TSlot> getTimesList() {
-        return timesList;
-    }
-
-    public void setTimesList(List<TSlot> timesList) {
-        this.timesList = timesList;
-    }*/
-
     public int getPrices() {
         return prices;
     }
@@ -154,6 +145,7 @@ public class Pub implements Serializable {
     public double getLng() {
         return lng;
     }
+
     public void setLng(long lng) {
         this.lng = lng;
     }

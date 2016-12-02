@@ -1,6 +1,7 @@
 package com.pcwebservice.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,11 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     @Column(name = "eventName")
     private String eventName;
 
+    /*@NotNull*/
     @Column(name = "date")
     private String date;
 
@@ -28,8 +31,8 @@ public class Event implements Serializable {
     @Column(name = "tracked")
     private boolean tracked;
 
-    @Column(name = "orderOfPubs")
-    private ArrayList<Integer> orderOfPubs;
+    @Column(name = "timeslotList")
+    private ArrayList<Timeslot> timeslotList;
 
     @ManyToMany(mappedBy = "eventsList")
     private List<Crawler> participantsList;
@@ -37,6 +40,7 @@ public class Event implements Serializable {
     @ManyToMany
     private List <Pub> pubsList;
 
+    /*@NotNull*/
     @ManyToOne
     private Crawler eventOwner;
 
@@ -68,12 +72,12 @@ public class Event implements Serializable {
 
     /*Getters and Setters*/
 
-    public ArrayList<Integer> getOrderOfPubs() {
-        return orderOfPubs;
+    public ArrayList<Timeslot> getTimeslotList() {
+        return timeslotList;
     }
 
-    public void setOrderOfPubs(ArrayList<Integer> orderOfPubs) {
-        this.orderOfPubs = orderOfPubs;
+    public void setTimeslotList(ArrayList<Timeslot> timeslotList) {
+        this.timeslotList = timeslotList;
     }
 
     public void setEventOwner(Crawler eventOwner) {
