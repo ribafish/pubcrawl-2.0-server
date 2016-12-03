@@ -12,7 +12,6 @@
             method: 'GET',
             url: '/hello'
         }).then(function successCallback(response) {
-            //console.log(response);
             $scope.greeting = response;
         }, function errorCallback(response) {
             console.log("Help");
@@ -20,7 +19,7 @@
 
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/image/1'
+            url: __env.apiUrl + 'image/1'
         }).then(function successCallback(response) {
             $scope.image = response.data;
         }, function errorCallback(response) {
@@ -31,7 +30,7 @@
         $scope.submit = function () {
             $http({
                 method: 'POST',
-                url: 'http://localhost:8080/image/1',
+                url: __env.apiUrl + 'image/1',
                 data: $scope.image.base64
             }).then(function successCallback(response) {
                 console.log(response);
