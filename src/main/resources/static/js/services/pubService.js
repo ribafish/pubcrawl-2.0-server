@@ -4,19 +4,8 @@
 (function(angular) {
     var pubFactory = function($resource) {
         return{
-            allPubs : $resource('/pubs/', {
-
-            }, {
-                update: {
-                    method: "PUT"
-                },
-                remove: {
-                    method: "DELETE"
-                },
-                get : {
-                    method: "GET"
-                }
-            })}
+            allPubs : $resource('/pubs/', {})
+        }
     };
 
     pubFactory.$inject = ['$resource'];

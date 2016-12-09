@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+}
+#right {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+}
+
+.parallax-container {
+    margin-bottom: -20px;
+    height: 300px;
+}
+
+footer.page-footer {
+    margin-top: 0px;
+}

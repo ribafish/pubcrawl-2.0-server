@@ -1,18 +1,11 @@
 (function(angular) {
     var crawlerFactory = function($resource) {
-        return $resource('/crawlers/', {
-
-        }, {
-            update: {
-                method: "PUT"
-            },
-            remove: {
-                method: "DELETE"
-            },
-            get : {
-                method: "GET"
-            }
-        });
+        return{
+            allCrawlers : $resource('/crawlers/', {}),
+            joinEvent : $resource('/crawlers/:userId/eventsList',
+                {},
+                { update: { method: 'PATCH', params: {userId: '@userId'}}})
+        }
     };
 
     crawlerFactory.$inject = ['$resource'];

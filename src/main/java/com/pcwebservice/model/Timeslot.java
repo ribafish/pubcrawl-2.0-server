@@ -1,7 +1,6 @@
 package com.pcwebservice.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Time;
 
@@ -26,7 +25,7 @@ public class Timeslot implements Serializable {
 
   /*  @NotNull*/
     @Column(name = "pubId")
-    private long pubId;
+    private String pubId;
 
     protected Timeslot(){
 
@@ -45,11 +44,11 @@ public class Timeslot implements Serializable {
         this.id = id;
     }
 
-    public long getPubId() {
+    public String getPubId() {
         return pubId;
     }
 
-    public void setPubId(long pubId) {
+    public void setPubId(String pubId) {
         this.pubId = pubId;
     }
 

@@ -3,17 +3,13 @@
 <html ng-app="pubApp">
 
 <head>
-    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/pccss.css">
     <base href="/">
 </head>
 
 <body ng-cloak>
-<!--
-  Your HTML content here
--->
-
-<!-- Angular Material requires Angular.js Libraries -->
 
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -49,10 +45,12 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 <script src="home/homeController.js"></script>
 
 
-
 <nav>
     <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Logo</a>
+        <a href="/" class="brand-logo">
+            <div class="bounding-box">
+            </div>
+        </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/create">Create PubCrawl</a></li>
             <li><a href="#modal1" class="waves-effect waves-light btn">Login</a></li>
@@ -105,6 +103,30 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 
 
 <div ng-view></div>
+<footer class="page-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Footer</h5>
+                <p class="grey-text text-lighten-4"></p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2014 Copyright Text
+        </div>
+    </div>
+</footer>
 
 </body>
 

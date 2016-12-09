@@ -4,23 +4,9 @@
 (function(angular) {
     var eventFactory = function($resource) {
         return{
-        allEvents : $resource('/events/', {
+        allEvents : $resource('/events/', {})
 
-        }, {
-            update: {
-                method: "PUT"
-            },
-            remove: {
-                method: "DELETE"
-            },
-            get : {
-                method: "GET"
-            }
-            ,
-            save : {
-                method: "POST"
-            }
-        })}
+        }
     };
 
     eventFactory.$inject = ['$resource'];
