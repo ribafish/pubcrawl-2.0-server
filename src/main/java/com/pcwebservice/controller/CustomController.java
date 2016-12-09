@@ -33,5 +33,4 @@ public class CustomController {
         return new String (Base64.getDecoder().decode(repository.findByid(id).getUserImage()));
     }
 
-
 }

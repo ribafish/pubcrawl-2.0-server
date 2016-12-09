@@ -20,22 +20,28 @@
 <script src="/bower_components/angular-animate/angular-animate.js"></script>
 <script src="/bower_components/angular-resource/angular-resource.js"></script>
 <script src="/bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+<script src="/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=
+AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
+        type="text/javascript"></script>
 
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
 
 
-<!--<script src="config/env.js"></script>-->
-<script src="config/prod.js"></script>
+<script src="config/env.js"></script>
+<!--<script src="config/prod.js"></script>-->
 
 <script src="js/application.js"></script>
 
 <!--Services-->
 <script src="js/services/crawlerService.js"></script>
+<script src="js/services/eventService.js"></script>
+<script src="js/services/pubService.js"></script>
 
 <!--Controllers-->
 
@@ -48,16 +54,17 @@
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">Logo</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/create">Sass</a></li>
+            <li><a href="/create">Create PubCrawl</a></li>
             <li><a href="#modal1" class="waves-effect waves-light btn">Login</a></li>
         </ul>
     </div>
 </nav>
 
-<div class="row center">
+<!--<div class="row center">
     <button data-target="modal1" class="btn modal-trigger">Modal</button>
-</div>
+</div>-->
 <!-- Modal Structure -->
+<!--
 <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4>Modal Header</h4>
@@ -74,7 +81,7 @@
     </div>
 </div>
 
-<!-- Modal Structure -->
+&lt;!&ndash; Modal Structure &ndash;&gt;
 <div id="modal2" class="modal">
     <div class="modal-content">
         <div class="row">
@@ -94,6 +101,7 @@
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
     </div>
 </div>
+-->
 
 
 <div ng-view></div>

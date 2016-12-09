@@ -5,14 +5,15 @@ if(window){
     Object.assign(env, window.__env);
 }
 
-var pubApp = angular.module('pubApp', ['ngResource','ngRoute','naif.base64']);
+var pubApp = angular.module('pubApp', ['ngResource','ngRoute','naif.base64','ngMap']);
 
 pubApp.config(['$routeProvider', '$locationProvider', function ($routeProvider ,$locationProvider) {
     $routeProvider.
     when("/", {
         templateUrl: 'home/home.html',
         controller: 'homeController'
-    }).when("/create", {
+    }).
+    when("/create", {
         templateUrl: 'create/create.html',
         controller: 'createController'
     }).
