@@ -8,6 +8,23 @@
         .controller('createController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', function ($scope, $http, CrawlerFac, EventFac, PubFac) {
             $scope.currentNavItem = 'page1';
 
+            /*Diverse Helpers to get things going*/
+
+            $(document).ready(function () {
+                $('.parallax').parallax();
+                $('.scrollspy').scrollSpy();
+            });
+
+
+            window.picker = $('.datepicker').pickadate({
+                selectYears: 16,
+                format: 'yyyy-mm-dd'
+            });
+
+            $scope.$on('mapInitialized', function (event, map) {
+                $scope.objMapa = map;
+            });
+
             /*Basic Variables we will need to get the Data from Forms and Google maps*/
 
             $scope.event =
@@ -32,8 +49,8 @@
             $scope.endPub = null;
 
             $scope.timer = {
-                startingTime: new Date(0, 0, 0, 0, 0, 0),
-                endingTime: new Date(0, 0, 0, 0, 0, 0)
+                startingTime: null,
+                endingTime: null
             };
 
 
@@ -56,7 +73,7 @@
                         url: String(crawler._links.eventsList.href),
                         data: {
                             _links: {
-                                href: "http://localhost:8080/events/6"/*$scope.event._links.self.href*/
+                                href: $scope.event._links.self.href
                             }
                         }
                     }).then(function successCallback(response) {
@@ -65,10 +82,51 @@
                         console.log("Help" + response);
                     });
                 });
-                $scope.usedCrawlers=[];
+                $scope.usedCrawlers = [];
             };
 
+            function timeNow(i) {
+                   var h = (i.getHours()<10?'0':'') + i.getHours()
+                   var m = (i.getMinutes()<10?'0':'') + i.getMinutes();
+                return h + ':' + m + ':00';
+            }
 
+            $scope.uploadPub = function () {
+                $scope.usedPubs.forEach(function (pubs) {
+                    console.log(pubs);
+                    console.log( timeNow(pubs.startingTime))
+                    $scope.event.timeslotList.push({
+                        startingTime: timeNow(pubs.startingTime),
+                        endingTime: timeNow(pubs.endingTime),
+                        pubId: pubs.pub._links.self.href
+                    });
+                    $http({
+                        method: 'PATCH',
+                        url: String($scope.event._links.pubsList.href),
+                        data: {
+                            _links: {
+                                href: pubs.pub._links.self.href
+                            }
+                        }
+                    }).then(function successCallback(response) {
+                        console.log(response);
+                    }, function errorCallback(response) {
+                        console.log("Help" + response);
+                    });
+                });
+                $scope.usedPubs = [];
+                $http({
+                    method: 'PATCH',
+                    url: String($scope.event._links.self.href),
+                    data: {
+                        timeslotList: $scope.event.timeslotList
+                    }
+                }).then(function successCallback(response) {
+                    console.log(response);
+                }, function errorCallback(response) {
+                    console.log("Help" + response);
+                });
+            };
 
 
             $scope.saveEvent = function () {
@@ -77,28 +135,6 @@
                     console.log($scope.event._links.self.href);
                 });
             };
-
-            $scope.savePubs = function () {
-                EventFac.allEvents.save($scope.event).$promise.then(function (data) {
-                });
-            };
-
-
-            /*Diverse Helpers to get things going*/
-            $(document).ready(function () {
-                $('.parallax').parallax();
-                $('.scrollspy').scrollSpy();
-            });
-
-
-            window.picker = $('.datepicker').pickadate({
-                selectYears: 16,
-                format: 'yyyy-mm-dd'
-            });
-
-            $scope.$on('mapInitialized', function (event, map) {
-                $scope.objMapa = map;
-            });
 
 
             /*Main Methods*/
@@ -149,9 +185,9 @@
             $scope.deleteFromOpens = function (value) {
                 var index = $scope.openPubs.indexOf(value);
                 $scope.openPubs.splice(index, 1);
-                $scope.usedPubs.push(value);
+                $scope.usedPubs.push({pub: value, startingTime: null, endingTime: null});
+                console.log( $scope.usedPubs)
                 geocodeLatLng(value);
-                $scope.event.timeslotList.push({startingTime: null, endingTime: null, pubId: value._links.self.href});
                 if ($scope.startPub == null) {
                     $scope.startPub = {lat: value.lat, lng: value.lng};
                 } else {
@@ -169,9 +205,16 @@
             };
 
             $scope.deleteFromUsed = function (value) {
-                var index = $scope.usedPubs.indexOf(value);
-                $scope.usedPubs.splice(index, 1);
-                $scope.openPubs.push(value);
+                $scope.usedPubs.forEach(function (pubs) {
+                    console.log(pubs)
+                    console.log(value)
+                    if (pubs.pub._links.self.href == value.pub._links.self.href) {
+                        var index = $scope.usedPubs.indexOf(pubs);
+                        $scope.usedPubs.splice(index, 1);
+                    }
+                });
+                console.log( $scope.usedPubs)
+                $scope.openPubs.push(value.pub);
                 if ($scope.startPub.lat == value.lat && $scope.startPub.lng == value.lng) {
                     if ($scope.wayPoints.length != 0) {
                         $scope.startPub = {
@@ -185,7 +228,7 @@
                     } else {
                         $scope.startPub = null;
                     }
-                } else if ($scope.endPub.lat == value.lat && $scope.endPub.lng == value.lng) {
+                } else if ($scope.endPub.lat == value.pub.lat && $scope.endPub.lng == value.pub.lng) {
                     if ($scope.wayPoints.length != 0) {
                         $scope.endPub = {
                             lat: $scope.wayPoints[$scope.wayPoints.length - 1].location.lat,

@@ -87,27 +87,25 @@
                     <div class="row">
                         <div class="col s12 m12 l12">
                             <ul class="collection">
-                                <li class="collection-item avatar" ng-repeat="pub in usedPubs"
+                                <li class="collection-item avatar" ng-repeat="pubs in usedPubs"
                                     style="margin-bottom: -15px">
                                     <img src="" alt="" class="circle">
                                     <div class="row" style="margin-bottom: 0px">
                                         <div class="col s12 m5 l7">
-                                            <span class="title">{{pub.pubName}}</span>
+                                            <span class="title">{{pubs.pub.pubName}}</span>
                                             <p>{{::adressPub}}</p>
                                         </div>
                                         <div class="col s5 m3 l2">
                                             <form name="timeForm" ng-controller="createController">
                                                 <input type="time" id="startingTime" name="input"
-                                                       ng-model="timer.startingTime"
-                                                       placeholder="timer.startingTime" min="00:00:00"
+                                                       ng-model="pubs.startingTime" min="00:00:00"
                                                        max="23:59:59"/>
                                             </form>
                                         </div>
                                         <div class="col s5 m3 l2">
                                             <form name="timeForm" ng-controller="createController">
                                                 <input type="time" id="endingTime" name="input"
-                                                       ng-model="timer.endingTime"
-                                                       placeholder="timer.endingTime" min="00:00:00"
+                                                       ng-model="pubs.endingTime" min="00:00:00"
                                                        max="23:59:59"/>
                                             </form>
                                         </div>
@@ -122,7 +120,7 @@
                     </div>
                     <div class="row">
                         <div class="col s12 m12 l12">
-                            <a class="waves-effect waves-light btn-large" ng-click="addCrawler()">Save Pubs</a>
+                            <a class="waves-effect waves-light btn-large" ng-click="uploadPub()">Save Pubs</a>
                         </div>
                     </div>
                 </div>
