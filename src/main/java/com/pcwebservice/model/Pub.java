@@ -34,8 +34,11 @@ public class Pub implements Serializable {
     @Column(name = "lng")
     private double lng;
 
-    @Column(name = "description")
+    @Column(name = "description", length=10485760)
     private String description;
+
+    @Column(name = "adress")
+    private String adress;
 
     @Column(name = "size")
     private int size;
@@ -84,6 +87,14 @@ public class Pub implements Serializable {
     }
 
     /*Getters and Setters*/
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
 
     public long getId() {
         return id;

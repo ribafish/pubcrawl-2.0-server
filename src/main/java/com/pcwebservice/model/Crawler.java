@@ -29,7 +29,7 @@ public class Crawler implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "description")
+    @Column(name = "description" , length=10485760)
     private String description;
 
     @Column(name = "userImage")

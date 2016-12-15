@@ -5,9 +5,9 @@ if(window){
     Object.assign(env, window.__env);
 }
 
-var pubApp = angular.module('pubApp', ['ngResource','ngRoute','naif.base64','ngMap']);
+var pubApp = angular.module('pubApp', ['ngResource','ngRoute','naif.base64','ngMap','LocalStorageModule']);
 
-pubApp.config(['$routeProvider', '$locationProvider', function ($routeProvider ,$locationProvider) {
+pubApp.config(['$routeProvider', '$locationProvider','localStorageServiceProvider', function ($routeProvider ,$locationProvider,localStorageServiceProvider) {
     $routeProvider.
     when("/", {
         templateUrl: 'home/home.html',
@@ -17,9 +17,22 @@ pubApp.config(['$routeProvider', '$locationProvider', function ($routeProvider ,
         templateUrl: 'create/create.html',
         controller: 'createController'
     }).
+    when("/event", {
+        templateUrl: 'event/event.html',
+        controller: 'eventController'
+    }).
+    when("/register", {
+        templateUrl: 'register/register.html',
+        controller: 'registerController'
+    }).
     otherwise({
         redirectTo: '/'
     });
+
+    localStorageServiceProvider
+        .setPrefix('holy')
+        .setStorageType('localStorage')
+        .setNotify(true, true);
 
     $locationProvider.html5Mode(true);
 }]);

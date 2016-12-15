@@ -3,11 +3,22 @@
  */
 (function () {
     'use strict';
-    angular.module('pubApp').controller('homeController', ['$scope', '$http', 'CrawlerFac', function ($scope, $http, CrawlerFac) {
+    angular.module('pubApp').controller('homeController', ['$scope', '$http', 'CrawlerFac', 'EventFac' , function ($scope, $http, CrawlerFac, EventFac) {
         $scope.currentNavItem = 'page1';
-        CrawlerFac.allCrawlers.get(function (response) {
-            $scope.crawler = response;
+        $scope.allEvent = [];
+
+        EventFac.allEvents.get().$promise.then(function (data) {
+            $scope.allEvent = data._embedded.events;
         });
+
+        $scope.setCurrentEvent = function (event) {
+            $scope.allEvent.forEach(function (value) {
+                if(value._links.self.href==event){
+                    EventFac.setCurrentEvent(value)
+                }
+            });
+        };
+
         $http({
             method: 'GET',
             url: '/hello'

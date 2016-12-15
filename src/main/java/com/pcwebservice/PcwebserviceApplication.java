@@ -14,15 +14,15 @@ import org.springframework.context.annotation.Bean;
 //@EnableOAuth2Sso
 public class PcwebserviceApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(PcwebserviceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PcwebserviceApplication.class, args);
+    }
 
 
 	/*@Bean
-	public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
+    public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
 		return (args) -> {
 			// save a couple of customers
 			repository.save(new Crawler("Jack", "Bauer"));
@@ -68,12 +68,12 @@ public class PcwebserviceApplication {
 			log.info("");
 
 			// fetch customers by last name
-			log.info("Customer found with findByLastName('Bauer'):");
+*//*			log.info("Customer found with findByLastName('Bauer'):");
 			log.info("--------------------------------------------");
-			*//*for (Crawler bauer : repository.findByuserName("Bauer")) {
+			for (Crawler bauer : repository.findByuserName("Bauer")) {
 				log.info(bauer.toString());
-			}*//*
-			log.info("");
+			}
+			log.info("");*//*
 		};
 	}*/
 }

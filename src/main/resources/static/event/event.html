@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row">
+        <h1 class="center-align">{{event.eventName}}</h1>
+    </div>
+    <!--{{event.timeslotList}}-->
+    <!--{{pubs}}-->
+    <div class="row">
+        <div class="col s7 m7 l7" style="height: 100%" id="addPubs">
+            <ng-map id="map" zoom="13" center="current-position" style="height:400px">
+                <directions
+                        draggable="false"
+                        panel="directions-panel"
+                        travel-mode="WALKING"
+                        waypoints="{{wayPoints}}"
+                        origin={{startPub}}
+                        destination="{{endPub}}">
+                </directions>
+                <!--
+                                <marker ng-repeat="mark in openPubs" position="{{mark.lat}},{{mark.lng}}"
+                                        title="{{mark.pubName}}"
+                                        on-click="showInfoWindow(event,mark)"></marker>-->
+            </ng-map>
+        </div>
+        <div class="col s5 m5 l5">
+            <div class="content">
+                <label><h5>Timetable</h5></label>
+                <label ng-if="pubs.length==0"><h6>None yet, is this still a Pubcrawl?</h6></label>
+                <ol ng-if="pubs.length!=0" id="eventList" class="collapsible"
+                    data-collapsible="accordion">
+                    <li type="A" ng-repeat="pub in pubs">
+                        <div class="collapsible-header">
+                            <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
+                                 data-err-src="images/png/avatar.png"/>
+                            {{event.timeslotList[$index].startingTime}} - {{event.timeslotList[$index].endingTime}} in
+                            {{pub.pubName}}
+                        </div>
+                        <div class="collapsible-body">
+                            <table>
+                                <tr>
+                                    <td><i class="material-icons">info</i></td>
+                                    <td>{{pub.description}}</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons">euro_symbol</i></td>
+                                    <td>{{pub.prices}}</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="material-icons">favorite</i></td>
+                                    <td>{{pubs.rating}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 m6 l6">
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <label><h5>Eventowner</h5></label>
+                    <p><h4>{{event.eventOwner}}</h4></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col l12 m12 s12">
+                    <label><h5>Description</h5></label>
+                    <p><h6>{{event.description}}</h6></p>
+                </div>
+            </div>
+        </div>
+        <div class="col s6 m6 l6">
+            <div class="content">
+                <label><h5>Participants</h5></label>
+                <label ng-if="participants.length==0"><h6>None yet, be the first!</h6></label>
+                <ul ng-if="participants.length!=0" id="eventList" class="collapsible"
+                    data-collapsible="accordion">
+                    <li ng-repeat="person in participants">
+                        <div class="collapsible-header">
+                            <img class="circle" data-ng-src="data:image/jpeg;base64,{{person.userImage}}"
+                                 data-err-src="images/png/avatar.png"/>{{person.userName}}
+                        </div>
+                        <div class="collapsible-body"><p>About me: {{person.description}}</p></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col s12 m12 l12">
+            <a class="waves-effect waves-light btn-large">Join Pubcrawl</a>
+        </div>
+    </div>
+</div>

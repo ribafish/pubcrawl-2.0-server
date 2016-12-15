@@ -6,7 +6,7 @@
 
     angular.module('pubApp')
         .controller('createController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', function ($scope, $http, CrawlerFac, EventFac, PubFac) {
-            $scope.currentNavItem = 'page1';
+            $scope.currentNavItem = 'page2';
 
             /*Diverse Helpers to get things going*/
 
@@ -77,7 +77,7 @@
                             }
                         }
                     }).then(function successCallback(response) {
-                        console.log(response);
+                        console.log("User uploaded");
                     }, function errorCallback(response) {
                         console.log("Help" + response);
                     });
@@ -86,6 +86,9 @@
             };
 
             function timeNow(i) {
+                if(i==null){
+                    return "00:00:00"
+                }
                    var h = (i.getHours()<10?'0':'') + i.getHours()
                    var m = (i.getMinutes()<10?'0':'') + i.getMinutes();
                 return h + ':' + m + ':00';
@@ -109,7 +112,7 @@
                             }
                         }
                     }).then(function successCallback(response) {
-                        console.log(response);
+                        console.log("Pub uoploaded");
                     }, function errorCallback(response) {
                         console.log("Help" + response);
                     });
@@ -208,13 +211,12 @@
                 $scope.usedPubs.forEach(function (pubs) {
                     console.log(pubs)
                     console.log(value)
-                    if (pubs.pub._links.self.href == value.pub._links.self.href) {
+                    if (pubs.pub._links.self.href == value._links.self.href) {
                         var index = $scope.usedPubs.indexOf(pubs);
                         $scope.usedPubs.splice(index, 1);
                     }
                 });
-                console.log( $scope.usedPubs)
-                $scope.openPubs.push(value.pub);
+                $scope.openPubs.push(value);
                 if ($scope.startPub.lat == value.lat && $scope.startPub.lng == value.lng) {
                     if ($scope.wayPoints.length != 0) {
                         $scope.startPub = {
@@ -228,7 +230,7 @@
                     } else {
                         $scope.startPub = null;
                     }
-                } else if ($scope.endPub.lat == value.pub.lat && $scope.endPub.lng == value.pub.lng) {
+                } else if ($scope.endPub.lat == value.lat && $scope.endPub.lng == value.lng) {
                     if ($scope.wayPoints.length != 0) {
                         $scope.endPub = {
                             lat: $scope.wayPoints[$scope.wayPoints.length - 1].location.lat,

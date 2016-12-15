@@ -14,23 +14,23 @@ import java.util.Base64;
 public class CustomController {
 
     @Autowired
-    CrawlerRepository repository;
+    CrawlerRepository crawlerRepository;
 
     @RequestMapping(value = "/hello",produces = "text/plain")
     public String crawler() {
-        return repository.findTitleById(1L);
+        return crawlerRepository.findTitleById(1L);
     }
 
     @RequestMapping(value = "/image/{id}",method = RequestMethod.POST)
     public void setImage(@PathVariable Long id, @RequestBody String body) {
         byte[] bytesEncoded = Base64.getEncoder().encode(body.getBytes());
-        repository.findByid(id).setUserImage(bytesEncoded);
-        repository.save(repository.findByid(id));
+        crawlerRepository.findByid(id).setUserImage(bytesEncoded);
+        crawlerRepository.save(crawlerRepository.findByid(id));
     }
 
     @RequestMapping(value = "/image/{id}",method = RequestMethod.GET, produces = "text/plain")
     public String getImage(@PathVariable Long id) {
-        return new String (Base64.getDecoder().decode(repository.findByid(id).getUserImage()));
+        return new String (Base64.getDecoder().decode(crawlerRepository.findByid(id).getUserImage()));
     }
 
 }

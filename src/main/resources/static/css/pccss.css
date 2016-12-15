@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
 }
+
 #right {
     width: 20%;
     height: 100%;
@@ -14,4 +15,12 @@ html, body {
 
 footer.page-footer {
     margin-top: 0px;
+}
+
+#eventList {
+    height: 325px;
+    overflow-y: auto;
+    margin-top: 0px;
+    box-shadow: none !important;
+    border: none !important
 }

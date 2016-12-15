@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html ng-app="pubApp">
 
 <head>
+    <base href="/">
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/pccss.css">
-    <base href="/">
 </head>
 
 <body ng-cloak>
@@ -24,6 +23,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=
 AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
         type="text/javascript"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
 <script src="/bower_components/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
@@ -41,6 +41,7 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 
 <!--Controllers-->
 
+<script src="event/eventController.js"></script>
 <script src="create/createController.js"></script>
 <script src="home/homeController.js"></script>
 
@@ -48,12 +49,12 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 <nav>
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">
-            <div class="bounding-box">
-            </div>
+            <i class="material-icons" style="padding-left: 15px">local_bar</i>
         </a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/create">Create PubCrawl</a></li>
-            <li><a href="#modal1" class="waves-effect waves-light btn">Login</a></li>
+            <li><a ng-href="/create">Create PubCrawl</a></li>
+            <li><a ng-href="/register">Register Pub</a></li>
+            <li><a ng-href="#modal1" class="waves-effect waves-light btn">Login</a></li>
         </ul>
     </div>
 </nav>
@@ -103,6 +104,8 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 
 
 <div ng-view></div>
+
+
 <footer class="page-footer">
     <div class="container">
         <div class="row">
