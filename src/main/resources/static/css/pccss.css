@@ -24,3 +24,8 @@ footer.page-footer {
     box-shadow: none !important;
     border: none !important
 }
+
+#tableD{
+    padding:0;
+    width: 50%;
+}

@@ -9,9 +9,10 @@
 
             $scope.event = [];
             $scope.wayPoints = [];
+            $scope.pubs = [];
 
             var setWaypoints = function () {
-                if ($scope.event.timeslotList[0] == null) {
+                if ($scope.event.timeslotList == null) {
                     return null;
                 }
                 $http({
@@ -77,6 +78,8 @@
                 });
 
                 EventFac.getter($scope.event._links.pubsList.href).then(function (result) {
+                    console.log(result);
+                    console.log($scope.event._links.pubsList.href)
                     $scope.pubs = result._embedded.pubs;
                 });
             };

@@ -31,22 +31,22 @@
                         <div class="collapsible-header">
                             <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
                                  data-err-src="images/png/avatar.png"/>
-                            {{event.timeslotList[$index].startingTime}} - {{event.timeslotList[$index].endingTime}} in
+                            <strong ng-if="event.timeslotList[$index].startingTime!=event.timeslotList[$index].endingTime">{{event.timeslotList[$index].startingTime}} - {{event.timeslotList[$index].endingTime}} in</strong>
                             {{pub.pubName}}
                         </div>
                         <div class="collapsible-body">
-                            <table>
+                            <table style="margin: 5px; width: 50%">
                                 <tr>
-                                    <td><i class="material-icons">info</i></td>
-                                    <td>{{pub.description}}</td>
+                                    <td id="tableD"><i class="material-icons">info</i></td>
+                                    <td id="tableD"><p>{{pub.description}}</p></td>
                                 </tr>
                                 <tr>
-                                    <td><i class="material-icons">euro_symbol</i></td>
-                                    <td>{{pub.prices}}</td>
+                                    <td id="tableD"><i class="material-icons">euro_symbol</i></td>
+                                    <td id="tableD">{{pub.prices}}</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="material-icons">favorite</i></td>
-                                    <td>{{pubs.rating}}</td>
+                                    <td id="tableD"><i class="material-icons">favorite</i></td>
+                                    <td id="tableD">{{pubs.rating}}</td>
                                 </tr>
                             </table>
                         </div>

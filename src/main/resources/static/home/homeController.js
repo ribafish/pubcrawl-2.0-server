@@ -30,18 +30,18 @@
 
         $http({
             method: 'GET',
-            url: __env.apiUrl + 'image/1'
+            url: __env.apiUrl + 'image/crawler/1'
         }).then(function successCallback(response) {
             $scope.image = response.data;
         }, function errorCallback(response) {
-            console.log("Help");
+            console.log("Picture couldnt load");
         });
 
 
         $scope.submit = function () {
             $http({
                 method: 'POST',
-                url: __env.apiUrl + 'image/1',
+                url: __env.apiUrl + 'image/crawler/1',
                 data: $scope.image.base64
             }).then(function successCallback(response) {
                 console.log(response);

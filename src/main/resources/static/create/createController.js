@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('createController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', function ($scope, $http, CrawlerFac, EventFac, PubFac) {
+        .controller('createController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page2';
 
             /*Diverse Helpers to get things going*/
@@ -55,7 +55,7 @@
 
 
             /*Using the REST Controller to get Data from DB and save it*/
-
+            /*Get all need things*/
 
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 $scope.openCrawlers = data._embedded.crawlers;
@@ -66,57 +66,56 @@
             });
 
 
+            /*Persist our items*/
+
             $scope.uploadUser = function () {
-                $scope.usedCrawlers.forEach(function (crawler) {
-                    $http({
-                        method: 'PATCH',
-                        url: String(crawler._links.eventsList.href),
-                        data: {
-                            _links: {
-                                href: $scope.event._links.self.href
+                $scope.usedCrawlers.reduce(function (p, currentValue) {
+                    return p.then(function () {
+                        return $http({
+                            method: 'PATCH',
+                            url: String(currentValue._links.eventsList.href),
+                            data: {
+                                _links: {
+                                    href: $scope.event._links.self.href
+                                }
                             }
-                        }
-                    }).then(function successCallback(response) {
-                        console.log("User uploaded");
-                    }, function errorCallback(response) {
-                        console.log("Help" + response);
-                    });
-                });
+                        })
+                    })
+                        .then(function (result) {
+                            //console.log(result);
+                        });
+                }, $q.when());
+
                 $scope.usedCrawlers = [];
+                Materialize.toast('Crawlers invited', 1000)
+
             };
 
-            function timeNow(i) {
-                if(i==null){
-                    return "00:00:00"
-                }
-                   var h = (i.getHours()<10?'0':'') + i.getHours()
-                   var m = (i.getMinutes()<10?'0':'') + i.getMinutes();
-                return h + ':' + m + ':00';
-            }
-
             $scope.uploadPub = function () {
-                $scope.usedPubs.forEach(function (pubs) {
-                    console.log(pubs);
-                    console.log( timeNow(pubs.startingTime))
+                $scope.usedPubs.reduce(function (p, currentValue) {
                     $scope.event.timeslotList.push({
-                        startingTime: timeNow(pubs.startingTime),
-                        endingTime: timeNow(pubs.endingTime),
-                        pubId: pubs.pub._links.self.href
+                        startingTime: timeNow(currentValue.startingTime),
+                        endingTime: timeNow(currentValue.endingTime),
+                        pubId: currentValue.pub._links.self.href
                     });
-                    $http({
-                        method: 'PATCH',
-                        url: String($scope.event._links.pubsList.href),
-                        data: {
-                            _links: {
-                                href: pubs.pub._links.self.href
+
+                    return p.then(function () {
+                        return $http({
+                            method: 'PATCH',
+                            url: String($scope.event._links.pubsList.href),
+                            data: {
+                                _links: {
+                                    href: currentValue.pub._links.self.href
+                                }
                             }
-                        }
-                    }).then(function successCallback(response) {
-                        console.log("Pub uoploaded");
-                    }, function errorCallback(response) {
-                        console.log("Help" + response);
-                    });
-                });
+                        })
+                    })
+                        .then(function (result) {
+                            //console.log(result);
+                        });
+                }, $q.when());
+
+                Materialize.toast('Pubs added', 1000);
                 $scope.usedPubs = [];
                 $http({
                     method: 'PATCH',
@@ -127,20 +126,31 @@
                 }).then(function successCallback(response) {
                     console.log(response);
                 }, function errorCallback(response) {
-                    console.log("Help" + response);
+                    console.log("Problem updating TimeslotList" + response);
                 });
             };
 
 
             $scope.saveEvent = function () {
+                Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
-                    console.log($scope.event._links.self.href);
+                    //console.log($scope.event._links.self.href);
                 });
             };
 
 
-            /*Main Methods*/
+            /*Helper Methods*/
+
+            function timeNow(i) {
+                if (i == null) {
+                    return "00:00:00"
+                }
+                var h = (i.getHours() < 10 ? '0' : '') + i.getHours()
+                var m = (i.getMinutes() < 10 ? '0' : '') + i.getMinutes();
+                return h + ':' + m + ':00';
+            }
+
 
             var geocodeLatLng = function (value) {
                 var geocoder = new google.maps.Geocoder;
@@ -172,6 +182,8 @@
             };
 
 
+            /*Main Methods*/
+
             $scope.addCrawler = function (crawler) {
                 var index = $scope.openCrawlers.indexOf(crawler);
                 $scope.openCrawlers.splice(index, 1);
@@ -189,7 +201,7 @@
                 var index = $scope.openPubs.indexOf(value);
                 $scope.openPubs.splice(index, 1);
                 $scope.usedPubs.push({pub: value, startingTime: null, endingTime: null});
-                console.log( $scope.usedPubs)
+                console.log($scope.usedPubs)
                 geocodeLatLng(value);
                 if ($scope.startPub == null) {
                     $scope.startPub = {lat: value.lat, lng: value.lng};

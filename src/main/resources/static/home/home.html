@@ -10,7 +10,7 @@
             <div class="card-content hoverable">
                 <p class="activator grey-text text-darken-4">{{event.eventName}}<i
                         class="material-icons right">more_vert</i></p>
-                <p>{{event.date}}</p>
+                <p>{{event.date | date : 'longDate'}}</p>
             </div>
             <div class="card-action ">
                 <a ng-click="setCurrentEvent(event._links.self.href)" ng-href="/event">Go to Event</a>
