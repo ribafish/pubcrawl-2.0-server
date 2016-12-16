@@ -59,7 +59,9 @@ You`ll need to login with username : user and a password : which is generated in
 
 ## REST API
 
-[Read the Crawler APi](CrawlerApi.md)
+[Read the Crawler APi](CrawlerAPi.md)
+[Read the Pub APi](PubAPi.md)
+[Read the Event APi](EventAPi.md)
 
 
 ## Running the tests
