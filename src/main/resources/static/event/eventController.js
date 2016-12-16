@@ -11,41 +11,43 @@
             $scope.wayPoints = [];
 
             var setWaypoints = function () {
-                if ($scope.event.timeslotList == null) {
+                if ($scope.event.timeslotList === null ||$scope.event.timeslotList.length == 0 ) {
                     return null;
-                }
-                $http({
-                    method: 'GET',
-                    url: String($scope.event.timeslotList[0].pubId)
-                }).then(function successCallback(response) {
-                    $scope.startPub = {lat: response.data.lat, lng: response.data.lng};
-                }, function errorCallback(response) {
-                    console.log("Setting Stratpub Problem" + response);
-                });
-
-                $http({
-                    method: 'GET',
-                    url: String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
-                }).then(function successCallback(response) {
-                    $scope.endPub = {lat: response.data.lat, lng: response.data.lng};
-                }, function errorCallback(response) {
-                    console.log("Setting Endpub Problem" + response);
-                });
-
-                for (var i = 1; i < $scope.event.timeslotList.length - 1; i++) {
+                }else{
                     $http({
                         method: 'GET',
-                        url: String($scope.event.timeslotList[i].pubId)
+                        url: String($scope.event.timeslotList[0].pubId)
                     }).then(function successCallback(response) {
-                        $scope.wayPoints.push({
-                            location: {lat: response.data.lat, lng: response.data.lng},
-                            stopover: true
-                        });
-                        //console.log($scope.wayPoints)
+                        $scope.startPub = {lat: response.data.lat, lng: response.data.lng};
                     }, function errorCallback(response) {
-                        console.log("Timeslotloopproblem " + response);
+                        console.log("Setting Stratpub Problem" + response);
                     });
+
+                    $http({
+                        method: 'GET',
+                        url: String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
+                    }).then(function successCallback(response) {
+                        $scope.endPub = {lat: response.data.lat, lng: response.data.lng};
+                    }, function errorCallback(response) {
+                        console.log("Setting Endpub Problem" + response);
+                    });
+
+                    for (var i = 1; i < $scope.event.timeslotList.length - 1; i++) {
+                        $http({
+                            method: 'GET',
+                            url: String($scope.event.timeslotList[i].pubId)
+                        }).then(function successCallback(response) {
+                            $scope.wayPoints.push({
+                                location: {lat: response.data.lat, lng: response.data.lng},
+                                stopover: true
+                            });
+                            //console.log($scope.wayPoints)
+                        }, function errorCallback(response) {
+                            console.log("Timeslotloopproblem " + response);
+                        });
+                    }
                 }
+
             };
 
             var init = function () {
