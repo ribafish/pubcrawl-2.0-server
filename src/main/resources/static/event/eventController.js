@@ -9,7 +9,6 @@
 
             $scope.event = [];
             $scope.wayPoints = [];
-            $scope.pubs = [];
 
             var setWaypoints = function () {
                 if ($scope.event.timeslotList == null) {
@@ -42,7 +41,7 @@
                             location: {lat: response.data.lat, lng: response.data.lng},
                             stopover: true
                         });
-                        console.log($scope.wayPoints)
+                        //console.log($scope.wayPoints)
                     }, function errorCallback(response) {
                         console.log("Timeslotloopproblem " + response);
                     });
@@ -50,6 +49,7 @@
             };
 
             var init = function () {
+
                 $(document).ready(function () {
                     $('.collapsible').collapsible();
                 });
@@ -78,8 +78,6 @@
                 });
 
                 EventFac.getter($scope.event._links.pubsList.href).then(function (result) {
-                    console.log(result);
-                    console.log($scope.event._links.pubsList.href)
                     $scope.pubs = result._embedded.pubs;
                 });
             };
