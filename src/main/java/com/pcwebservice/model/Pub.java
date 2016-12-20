@@ -3,6 +3,7 @@ package com.pcwebservice.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -20,8 +21,11 @@ public class Pub implements Serializable {
     @Column(name = "pubName")
     private String pubName;
 
-    @Column(name = "prices")
-    private int prices;
+    @Column(name = "pubImage")
+    private byte [] pubImage;
+
+    @Column(name = "price")
+    private int price;
 
     @Column(name = "rating")
     private int rating;
@@ -34,7 +38,7 @@ public class Pub implements Serializable {
     @Column(name = "lng")
     private double lng;
 
-    @Column(name = "description", length=10485760)
+    @Column(name = "description", length = 10485760)
     private String description;
 
     @Column(name = "adress")
@@ -44,7 +48,10 @@ public class Pub implements Serializable {
     private int size;
 
     @Column(name = "closingTime")
-    private Timeslot closingTime;
+    private Time closingTime;
+
+    @Column(name = "openingTime")
+    private Time openingTime;
 
     @ManyToMany
     private List<Crawler> topsList;
@@ -74,7 +81,7 @@ public class Pub implements Serializable {
                 "id=" + id +
                 ", pubName='" + pubName + '\'' +
                 /*", timesList=" + timesList +*/
-                ", prices=" + prices +
+                ", price=" + price +
                 ", rating=" + rating +
                 ", lat=" + lat +
                 ", lng=" + lng +
@@ -87,14 +94,6 @@ public class Pub implements Serializable {
     }
 
     /*Getters and Setters*/
-
-    public String getAdress() {
-        return adress;
-    }
-
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 
     public long getId() {
         return id;
@@ -112,12 +111,20 @@ public class Pub implements Serializable {
         this.pubName = pubName;
     }
 
-    public int getPrices() {
-        return prices;
+    public byte[] getPubImage() {
+        return pubImage;
     }
 
-    public void setPrices(int prices) {
-        this.prices = prices;
+    public void setPubImage(byte[] pubImage) {
+        this.pubImage = pubImage;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getRating() {
@@ -128,12 +135,36 @@ public class Pub implements Serializable {
         this.rating = rating;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAdress() {
+        return adress;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public int getSize() {
@@ -144,24 +175,24 @@ public class Pub implements Serializable {
         this.size = size;
     }
 
+    public Time getClosingTime() {
+        return closingTime;
+    }
+
+    public void setClosingTime(Time closingTime) {
+        this.closingTime = closingTime;
+    }
+
+    public Time getOpeningTime() {
+        return openingTime;
+    }
+
+    public void setOpeningTime(Time openingTime) {
+        this.openingTime = openingTime;
+    }
+
     public List<Crawler> getTopsList() {
         return topsList;
-    }
-
-    public double getLat() {
-        return lat;
-    }
-
-    public void setLat(long lat) {
-        this.lat = lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public void setLng(long lng) {
-        this.lng = lng;
     }
 
     public void setTopsList(List<Crawler> topsList) {
@@ -174,29 +205,5 @@ public class Pub implements Serializable {
 
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public Crawler getPubOwner() {
-        return pubOwner;
-    }
-
-    public void setPubOwner(Crawler pubOwner) {
-        this.pubOwner = pubOwner;
-    }
-
-    public Timeslot getClosingTime() {
-        return closingTime;
-    }
-
-    public void setClosingTime(Timeslot closingTime) {
-        this.closingTime = closingTime;
     }
 }

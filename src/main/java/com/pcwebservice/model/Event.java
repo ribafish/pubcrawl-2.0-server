@@ -21,9 +21,24 @@ public class Event implements Serializable {
     @Column(name = "eventName")
     private String eventName;
 
+    @Column(name = "eventImage")
+    private byte [] eventImage;
+
     /*@NotNull*/
     @Column(name = "date")
     private String date;
+
+    @Column(name = "latmax")
+    private Double latmax;
+
+    @Column(name = "latmin")
+    private Double latmin;
+
+    @Column(name = "lngmax")
+    private Double lngmax;
+
+    @Column(name = "lngmin")
+    private Double lngmin;
 
     @Column(name = "description" , length=10485760)
     private String description;
@@ -146,5 +161,45 @@ public class Event implements Serializable {
 
     public void setPubsList(List<Pub> pubsList) {
         this.pubsList = pubsList;
+    }
+
+    public Double getLatmax() {
+        return latmax;
+    }
+
+    public void setLatmax(Double latmax) {
+        this.latmax = latmax;
+    }
+
+    public Double getLatmin() {
+        return latmin;
+    }
+
+    public void setLatmin(Double latmin) {
+        this.latmin = latmin;
+    }
+
+    public Double getLngmax() {
+        return lngmax;
+    }
+
+    public void setLngmax(Double lngmax) {
+        this.lngmax = lngmax;
+    }
+
+    public Double getLngmin() {
+        return lngmin;
+    }
+
+    public void setLngmin(Double lngmin) {
+        this.lngmin = lngmin;
+    }
+
+    public byte[] getEventImage() {
+        return eventImage;
+    }
+
+    public void setEventImage(byte[] eventImage) {
+        this.eventImage = eventImage;
     }
 }

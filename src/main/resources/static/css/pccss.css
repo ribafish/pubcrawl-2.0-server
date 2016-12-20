@@ -25,7 +25,20 @@ footer.page-footer {
     border: none !important
 }
 
-#tableD{
-    padding:0;
+#tableD {
+    padding: 0;
     width: 50%;
+}
+
+#timelabel {
+    display: inline-block;
+    width: 140px;
+    /*text-align: right;*/
+    background-color: #00b0ff;
+}
+
+
+.material-icons.pubicon {
+    display: inline-block;
+    width: 15px;
 }
