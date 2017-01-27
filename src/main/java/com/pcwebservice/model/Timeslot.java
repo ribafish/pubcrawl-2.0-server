@@ -2,7 +2,6 @@ package com.pcwebservice.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
 
 /**
  * Created by Leo on 02.12.2016.
@@ -17,11 +16,11 @@ public class Timeslot implements Serializable {
 
     /*@NotNull*/
     @Column(name = "startingTime")
-    private Time startingTime;
+    private long startingTime;
 
 /*    @NotNull*/
     @Column(name = "endingTime")
-    private Time endingTime;
+    private long endingTime;
 
   /*  @NotNull*/
     @Column(name = "pubId")
@@ -31,7 +30,7 @@ public class Timeslot implements Serializable {
 
     }
 
-    public Timeslot (Time startingTime, Time endingTime){
+    public Timeslot (long startingTime, long endingTime){
         this.startingTime = startingTime;
         this.endingTime = endingTime;
     }
@@ -52,19 +51,19 @@ public class Timeslot implements Serializable {
         this.pubId = pubId;
     }
 
-    public Time getStartingTime() {
+    public long getStartingTime() {
         return startingTime;
     }
 
-    public void setStartingTime(Time startingTime) {
+    public void setStartingTime(long startingTime) {
         this.startingTime = startingTime;
     }
 
-    public Time getEndingTime() {
+    public long getEndingTime() {
         return endingTime;
     }
 
-    public void setEndingTime(Time endingTime) {
+    public void setEndingTime(long endingTime) {
         this.endingTime = endingTime;
     }
 }

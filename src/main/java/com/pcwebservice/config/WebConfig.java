@@ -33,7 +33,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         @RequestMapping({
                 "/create",
                 "/event",
-                "/register"
+                "/register",
+                "/login"
         })
         public String index() {
             return "forward:/index.html";

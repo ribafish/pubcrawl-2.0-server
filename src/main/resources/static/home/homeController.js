@@ -3,7 +3,7 @@
  */
 (function () {
     'use strict';
-    angular.module('pubApp').controller('homeController', ['$scope', '$http', 'CrawlerFac', 'EventFac' , function ($scope, $http, CrawlerFac, EventFac) {
+    angular.module('pubApp').controller('homeController', ['$scope', '$http', 'CrawlerFac', 'EventFac', function ($scope, $http, CrawlerFac, EventFac) {
         $scope.currentNavItem = 'page1';
         $scope.allEvent = [];
 
@@ -13,41 +13,54 @@
 
         $scope.setCurrentEvent = function (event) {
             $scope.allEvent.forEach(function (value) {
-                if(value._links.self.href==event){
+                if (value._links.self.href == event) {
                     EventFac.setCurrentEvent(value)
                 }
             });
         };
 
-        $http({
-            method: 'GET',
-            url: '/hello'
-        }).then(function successCallback(response) {
-            $scope.greeting = response;
-        }, function errorCallback(response) {
-            console.log("Help");
-        });
-
-        $http({
-            method: 'GET',
-            url: __env.apiUrl + 'image/crawler/1'
-        }).then(function successCallback(response) {
-            $scope.image = response.data;
-        }, function errorCallback(response) {
-            console.log("Picture couldnt load");
-        });
-
-
-        $scope.submit = function () {
-            $http({
-                method: 'POST',
-                url: __env.apiUrl + 'image/crawler/1',
-                data: $scope.image.base64
-            }).then(function successCallback(response) {
-                console.log(response);
-            }, function errorCallback(response) {
-                console.log("Help");
+        $scope.logout = function () {
+            $http.post('/logout', {}).success(function() {
+                self.authenticated = false;
+                //$location.path("/");
+            }).error(function(data) {
+                console.log("Logout failed")
+                self.authenticated = false;
             });
-        }
+            console.log();
+        };
+
+        /*        $http({
+         method: 'GET',
+         url: '/hello'
+         }).then(function successCallback(response) {
+         $scope.greeting = response;
+         }, function errorCallback(response) {
+         console.log("Help");
+         });*/
+
+        /*
+         $http({
+         method: 'GET',
+         url: __env.apiUrl + 'image/crawler/1'
+         }).then(function successCallback(response) {
+         $scope.image = response.data;
+         }, function errorCallback(response) {
+         console.log("Picture couldnt load");
+         });
+         */
+
+
+        /*        $scope.submit = function () {
+         $http({
+         method: 'POST',
+         url: __env.apiUrl + 'image/crawler/1',
+         data: $scope.image.base64
+         }).then(function successCallback(response) {
+         console.log(response);
+         }, function errorCallback(response) {
+         console.log("Help");
+         });
+         }*/
     }])
 })();

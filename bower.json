@@ -1,6 +1,7 @@
 {
   "name": "pubcrawl-2.0-server",
-    "dependencies": {
+  "dependencies": {
+    "angular-local-storage": "^0.5.2"
   },
   "homepage": "https://github.com/ribafish/pubcrawl-2.0-server",
   "authors": [

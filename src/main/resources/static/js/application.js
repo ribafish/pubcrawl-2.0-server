@@ -25,6 +25,10 @@ pubApp.config(['$routeProvider', '$locationProvider','localStorageServiceProvide
         templateUrl: 'register/register.html',
         controller: 'registerController'
     }).
+    when("/login", {
+        templateUrl: 'login/login.html',
+        controller: 'loginController'
+    }).
     otherwise({
         redirectTo: '/'
     });

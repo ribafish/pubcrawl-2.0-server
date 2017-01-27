@@ -27,10 +27,11 @@
 
             /*Basic Variables we will need to get the Data from Forms and Google maps*/
 
+
             $scope.event =
             {
                 eventName: null,
-                date: new Date(),
+                date: new Date().getTime(),
                 description: null,
                 tracked: false,
                 timeslotList: []
@@ -52,7 +53,6 @@
                 startingTime: null,
                 endingTime: null
             };
-
 
             /*Using the REST Controller to get Data from DB and save it*/
             /*Get all need things*/
@@ -132,6 +132,8 @@
 
 
             $scope.saveEvent = function () {
+                console.log(new Date($('.datepicker').val()).getTime() / 1000);
+                $scope.event.date = new Date($('.datepicker').val()).getTime() / 1000;
                 Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;

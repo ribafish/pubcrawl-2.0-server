@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +29,12 @@ public class Crawler implements Serializable {
     /*@NotNull*/
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "role")
+    private String role;
 
     @Column(name = "description" , length=10485760)
     private String description;
@@ -55,9 +62,22 @@ public class Crawler implements Serializable {
     protected Crawler() {
     }
 
-    public Crawler(String userName, String email) {
+    public Crawler(String userName, String email,String password,String role) {
         this.userName = userName;
         this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Crawler{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     /*Getters and Setters*/
@@ -144,5 +164,21 @@ public class Crawler implements Serializable {
 
     public void setUserImage(byte[] userImage) {
         this.userImage = userImage;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

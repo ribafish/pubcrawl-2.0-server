@@ -6,26 +6,32 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/pccss.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--<script src="https://hybroker.rethink.ptinovacao.pt/.well-known/runtime/rethink.js"></script>-->
+
 </head>
 
 <body ng-cloak>
 
-<script src="/bower_components/angular/angular.js"></script>
-<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="/bower_components/angular-animate/angular-animate.js"></script>
-<script src="/bower_components/angular-resource/angular-resource.js"></script>
-<script src="/bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
-<script src="/bower_components/ngmap/build/scripts/ng-map.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+<script src="./bower_components/angular/angular.js"></script>
+<script src="./bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="./bower_components/angular-animate/angular-animate.js"></script>
+<script src="./bower_components/angular-resource/angular-resource.js"></script>
+<script src="./bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
+<script src="./bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=
-AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
         type="text/javascript"></script>
 <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
-<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script type="text/javascript" src="js/materialize/materialize.min.js"></script>
 
 
@@ -41,10 +47,15 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
 
 <!--Controllers-->
 
+<script src="login/loginController.js"></script>
 <script src="register/registerController.js"></script>
 <script src="event/eventController.js"></script>
 <script src="create/createController.js"></script>
 <script src="home/homeController.js"></script>
+<!--
+<script src="rethink/.well-known/runtime/rethink.js"></script>
+<script src="rethink/.well-known/runtime/core.js"></script>-->
+<script src="rethink/helloWorldHypertyClient.js"></script>
 
 
 <nav>
@@ -55,10 +66,36 @@ AIzaSyB8INbbg7MdTJCwgayePGZRJS2lUTRw-yQ"
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a ng-href="/create">Create PubCrawl</a></li>
             <li><a ng-href="/register">Register Pub</a></li>
-            <li><a ng-href="#modal1" class="waves-effect waves-light btn">Login</a></li>
+            <li><a ng-href="/login" class="waves-effect waves-light btn">Login</a></li>
+            <li><a ng-click="logout()" class="waves-effect waves-light btn">Login</a></li>
         </ul>
     </div>
 </nav>
+
+<!--<div class="progress"><div class="indeterminate"></div></div>-->
+<div>
+    This Example will show you (please click on the link):
+    <ul class="collection">
+    </ul>
+</div>
+<div class="runtime-panel">
+</div>
+
+<div class="hyperty-panel">
+</div>
+
+<div class="invitation-panel">
+</div>
+
+<div class="hello-panel">
+</div>
+
+<div class="bye-panel">
+</div>
+
+<div class="msg-panel">
+</div>
+
 
 <!--<div class="row center">
     <button data-target="modal1" class="btn modal-trigger">Modal</button>

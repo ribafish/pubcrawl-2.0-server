@@ -3,7 +3,6 @@ package com.pcwebservice.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.List;
 
 /**
@@ -48,10 +47,10 @@ public class Pub implements Serializable {
     private int size;
 
     @Column(name = "closingTime")
-    private Time closingTime;
+    private long closingTime;
 
     @Column(name = "openingTime")
-    private Time openingTime;
+    private long openingTime;
 
     @ManyToMany
     private List<Crawler> topsList;
@@ -175,19 +174,19 @@ public class Pub implements Serializable {
         this.size = size;
     }
 
-    public Time getClosingTime() {
+    public long getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(Time closingTime) {
+    public void setClosingTime(long closingTime) {
         this.closingTime = closingTime;
     }
 
-    public Time getOpeningTime() {
+    public long getOpeningTime() {
         return openingTime;
     }
 
-    public void setOpeningTime(Time openingTime) {
+    public void setOpeningTime(long openingTime) {
         this.openingTime = openingTime;
     }
 

@@ -1,6 +1,7 @@
 <div class="container">
     <h1>Welcome to PubCrawl 2.0</h1>
     <h2>Here are some awesome Pubcrawls:</h2>
+    <a ng-click="logout()" class="waves-effect waves-light btn">Login</a>
     <div class="row">
         <div class="card sticky-action col s6 m4 l3" ng-repeat="event in allEvent"
              style="padding: 0; border: solid white">
@@ -10,7 +11,7 @@
             <div class="card-content hoverable">
                 <p class="activator grey-text text-darken-4">{{event.eventName}}<i
                         class="material-icons right">more_vert</i></p>
-                <p>{{event.date | date : 'longDate'}}</p>
+                <p>{{event.date | date : 'medium'}}</p>
             </div>
             <div class="card-action ">
                 <a ng-click="setCurrentEvent(event._links.self.href)" ng-href="/event">Go to Event</a>
@@ -36,9 +37,11 @@
         </div>
     </div>
 </div>
+<!--
 <form ng-submit="submit()" ng-controller="homeController">
     <input type='file' ng-model='image' base-sixty-four-input>
     <input type="submit" id="submit" value="Submit"/>
 </form>
 
 <img data-ng-src="data:image/jpeg;base64,{{image}}" data-err-src="images/png/avatar.png"/>
+-->
