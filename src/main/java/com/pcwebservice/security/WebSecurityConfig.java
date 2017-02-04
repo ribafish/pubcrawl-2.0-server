@@ -1,164 +1,66 @@
 package com.pcwebservice.security;
 
-/*
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-*/
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/**")
+        http
                 .authorizeRequests()
-                .antMatchers("/", "/login**", "/home")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and().logout().logoutSuccessUrl("/").permitAll()
-                .and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .antMatchers("/nav/**", "/config/**", "/login/**", "/bower_components/**", "/js/**", "/home/**").permitAll()
+                .anyRequest().authenticated()
+                .and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").logoutSuccessUrl("/").permitAll()
+                .and().csrf().disable();
+
+        OAuth2ClientAuthenticationProcessingFilter oauth2Filter = new OAuth2ClientAuthenticationProcessingFilter("/login");
+        oauth2Filter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler() {
+
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                this.setDefaultTargetUrl("/login");
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+        });
+/*                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .and()
+                .addFilterAfter(csrfHeaderFilter(), SessionManagementFilter.class);*/
     }
+
+
+/*    private Filter csrfHeaderFilter() {
+        return new OncePerRequestFilter() {
+
+            @Override
+            protected void doFilterInternal(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain filterChain) throws ServletException, IOException {
+
+                CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+                if (csrf != null) {
+                    Cookie cookie = WebUtils.getCookie(request, "csrftoken");
+                    String token = csrf.getToken();
+                    if (cookie == null || token != null
+                            && !token.equals(cookie.getValue())) {
+                        cookie = new Cookie("X-XSRF-TOKEN", token);
+                        cookie.setPath("/");
+                        response.addCookie(cookie);
+                    }
+                }
+                filterChain.doFilter(request, response);
+            }
+        };
+    }*/
 }
 
-    /*private static final String LOGIN_PATH = "/login";
-
-    @Autowired
-    private PCUserDetailsService userDetailsService;
-    @Autowired
-    private HttpAuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
-    private AuthSuccessHandler authSuccessHandler;
-    @Autowired
-    private AuthFailureHandler authFailureHandler;
-    @Autowired
-    private HttpLogoutSuccessHandler logoutSuccessHandler;
-
-  *//*  @Bean RemoteTokenServices remoteTokenServices() {
-        RemoteTokenServices rts = new RemoteTokenServices();
-        rts.setClientId(clientId);
-        rts.setClientSecret(clientSecret);
-        rts.setCheckTokenEndpointUrl(identityServerUrl + "/check_token");
-        return rts;
-    }
-*//*
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return super.userDetailsServiceBean();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(10));
-
-        return authenticationProvider;
-    }
 
 
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
-
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        http.authorizeRequests()
-                .antMatchers("/login*//**
- * ","/bower_components","/rethink","/js","/register","/fonts","/css","/config","/home","/browser").permitAll();
- * http.csrf().disable()
- * .authenticationProvider(authenticationProvider())
- * .exceptionHandling()
- * .authenticationEntryPoint(authenticationEntryPoint)
- * .and()
- * .formLogin()
- * .defaultSuccessUrl("/")
- * .loginPage("/login")
- * .permitAll()
- * .loginProcessingUrl(LOGIN_PATH)
- * .usernameParameter("user")
- * .passwordParameter("password")
- * .successHandler(authSuccessHandler)
- * .failureHandler(authFailureHandler)
- * .and()
- * .logout()
- * .permitAll()
- * .logoutRequestMatcher(new AntPathRequestMatcher(LOGIN_PATH, "DELETE"))
- * .logoutSuccessHandler(logoutSuccessHandler);
- * ","/rethink","/js","/register","/fonts","/css","/config","/home","/browser").permitAll();
- * http.csrf().disable()
- * .authenticationProvider(authenticationProvider())
- * .exceptionHandling()
- * .authenticationEntryPoint(authenticationEntryPoint)
- * .and()
- * .formLogin()
- * .defaultSuccessUrl("/")
- * .loginPage("/login")
- * .permitAll()
- * .loginProcessingUrl(LOGIN_PATH)
- * .usernameParameter("user")
- * .passwordParameter("password")
- * .successHandler(authSuccessHandler)
- * .failureHandler(authFailureHandler)
- * .and()
- * .logout()
- * .permitAll()
- * .logoutRequestMatcher(new AntPathRequestMatcher(LOGIN_PATH, "DELETE"))
- * .logoutSuccessHandler(logoutSuccessHandler);
- *//**","/rethink*//**","/js*//**","/register*//**","/fonts*//**","/css*//**","/config*//**","/home*//**","/browser*//**").permitAll();
- http.csrf().disable()
- .authenticationProvider(authenticationProvider())
- .exceptionHandling()
- .authenticationEntryPoint(authenticationEntryPoint)
- .and()
- .formLogin()
- .defaultSuccessUrl("/")
- .loginPage("/login")
- .permitAll()
- .loginProcessingUrl(LOGIN_PATH)
- .usernameParameter("user")
- .passwordParameter("password")
- .successHandler(authSuccessHandler)
- .failureHandler(authFailureHandler)
- .and()
- .logout()
- .permitAll()
- .logoutRequestMatcher(new AntPathRequestMatcher(LOGIN_PATH, "DELETE"))
- .logoutSuccessHandler(logoutSuccessHandler);
- *//*
-                .and()
-                .sessionManagement()
-                .maximumSessions(1);
-*//*
-
-        http.authorizeRequests().anyRequest().authenticated();
-    }*/

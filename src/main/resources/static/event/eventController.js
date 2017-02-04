@@ -56,7 +56,6 @@
                     $('.collapsible').collapsible();
                 });
 
-
                 var toLocal = function (key, value) {
                     return localStorageService.set(key, value);
                 };
@@ -72,6 +71,14 @@
                 } else {
                     $scope.event = EventFac.getCurrentEvent();
                     toLocal("eve", $scope.event);
+                  $http({
+                        method: 'GET',
+                        url: String($scope.event._links.eventOwner.href)
+                    }).then(function successCallback(response) {
+                      $scope.event.eventOwner =  response.data.userName;
+                    }, function errorCallback(response) {
+                        console.log("NO EVENTOWNSER " + response);
+                    });
                     setWaypoints();
                 }
 

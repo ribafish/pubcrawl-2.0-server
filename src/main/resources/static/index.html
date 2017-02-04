@@ -23,6 +23,7 @@
 <script src="./bower_components/angular-resource/angular-resource.js"></script>
 <script src="./bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>
 <script src="./bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+<script src="./bower_components/angular-cookies/angular-cookies.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
@@ -31,13 +32,14 @@
         type="text/javascript"></script>
 <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
-<script type="text/javascript" src="js/materialize/materialize.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script type="text/javascript" src="js/materialize/materialize.js"></script>
+
 
 
 <!--<script src="config/env.js"></script>-->
 <script src="config/prod.js"></script>
-
 <script src="js/application.js"></script>
 
 <!--Services-->
@@ -52,27 +54,16 @@
 <script src="event/eventController.js"></script>
 <script src="create/createController.js"></script>
 <script src="home/homeController.js"></script>
+<script src="nav/navController.js"></script>
 <!--
 <script src="rethink/.well-known/runtime/rethink.js"></script>
 <script src="rethink/.well-known/runtime/core.js"></script>-->
-<script src="rethink/helloWorldHypertyClient.js"></script>
+<!--<script src="rethink/helloWorldHypertyClient.js"></script>-->
 
-
-<nav>
-    <div class="nav-wrapper">
-        <a href="/" class="brand-logo">
-            <i class="material-icons" style="padding-left: 15px">local_bar</i>
-        </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a ng-href="/create">Create PubCrawl</a></li>
-            <li><a ng-href="/register">Register Pub</a></li>
-            <li><a ng-href="/login" class="waves-effect waves-light btn">Login</a></li>
-            <li><a ng-click="logout()" class="waves-effect waves-light btn">Login</a></li>
-        </ul>
-    </div>
-</nav>
+<div ng-include="'nav/nav.html'" ng-controller="navController as navController"></div>
 
 <!--<div class="progress"><div class="indeterminate"></div></div>-->
+<!--
 <div>
     This Example will show you (please click on the link):
     <ul class="collection">
@@ -95,79 +86,8 @@
 
 <div class="msg-panel">
 </div>
-
-
-<!--<div class="row center">
-    <button data-target="modal1" class="btn modal-trigger">Modal</button>
-</div>-->
-<!-- Modal Structure -->
-<!--
-<div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
-    </div>
-    <script>
-        $(document).ready(function(){
-            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-            $('.modal-trigger').modal2();
-        });
-    </script>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-    </div>
-</div>
-
-&lt;!&ndash; Modal Structure &ndash;&gt;
-<div id="modal2" class="modal">
-    <div class="modal-content">
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="username" type="username" class="validate">
-                <label for="username">Username</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="password" type="password" class="validate">
-                <label for="password">Password</label>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-</div>
 -->
-
-
 <div ng-view></div>
-
-
-<footer class="page-footer">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Footer</h5>
-                <p class="grey-text text-lighten-4"></p>
-            </div>
-            <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!"></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            © 2014 Copyright Text
-        </div>
-    </div>
-</footer>
 
 </body>
 

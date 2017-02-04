@@ -27,20 +27,11 @@ public class Crawler implements Serializable {
     private String userName;
 
     /*@NotNull*/
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "role")
-    private String role;
-
-    @Column(name = "description" , length=10485760)
-    private String description;
+    @Column(name = "profile")
+    private String profile;
 
     @Column(name = "userImage")
-    private byte [] userImage;
+    private String userImage;
 
     @ManyToMany
     private List<Crawler> friendsList;
@@ -62,11 +53,10 @@ public class Crawler implements Serializable {
     protected Crawler() {
     }
 
-    public Crawler(String userName, String email,String password,String role) {
+    public Crawler(String userName, String profile, String userImage) {
         this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+        this.profile = profile;
+        this.userImage = userImage;
     }
 
     @Override
@@ -74,9 +64,7 @@ public class Crawler implements Serializable {
         return "Crawler{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", description='" + description + '\'' +
+                ", profile='" + profile + '\'' +
                 '}';
     }
 
@@ -98,20 +86,12 @@ public class Crawler implements Serializable {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getProfile() {
+        return profile;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public List<Crawler> getFriendsList() {
@@ -158,27 +138,12 @@ public class Crawler implements Serializable {
         this.ownEvents = ownEvents;
     }
 
-    public byte[] getUserImage() {
+    public String getUserImage() {
         return  userImage;
     }
 
-    public void setUserImage(byte[] userImage) {
+    public void setUserImage(String userImage) {
         this.userImage = userImage;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

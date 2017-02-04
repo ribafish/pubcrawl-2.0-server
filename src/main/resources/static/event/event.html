@@ -27,7 +27,7 @@
                 <label ng-if="pubs.length==0"><h6>None yet, is this still a Pubcrawl?</h6></label>
                 <ol ng-if="pubs.length!=0" id="eventList" class="collapsible"
                     data-collapsible="accordion">
-                    <li type="A" ng-repeat="pub in pubs">
+                    <li type="A" ng-repeat="pub in pubs" class="">
                         <div class="collapsible-header">
                             <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
                                  data-err-src="images/png/avatar.png"/>
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col l12 m12 s12">
                     <label><h5>Eventowner</h5></label>
-                    <p><h4>{{event.eventOwner}}</h4></p>
+                    <p><h6>{{event.eventOwner}}</h6></p>
                 </div>
             </div>
             <div class="row">
@@ -78,10 +78,11 @@
                     data-collapsible="accordion">
                     <li ng-repeat="person in participants">
                         <div class="collapsible-header">
-                            <img class="circle" data-ng-src="data:image/jpeg;base64,{{person.userImage}}"
-                                 data-err-src="images/png/avatar.png"/>{{person.userName}}
+                            <img class="circle" style="height:30px;" ng-src="{{person.userImage}}"
+                                 err-src="images/png/avatar.png"/>
+                            {{person.userName}}
                         </div>
-                        <div class="collapsible-body"><p>About me: {{person.description}}</p></div>
+                        <div class="collapsible-body"><p><a href="{{person.profile}}">My Google page</a></p></div>
                     </li>
                 </ul>
             </div>

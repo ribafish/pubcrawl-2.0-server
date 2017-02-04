@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('createController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($scope, $http, CrawlerFac, EventFac, PubFac, $q) {
+        .controller('createController', ['$location','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ( $location,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page2';
 
             /*Diverse Helpers to get things going*/
@@ -14,6 +14,22 @@
                 $('.parallax').parallax();
                 $('.scrollspy').scrollSpy();
             });
+
+            $scope.logout = function() {
+                /*$http({method: 'POST', url: '/logout', headers: {
+                 'X-XSRF-TOKEN': 'ruUlUFrunQpvDqPKEEEnZ2s1dhcZyb4LKSob9ZaIX2nICPLb5t0J20zx0IreQcq7'}
+                 }).success(function () {
+                 $rootScope.authenticated = false;
+                 $location.path("/");
+                 });*/
+                console.log("createcontrollercalled")
+                $http.post('https://localhost:8443/logout', {}).success(function() {
+                    $location.path("/");
+                }).error(function(data) {
+                    console.log(data)
+                });
+            };
+
 
 
             window.picker = $('.datepicker').pickadate({
@@ -27,18 +43,19 @@
 
             /*Basic Variables we will need to get the Data from Forms and Google maps*/
 
-
             $scope.event =
             {
                 eventName: null,
                 date: new Date().getTime(),
                 description: null,
                 tracked: false,
-                timeslotList: []
+                timeslotList: [],
+                eventOwner : CrawlerFac.getCurrentUser()._links.crawler.href
             };
 
             $scope.openPubs = [];
             $scope.usedPubs = [];
+
 
             $scope.openCrawlers = [];
             $scope.usedCrawlers = [];
@@ -58,7 +75,14 @@
             /*Get all need things*/
 
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
-                $scope.openCrawlers = data._embedded.crawlers;
+                data._embedded.crawlers.forEach(function (crawler) {
+                    if(crawler.profile == CrawlerFac.getCurrentUser().profile){
+                        $scope.addCrawler(crawler);
+                    }else {
+                        $scope.openCrawlers.push(crawler)
+                    }
+                })
+
             });
 
             PubFac.allPubs.get().$promise.then(function (data) {

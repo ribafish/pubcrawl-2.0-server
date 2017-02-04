@@ -1,9 +1,7 @@
 package com.pcwebservice;
 
-import com.pcwebservice.model.Crawler;
-import com.pcwebservice.model.CrawlerRepository;
-import com.pcwebservice.model.EventRepository;
-import com.pcwebservice.model.PubRepository;
+import com.pcwebservice.model.*;
+import com.pcwebservice.security.WebSecurityConfig;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,12 +10,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
 @SpringBootApplication
 @EnableOAuth2Sso
-public class PcwebserviceApplication extends WebSecurityConfigurerAdapter {
+public class PcwebserviceApplication extends WebSecurityConfig {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
@@ -27,32 +24,23 @@ public class PcwebserviceApplication extends WebSecurityConfigurerAdapter {
 
     }
 
-/*    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .antMatcher("*//**")
-                .authorizeRequests()
-                .antMatchers("/", "/login**", "/webjars*//**")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
-    }*/
-
     @Bean
     public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
 		return (args) -> {
             // save a couple of customers
-            repository.save(new Crawler("hallo", "asd","$2a$10$GHG2KSsQzvB9sMCclzmeEOn9E5LP2jsRUs8hgXuwfVMZbBTNFd3iC","USER"));
-/*
+            /*
+            repository.save(new Crawler("WebApplikation", "leolileoo@gmail.com","asdasdasdasd"));
+
             repository.save(new Crawler("Chloe", "O'Brian"));
             repository.save(new Crawler("Kim", "Bauer"));
             repository.save(new Crawler("David", "Palmer"));
-            repository.save(new Crawler("Michelle", "Dessler"));*//*
+            repository.save(new Crawler("Michelle", "Dessler"));*/
 
-
+/*
             eventRepository.save(new Event("PubEvent1", 1483885590L , repository.findByuserName("Jack"), null));
             eventRepository.save(new Event("PubEvent2", 1483833490L, repository.findByuserName("Kim"), null));
             eventRepository.save(new Event("PubEvent3", 1483883412L, repository.findByuserName("Michelle"), null));
+*/
 
 
             pubRepository.save(new Pub("Molly Mallones", 52.525387, 13.385950));
@@ -64,12 +52,6 @@ public class PcwebserviceApplication extends WebSecurityConfigurerAdapter {
             pubRepository.save(new Pub("Phuket Pub", 52.527409, 13.382590));
             pubRepository.save(new Pub("37min drive", 52.522017, 13.381914));
             pubRepository.save(new Pub("Grimm Center", 52.521500, 13.391271));
-
-
-            eventRepository.save(new Event("PubEvent1", 1288323623006L  , repository.findByuserName("Jack"), null));
-            eventRepository.save(new Event("PubEvent2", 1288323623006L  , repository.findByuserName("Kim"), null));
-            eventRepository.save(new Event("PubEvent3", 1288323623006L  , repository.findByuserName("Michelle"), null));
-*/
 
 
             // fetch all customers
