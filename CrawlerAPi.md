@@ -12,9 +12,8 @@ Response:
 ```
 {
   "userName": String,
-  "email": String,
-  "description": String,
-  "userImage": Byte,
+  "profile": String,
+  "userImage": String,
   "_links": {
     "self": {
       "href": "http://localhost:8080/crawlers/{idOfCrawler}"
@@ -41,7 +40,7 @@ Response:
 }
 ```
 #### Image
-The Image will be saved in an array of bytes but the EndPoint is a String BASE64 endpoint so the frontend has to decode/encode the images.
+The Image is now a link provided by Google OAuth Request
 
 ### CREATING
 While developement is ongoing there are no required fields except userName.
@@ -52,7 +51,9 @@ Host/crawlers/
 ```
 ```
 {
-  "userName": "Kim"
+  "userName": Kim,
+  "profile": LinkToGoogleProfile,
+  "userImage": LinkToGooglePicture,
 }
 ```
 An ID will be generated but more Properties can be added and set.
