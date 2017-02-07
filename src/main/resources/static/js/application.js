@@ -1,31 +1,29 @@
 var env = {};
 
 // Import variables if present (from env.js)
-if(window){
+if (window) {
     Object.assign(env, window.__env);
 }
 
-var pubApp = angular.module('pubApp', ['ngResource','ngRoute','naif.base64','ngMap','LocalStorageModule']);
+var pubApp = angular.module('pubApp', ['ngCookies', 'ngResource', 'ngRoute', 'naif.base64', 'ngMap', 'LocalStorageModule']);
 
-pubApp.config(['$routeProvider', '$locationProvider','localStorageServiceProvider', function ($routeProvider ,$locationProvider,localStorageServiceProvider) {
-    $routeProvider.
-    when("/", {
+pubApp.config(['$httpProvider','$routeProvider','$locationProvider', 'localStorageServiceProvider', function ($httpProvider,$routeProvider, $locationProvider, localStorageServiceProvider) {
+    $routeProvider.when("/", {
         templateUrl: 'home/home.html',
         controller: 'homeController'
-    }).
-    when("/create", {
+    }).when("/create", {
         templateUrl: 'create/create.html',
         controller: 'createController'
-    }).
-    when("/event", {
+    }).when("/event", {
         templateUrl: 'event/event.html',
         controller: 'eventController'
-    }).
-    when("/register", {
+    }).when("/register", {
         templateUrl: 'register/register.html',
         controller: 'registerController'
-    }).
-    otherwise({
+    }).when("/login", {
+        templateUrl: 'login/login.html',
+        controller: 'loginController'
+    }).otherwise({
         redirectTo: '/'
     });
 
@@ -37,6 +35,18 @@ pubApp.config(['$routeProvider', '$locationProvider','localStorageServiceProvide
     $locationProvider.html5Mode(true);
 }]);
 
+pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $location, CrawlerFac) {
+    $rootScope.$on('$routeChangeStart', function (event,next,current) {
+
+        if(!CrawlerFac.getAuthenticated()) {
+            if(next.$$route.originalPath=='/login'){
+                $location.path('/login');
+                return
+            }
+            $location.path('/');
+        }
+    });
+}]);
 
 // Register environment in AngularJS as constant
 pubApp.constant('__env', env);

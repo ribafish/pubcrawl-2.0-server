@@ -1,0 +1,13 @@
+<nav ng-controller="navController">
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo">
+            <i class="material-icons" style="padding-left: 15px">local_bar</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li ng-if="authenticated"><a ng-href="/create">Create PubCrawl</a></li>
+            <li ng-if="authenticated"><a ng-href="/register">Register Pub</a></li>
+            <li ng-if="!authenticated"><a ng-href="/login" class="waves-effect waves-light btn">Login</a></li>
+            <li ng-if="authenticated"><a ng-click="logout()" class="waves-effect waves-light btn">Logout</a></li>
+        </ul>
+    </div>
+</nav>

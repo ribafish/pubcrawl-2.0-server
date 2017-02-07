@@ -26,7 +26,7 @@ public class Event implements Serializable {
 
     /*@NotNull*/
     @Column(name = "date")
-    private String date;
+    private Long date;
 
     @Column(name = "latmax")
     private Double latmax;
@@ -64,7 +64,7 @@ public class Event implements Serializable {
     protected Event() {
     }
 
-    public Event(String eventName, String date, Crawler eventOwner, List <Pub> pubsList) {
+    public Event(String eventName, long date, Crawler eventOwner, List <Pub> pubsList) {
         this.eventName = eventName;
         this.date = date;
         this.eventOwner = eventOwner;
@@ -115,11 +115,11 @@ public class Event implements Serializable {
         this.eventName = eventName;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

@@ -1,179 +1,165 @@
-<div class="row">
-    <div id="right" class="col l1 m1 s1">
-        <ul class="section table-of-contents">
-            <li><a href="#createEvent">Create</a></li>
-            <li><a href="#addPubs">Add Pubs</a></li>
-            <li><a href="#addUsers">Invite</a></li>
-        </ul>
-    </div>
-    <div class="col offset-l1 offset-m1 offset-s1 l11 m11 s1" style="padding: 0px; padding-left: 35px">
-        <div class="parallax-container">
-            <div class="parallax"><img src="images/lights.jpg"></div>
-        </div>
-        <div class="content">
-            <div class="section white">
-                <h5>Add Details</h5>
-                <div class="row container">
+<div class="parallax-container">
+    <div class="parallax"><img src="images/lights.jpg"></div>
+</div>
+<div class="content">
+    <div class="section white" style="padding-left: 50px">
+        <h5>Add Details</h5>
+        <div class="row container">
+            <div class="row">
+                <form class="col s12" id="createEvent">
                     <div class="row">
-                        <form class="col s12" id="createEvent">
-                            <div class="row">
-                                <div class="input-field col s6 m6 l6">
-                                    <input id="eventName" type="text" class="validate" ng-model="event.eventName">
-                                    <label for="eventName">PubCrawl Name</label>
-                                </div>
-                                <div class="input-field col s3 m3 l3">
-                                    <input type="date" class="datepicker" ng-model="event.date">
-                                </div>
-                                <div class="input-field col s3 m3 l3">
-                                    <input type="checkbox" class="filled-in" id="tracker" ng-model="event.tracked"/>
-                                    <label for="tracker">Should your PubCrawl be trackable?</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-field col s12">
+                        <div class="input-field col s6 m6 l6">
+                            <input id="eventName" type="text" class="validate" ng-model="event.eventName">
+                            <label for="eventName">PubCrawl Name</label>
+                        </div>
+                        <div class="input-field col s3 m3 l3">
+                            <input type="text" class="datepicker">
+                        </div>
+                        <div class="input-field col s3 m3 l3">
+                            <input type="checkbox" class="filled-in" id="tracker" ng-model="event.tracked"/>
+                            <label for="tracker">Should your PubCrawl be trackable?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
                             <textarea id="descriptor" class="materialize-textarea"
                                       ng-model="event.description"></textarea>
-                                    <label for="descriptor">Description</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col s12 m12 l12">
-                                    <a class="waves-effect waves-light btn-large" ng-click="saveEvent()">Create
-                                        Event</a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="parallax-container">
-            <div class="parallax"><img src="images/lights2.jpg"></div>
-        </div>
-        <div class="content">
-            <div class="section white">
-                <h5>Select your Pubs</h5>
-                <div class="row container">
-                    <div class="row">
-                        <div class="col s12 m8 l8" style="height: 100%" id="addPubs">
-                            <ng-map id="map" zoom="13" center="current-position" style="height:400px">
-                                <directions
-                                        draggable="false"
-                                        panel="directions-panel"
-                                        travel-mode="WALKING"
-                                        waypoints="{{wayPoints}}"
-                                        origin={{startPub}}
-                                        destination="{{endPub}}">
-                                </directions>
-
-                                <marker ng-repeat="mark in openPubs" position="{{mark.lat}},{{mark.lng}}"
-                                        title="{{mark.pubName}}"
-                                        on-click="showInfoWindow(event,mark)"></marker>
-                            </ng-map>
-                            <!--    Directions path length:
-                                {{map.directionsRenderers[0].directions.routes[0].overview_path.length}}-->
-                        </div>
-
-                        <div class="col s12 m4 l4">
-                            <input placeholder="Search" type="text" class="validate" ng-model="searchText">
-                            <div class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
-                                <a href="" class="collection-item" ng-repeat="pub in openPubs | filter:searchText"
-                                   ng-click="deleteFromOpens(pub)">{{pub.pubName}}
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col s12 m12 l12">
-                            <ul class="collection">
-                                <li class="collection-item avatar" ng-repeat="pubs in usedPubs"
-                                    style="margin-bottom: -15px">
-                                    <img src="" alt="" class="circle">
-                                    <div class="row" style="margin-bottom: 0px">
-                                        <div class="col s12 m5 l7">
-                                            <span class="title">{{pubs.pub.pubName}}</span>
-                                            <p>{{::adressPub}}</p>
-                                        </div>
-                                        <div class="col s5 m3 l2">
-                                            <form name="timeForm" ng-controller="createController">
-                                                <input type="time" id="startingTime" name="input"
-                                                       ng-model="pubs.startingTime" min="00:00:00"
-                                                       max="23:59:59"/>
-                                            </form>
-                                        </div>
-                                        <div class="col s5 m3 l2">
-                                            <form name="timeForm" ng-controller="createController">
-                                                <input type="time" id="endingTime" name="input"
-                                                       ng-model="pubs.endingTime" min="00:00:00"
-                                                       max="23:59:59"/>
-                                            </form>
-                                        </div>
-                                        <div class="col s2 m1 l1">
-                                        </div>
-                                        <a href="" class="secondary-content" ng-click="deleteFromUsed(pubs.pub)"><i
-                                                class="material-icons">delete</i></a>
-                                    </div>
-                                </li>
-                            </ul>
+                            <label for="descriptor">Description</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12 m12 l12">
-                            <a class="waves-effect waves-light btn-large" ng-click="uploadPub()">Save Pubs</a>
+                            <a class="waves-effect waves-light btn-large" ng-click="saveEvent()">Create
+                                Event</a>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </div>
-        <div class="parallax-container">
-            <div class="parallax"><img src="images/lights.jpg"></div>
-        </div>
-        <div class="content">
-            <div class="section white">
-                <h5>Invite People</h5>
-                <div class="row container">
-                    <div class="row">
-                        <div class="col s5 m5 l5">
-                            <input placeholder="Search" type="text" class="validate" ng-model="searchText">
-                            <div id="addUsers" class="collection"
-                                 style="height: 325px; overflow-y: auto; margin-top: 0px">
-                                <a href="" class="collection-item"
-                                   ng-repeat="crawler in openCrawlers | filter:searchText"
-                                   ng-click="addCrawler(crawler)">{{crawler.userName}}
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col s1 m1 l1">
-                        </div>
-                        <div class="col s6 m6 l6" style="margin-top: 20px">
-                            <label class="header-panel"><h5>Participants</h5></label>
-                            <ul class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
-                                <li class="collection-item avatar" ng-repeat="crawler in usedCrawlers"
-                                    style="margin-bottom: -15px">
-                                    <img data-ng-src="data:image/jpeg;base64,{{crawler.userImage}}"
-                                         data-err-src="images/png/avatar.png" alt="" class="circle"/>
-                                    <span class="title">{{crawler.userName}}</span>
-                                    <p>{{crawler.description}}</p>
-                                    <a href="" class="secondary-content" ng-click="delCrawler(crawler)"><i
-                                            class="material-icons">delete</i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col offset-s8 offset-m9 offset-l10">
-                            <a class="waves-effect waves-light btn-large" ng-href="/" ng-click="uploadUser()">Send Invitation</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="parallax-container">
-            <div class="parallax"><img src="images/lights.jpg"></div>
         </div>
     </div>
 </div>
+<div class="parallax-container">
+    <div class="parallax"><img src="images/lights2.jpg"></div>
+</div>
+<div class="content">
+    <div class="section white" style="padding-left: 50px">
+        <h5>Select your Pubs</h5>
+        <div class="row container">
+            <div class="row">
+                <div class="col s12 m8 l8" style="height: 100%" id="addPubs">
+                    <ng-map id="map" zoom="13" center="current-position" style="height:400px">
+                        <directions
+                                draggable="false"
+                                panel="directions-panel"
+                                travel-mode="WALKING"
+                                waypoints="{{wayPoints}}"
+                                origin={{startPub}}
+                                destination="{{endPub}}">
+                        </directions>
 
+                        <marker ng-repeat="mark in openPubs" position="{{mark.lat}},{{mark.lng}}"
+                                title="{{mark.pubName}}"
+                                on-click="showInfoWindow(event,mark)"></marker>
+                    </ng-map>
+                    <!--    Directions path length:
+                        {{map.directionsRenderers[0].directions.routes[0].overview_path.length}}-->
+                </div>
+
+                <div class="col s12 m4 l4">
+                    <input placeholder="Search" type="text" class="validate" ng-model="searchText">
+                    <div class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
+                        <a href="" class="collection-item" ng-repeat="pub in openPubs | filter:searchText"
+                           ng-click="deleteFromOpens(pub)">{{pub.pubName}}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <ul class="collection">
+                        <li class="collection-item avatar" ng-repeat="pubs in usedPubs"
+                            style="margin-bottom: -15px">
+                            <img src="" alt="" class="circle">
+                            <div class="row" style="margin-bottom: 0px">
+                                <div class="col s12 m5 l7">
+                                    <span class="title">{{pubs.pub.pubName}}</span>
+                                    <p>{{::adressPub}}</p>
+                                </div>
+                                <div class="col s5 m3 l2">
+                                    <form name="timeForm" ng-controller="createController">
+                                        <input type="time" id="startingTime" name="input"
+                                               ng-model="pubs.startingTime" min="00:00:00"
+                                               max="23:59:59"/>
+                                    </form>
+                                </div>
+                                <div class="col s5 m3 l2">
+                                    <form name="timeForm" ng-controller="createController">
+                                        <input type="time" id="endingTime" name="input"
+                                               ng-model="pubs.endingTime" min="00:00:00"
+                                               max="23:59:59"/>
+                                    </form>
+                                </div>
+                                <div class="col s2 m1 l1">
+                                </div>
+                                <a href="" class="secondary-content" ng-click="deleteFromUsed(pubs.pub)"><i
+                                        class="material-icons">delete</i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m12 l12">
+                    <a class="waves-effect waves-light btn-large" ng-click="uploadPub()">Save Pubs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img src="images/lights.jpg"></div>
+</div>
+<div class="content">
+    <div class="section white" style="padding-left: 50px">
+        <h5>Invite People</h5>
+        <div class="row container">
+            <div class="row">
+                <div class="col s5 m5 l5">
+                    <input placeholder="Search" type="text" class="validate" ng-model="searchText">
+                    <div id="addUsers" class="collection"
+                         style="height: 325px; overflow-y: auto; margin-top: 0px">
+                        <a href="" class="collection-item"
+                           ng-repeat="crawler in openCrawlers | filter:searchText"
+                           ng-click="addCrawler(crawler)">{{crawler.userName}}
+                        </a>
+                    </div>
+                </div>
+                <div class="col s1 m1 l1">
+                </div>
+                <div class="col s6 m6 l6" style="margin-top: 20px">
+                    <label class="header-panel"><h5>Participants</h5></label>
+                    <ul class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
+                        <li class="collection-item avatar" ng-repeat="crawler in usedCrawlers"
+                            style="margin-bottom: -15px">
+                            <img ng-src="{{crawler.userImage}}"
+                                 err-src="images/png/avatar.png" alt="" class="circle"/>
+                            <span class="title">{{crawler.userName}}</span>
+                            <p>{{crawler.description}}</p>
+                            <a href="" class="secondary-content" ng-click="delCrawler(crawler)"><i
+                                    class="material-icons">delete</i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col offset-s8 offset-m9 offset-l10">
+                    <a class="waves-effect waves-light btn-large" ng-href="/" ng-click="uploadUser()">Send
+                        Invitation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--<div id="directions-panel" style="width: 28%; float:left; height: 100%; overflow: auto; padding: 0px 5px">-->
