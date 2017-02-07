@@ -5,31 +5,14 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('createController', ['$location','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ( $location,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
+        .controller('createController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page2';
 
             /*Diverse Helpers to get things going*/
 
             $(document).ready(function () {
                 $('.parallax').parallax();
-                $('.scrollspy').scrollSpy();
             });
-
-            $scope.logout = function() {
-                /*$http({method: 'POST', url: '/logout', headers: {
-                 'X-XSRF-TOKEN': 'ruUlUFrunQpvDqPKEEEnZ2s1dhcZyb4LKSob9ZaIX2nICPLb5t0J20zx0IreQcq7'}
-                 }).success(function () {
-                 $rootScope.authenticated = false;
-                 $location.path("/");
-                 });*/
-                console.log("createcontrollercalled")
-                $http.post('https://localhost:8443/logout', {}).success(function() {
-                    $location.path("/");
-                }).error(function(data) {
-                    console.log(data)
-                });
-            };
-
 
 
             window.picker = $('.datepicker').pickadate({
@@ -50,7 +33,7 @@
                 description: null,
                 tracked: false,
                 timeslotList: [],
-                eventOwner : CrawlerFac.getCurrentUser()._links.crawler.href
+                eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href
             };
 
             $scope.openPubs = [];
@@ -76,9 +59,9 @@
 
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 data._embedded.crawlers.forEach(function (crawler) {
-                    if(crawler.profile == CrawlerFac.getCurrentUser().profile){
+                    if (crawler.profile == CrawlerFac.getCurrentUser().profile) {
                         $scope.addCrawler(crawler);
-                    }else {
+                    } else {
                         $scope.openCrawlers.push(crawler)
                     }
                 })
@@ -156,8 +139,7 @@
 
 
             $scope.saveEvent = function () {
-                console.log(new Date($('.datepicker').val()).getTime() / 1000);
-                $scope.event.date = new Date($('.datepicker').val()).getTime() / 1000;
+                $scope.event.date = new Date($('.datepicker').val()).getTime();
                 Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
@@ -170,11 +152,16 @@
 
             function timeNow(i) {
                 if (i == null) {
-                    return "00:00:00"
+                    return $scope.event.date
                 }
-                var h = (i.getHours() < 10 ? '0' : '') + i.getHours()
+                var h = (i.getHours() < 10 ? '0' : '') + i.getHours();
                 var m = (i.getMinutes() < 10 ? '0' : '') + i.getMinutes();
-                return h + ':' + m + ':00';
+                var all = ((h * 3600000) + (m * 60000));
+                if (h <= 12) {
+                    return $scope.event.date + all + 86400000;
+                } else {
+                    return $scope.event.date + all;
+                }
             }
 
 
@@ -200,7 +187,7 @@
                 var center = new google.maps.LatLng(mark.lat, mark.lng);
 
                 infowindow.setContent(
-                    '<table><tbody><tr><td><h6>' + mark.pubName + '</h6></td><td></td></tr><tr><td>Prices: ' + mark.prices + '</td><td></td></tr><tr><td>Rating: ' + mark.rating + '</td><td><a class="waves-effect waves-light btn" ng-click="deleteFromOpens(' + mark + ')">add</a></td></tr></tbody></table>'
+                    '<table><tbody><tr><td><h6>' + mark.pubName + '</h6></td><td></td></tr><tr><td>Prices: ' + mark.price + "/5" + '</td><td></td></tr><tr><td>Size: ' + mark.size + "/5" + '</td></tr><tr><td>Usually open from: ' + mark.openingTime + " to" + mark.closingTime + '</td></tr></tbody></table>'
                 );
 
                 infowindow.setPosition(center);

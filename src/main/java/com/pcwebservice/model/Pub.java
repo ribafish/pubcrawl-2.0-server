@@ -47,10 +47,10 @@ public class Pub implements Serializable {
     private int size;
 
     @Column(name = "closingTime")
-    private long closingTime;
+    private String closingTime;
 
     @Column(name = "openingTime")
-    private long openingTime;
+    private String openingTime;
 
     @ManyToMany
     private List<Crawler> topsList;
@@ -174,19 +174,19 @@ public class Pub implements Serializable {
         this.size = size;
     }
 
-    public long getClosingTime() {
+    public String getClosingTime() {
         return closingTime;
     }
 
-    public void setClosingTime(long closingTime) {
+    public void setClosingTime(String closingTime) {
         this.closingTime = closingTime;
     }
 
-    public long getOpeningTime() {
+    public String getOpeningTime() {
         return openingTime;
     }
 
-    public void setOpeningTime(long openingTime) {
+    public void setOpeningTime(String openingTime) {
         this.openingTime = openingTime;
     }
 

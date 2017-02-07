@@ -36,11 +36,9 @@ public class PcwebserviceApplication extends WebSecurityConfig {
             repository.save(new Crawler("David", "Palmer"));
             repository.save(new Crawler("Michelle", "Dessler"));*/
 
-/*
             eventRepository.save(new Event("PubEvent1", 1483885590L , repository.findByuserName("Jack"), null));
             eventRepository.save(new Event("PubEvent2", 1483833490L, repository.findByuserName("Kim"), null));
             eventRepository.save(new Event("PubEvent3", 1483883412L, repository.findByuserName("Michelle"), null));
-*/
 
 
             pubRepository.save(new Pub("Molly Mallones", 52.525387, 13.385950));
@@ -63,10 +61,10 @@ public class PcwebserviceApplication extends WebSecurityConfig {
             log.info("");
 
             // fetch an individual customer by ID
-            Crawler Crawler = repository.findOne(1L);
+            //Crawler Crawler = repository.findOne(1L);
             log.info("Customer found with findOne(1L):");
             log.info("--------------------------------");
-            log.info(Crawler.toString());
+            //log.info(Crawler.toString());
             log.info("");
 
             // fetch customers by last name

@@ -11,15 +11,20 @@
             $scope.allEvent = data._embedded.events;
         });
 
+        $scope.$watch(function () {
+            return CrawlerFac.getAuthenticated()
+        }, function () {
+            $scope.authenticated = CrawlerFac.getAuthenticated();
+        });
 
         if (CrawlerFac.getAuthenticated()) {
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                     var openCrawlers = data._embedded.crawlers;
                     var user = CrawlerFac.getCurrentUser().userAuthentication;
-                    console.log(openCrawlers.length)
                     for (var i = 0; i < openCrawlers.length; i++) {
                         if (user.details.profile === openCrawlers[i].profile) {
                             CrawlerFac.setCurrentUser(openCrawlers[i]);
+                            Materialize.toast('Welcome back ' + openCrawlers[i].userName + '!!', 1000);
                         } else if (i === openCrawlers.length - 1) {
                             var crawlerToSave = {
                                 userName: user.name,
@@ -27,10 +32,21 @@
                                 userImage: user.details.picture
                             };
                             CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
-                                Materialize.toast('Welcome new Crawler!!', 1000);
+                                Materialize.toast('Welcome to Pubcrawl2.0'+user.name+'!!', 1000);
                             });
                             CrawlerFac.setCurrentUser(crawlerToSave);
                         }
+                    }
+                    if (openCrawlers.length === 0) {
+                        var crawlerToSave = {
+                            userName: user.name,
+                            profile: user.details.profile,
+                            userImage: user.details.picture
+                        };
+                        CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
+                            Materialize.toast('Welcome to Pubcrawl2.0'+user.name+'!!', 1000);
+                        });
+                        CrawlerFac.setCurrentUser(crawlerToSave);
                     }
                 }
             );
@@ -45,34 +61,7 @@
             });
         };
 
-        /*        $http.get('user').success(function(data) {
-         if (data.name) {
-
-         console.log($cookies.getAll());
-         $rootScope.authenticated = true;
-         } else {
-         $rootScope.authenticated = false;
-         }
-         }).error(function() {
-         $rootScope.authenticated = false;
-         });*/
-
         $scope.credentials = {};
-
-        $scope.logout = function () {
-            /*$http({method: 'POST', url: '/logout', headers: {
-             'X-XSRF-TOKEN': 'ruUlUFrunQpvDqPKEEEnZ2s1dhcZyb4LKSob9ZaIX2nICPLb5t0J20zx0IreQcq7'}
-             }).success(function () {
-             $rootScope.authenticated = false;
-             $location.path("/");
-             });*/
-            $http.post('/logout', {}).success(function () {
-                $rootScope.authenticated = false;
-                $location.path("/");
-            }).error(function (data) {
-                $rootScope.authenticated = false;
-            });
-        };
 
         /*        $http({
          method: 'GET',

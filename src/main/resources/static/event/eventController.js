@@ -10,10 +10,12 @@
             $scope.event = [];
             $scope.wayPoints = [];
 
+            $scope.owner = false;
+
             var setWaypoints = function () {
-                if ($scope.event.timeslotList === null ||$scope.event.timeslotList.length == 0 ) {
+                if ($scope.event.timeslotList === null || $scope.event.timeslotList.length == 0) {
                     return null;
-                }else{
+                } else {
                     $http({
                         method: 'GET',
                         url: String($scope.event.timeslotList[0].pubId)
@@ -50,6 +52,52 @@
 
             };
 
+            $scope.leavePubcrawl = function () {
+                console.log(CrawlerFac.getCurrentUser())
+                $http({
+                    method: 'GET',
+                    url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),
+                }).then(function successCallback(response) {
+                    var array = [];
+                    for (var i = 0; i <= response.data._embedded.events.length - 1; i++) {
+                        if (i == response.data._embedded.events.length - 1) {
+                            console.log(array)
+                            $http({
+                                method: 'PUT',
+                                url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),
+                                data: {
+                                    _links: {
+                                        href: array
+                                    }
+                                }
+                            });
+                            Materialize.toast('Successfully left Pubcrawl', 1000);
+                        } else {
+                            array.push(response.data._embedded.events[i]._links.event.href)
+                        }
+                    }
+
+                }, function errorCallback(response) {
+                    console.log("Joining Pub Problem" + response);
+                });
+            };
+
+            $scope.enterPubcrawl = function () {
+                $http({
+                    method: 'PATCH',
+                    url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),
+                    data: {
+                        _links: {
+                            href: $scope.event._links.event.href
+                        }
+                    }
+                }).then(function successCallback(response) {
+                    Materialize.toast('Yayy you joined the Pubcrawl', 1000);
+                }, function errorCallback(response) {
+                    console.log("Entering Problem " + response);
+                });
+            };
+
             var init = function () {
 
                 $(document).ready(function () {
@@ -71,11 +119,11 @@
                 } else {
                     $scope.event = EventFac.getCurrentEvent();
                     toLocal("eve", $scope.event);
-                  $http({
+                    $http({
                         method: 'GET',
                         url: String($scope.event._links.eventOwner.href)
                     }).then(function successCallback(response) {
-                      $scope.event.eventOwner =  response.data.userName;
+                        $scope.event.eventOwner = response.data;
                     }, function errorCallback(response) {
                         console.log("NO EVENTOWNSER " + response);
                     });
@@ -84,6 +132,11 @@
 
                 EventFac.getter($scope.event._links.participantsList.href).then(function (result) {
                     $scope.participants = result._embedded.crawlers;
+                    $scope.participants.forEach(function (user) {
+                        if (CrawlerFac.getCurrentUser().userName == user.userName) {
+                            $scope.owner = true;
+                        }
+                    })
                 });
 
                 EventFac.getter($scope.event._links.pubsList.href).then(function (result) {
