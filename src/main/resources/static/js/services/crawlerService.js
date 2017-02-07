@@ -27,7 +27,7 @@
             setUser: function () {
                 $http({
                     method: 'GET',
-                    url: "https://localhost:8443/user",
+                    url: "https://134.158.74.243:8443/user",
                 }).then(function successCallback(response) {
                     currentUser = response.data;
                     setAuthenticated(true);
