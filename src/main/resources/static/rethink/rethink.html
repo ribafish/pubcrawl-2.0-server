@@ -5,15 +5,14 @@
     <title>Rethink Integration</title>
 </head>
 <body>
-
+<!--
 <script src=".well-known/runtime/rethink.js"></script>
 <script src=".well-known/runtime/core.js"></script>
-<script src="helloWorldHypertyClient.js"></script>
-<script src="groupChat.js"></script>
+<script src="groupChat.js"></script>-->
 
 <div>
     This Example will show you (please click on the link):
-    <ul class="collection">
+    <ul class="collection loading">
     </ul>
 </div>
 <div class="runtime-panel">
@@ -36,32 +35,44 @@
 
 <div class="card-panel teal lighten-2 white-text"></div>
 
-<div class="col s12">
-    <button class="btn waves-effect waves-light create-room-btn" type="button"><i class="material-icons left">chat</i>Create Chat</button>
-</div>
+<!--<div class="col s12">
+    <button class="btn waves-effect waves-light create-room-btn" type="button"><i class="material-icons left">chat</i>Create
+        Chat
+    </button>
+</div>-->
 
 <section class="chat-section col s12 hide">
 
 </section>
 
 <!-- Modal Structure -->
-<div class="modal modal-fixed-footer create-chat">
-    <div class="modal-content">
-        <div class="chat-name">
-            <h4>Name of Chat Group</h4>
-            <input class="input-name" placeholder="chat name" id="name" required aria-required="true" type="text">
-        </div>
-        <div class="participants">
-            <form class="participants-form">
-            </form>
-        </div>
-        <div class="row">
-            <button class="btn waves-effect waves-light btn-add" type="submit" name="action">Add Participant<i class="material-icons right">add</i></button>
-        </div>
+<div class="section create-chat">
+    <div class="chat-name">
+        <h4>Name of Chat Group</h4>
+        <input class="input-name" placeholder="chat name" id="name" required aria-required="true" type="text">
     </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn-cancel">Cancel</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn-create">Create</a>
+    <div class="participants">
+        <form class="participants-form">
+        </form>
+    </div>
+    <div class="row">
+        <button class="btn waves-effect waves-light btn-add" type="submit" name="action">Add Participant<i
+                class="material-icons right">add</i></button>
+    </div>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn-cancel">Cancel</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat btn-create">Create</a>
+</div>
+
+<div class="section">
+    <div class="valign-wrapper chat-header blue lighten-5"></div>
+    <div class="row">
+        <div class="conversations col s12 ">
+            <h5>This is the chat</h5>
+            <div class="row messages">
+                <ul class="collection">
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

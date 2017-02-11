@@ -26,7 +26,7 @@ $(document).ready(function(){
   });
 });
 
-//setting the urls
+//setting the urls and adding scritp to html
 function ready(config){
   runtime_domain = config["runtime-domain"];
   hyperty_domain = config["hyperty-domain"]
@@ -48,8 +48,7 @@ function ready(config){
  *Some variables for flux control
  */
 let RUNTIME;
-let hypertyObserver = null;
-let hypertyReporter = null;
+let groupchatHyperty = null;
 const hypertyURI = (hyperty_domain, hyperty) => `hyperty-catalogue://catalogue.${hyperty_domain}/.well-known/hyperty/${hyperty}`;
 let toHyperty = null;
 let status = 0;
@@ -70,41 +69,25 @@ function loadRuntime()
   }).then((runtime) => {
     RUNTIME = runtime
     var time = (new Date().getTime()) - start;
-    hypertyLoaded(runtimeURL);
     $('.runtime-panel').append('<p>Runtime has been successfully launched in ' + time/1000 +' seconds</p>');
-    let collection = $(".collection");
-    collection.append('<a onclick="loadHypertyObs();" class="collection-item">Thats a GroupchatManager</li>') ;
-    collection.append('<a onclick="loadHypertyRep();" class="collection-item">Thats a Groupchat</li>') ;
+    let collection = $(".loading");
+    collection.append('<a onclick="loadHyperty();" class="collection-item">Load a Groupchathyperty</li>') ;
   });
 }
 
-//loading the Groupchatmanagerhyperty
-function loadHypertyObs()
-{
-  RUNTIME.requireHyperty(hypertyURI(hyperty_domain, 'GroupChatManager')).then((hyperty) => {
-    console.log('hyperty', hyperty);
-    hypertyObserver = hyperty;
-    $('.runtime-panel').append('<p><b>'
-        +' Event: Hyperty '+hyperty.name+' Deployed<br>'+
-        '<hr style="border:1px solid;"/></b></p>');
-    hypertyDeployed(hypertyObserver);
-    status++;
-    //enableSayHelloToLocal();
-  });
-}
 //loading the Groupchat hyperty
-function loadHypertyRep(){
+function loadHyperty(){
   RUNTIME.requireHyperty(hypertyURI(hyperty_domain, 'GroupChat')).then((hyperty) => {
-    hypertyReporter = hyperty;
-    console.log(hyperty);
-    $('.runtime-panel').append('<p><b>'
+    groupchatHyperty = hyperty;
+    hypertyLoaded(hyperty);
+/*    $('.runtime-panel').append('<p><b>'
         +' Event: Hyperty '+hyperty.name+' Deployed<br>'+
-        '<hr style="border:1px solid;"/></b></p>');
+        '<hr style="border:1px solid;"/></b></p>');*/
     status++;
     if (! reporterLoaded) {
       let collection = $('.collection');
-      collection.append('<a  onclick="createNewchat();"  class="collection-item">Create new Groupchat</li>') ;
-      collection.append('<a  onclick="getMessage();"  class="collection-item">Get Messages</li>') ;
+/*      collection.append('<a  onclick="createNewchat();"  class="collection-item">Create new Groupchat</li>') ;
+      collection.append('<a  onclick="getMessage();"  class="collection-item">Get Messages</li>') ;*/
       reporterLoaded = true;
     }
     //enableSayHelloToLocal();
@@ -112,6 +95,7 @@ function loadHypertyRep(){
   });
 }
 
+/*
 function createNewchat() {
   var participants = [{email:"leolileoo@gmail.com", domain:"google.com"}];
   hypertyReporter.instance.create("EventGroupchat", participants)
@@ -136,10 +120,10 @@ function getMessage() {
     let collection = $('.collection');
     let hello = $('.hello-panel');
     hello.addClass('hide');
-    /*    if (!sent) {
+    /!*    if (!sent) {
      collection.append('<a  onclick="fillSayBye();"  class="collection-item">How to say Bye to a Hyperty.</li>') ;
      sent = true;
-     }*/
+     }*!/
   }).catch(function(reason) {
     console.error(reason);
   });
@@ -181,17 +165,17 @@ function sayHelloToRemoteHyperty(event) {
     let collection = $('.collection');
     let hello = $('.hello-panel');
     hello.addClass('hide');
-    /*    if (!sent) {
+    /!*    if (!sent) {
      collection.append('<a  onclick="fillSayBye();"  class="collection-item">How to say Bye to a Hyperty.</li>') ;
      sent = true;
-     }*/
+     }*!/
   }).catch(function(reason) {
     console.error(reason);
   });
 }
-/**
+/!**
  * Call back after hyperty is loaded
- */
+ *!/
 function hypertyDeployed(result) {
   let hypertyObserver;
 
@@ -205,6 +189,7 @@ function hypertyDeployed(result) {
 
 
 };
+*/
 
 
 //////////////////////////////////////////old
@@ -215,8 +200,6 @@ function hypertyDeployed(result) {
 
 
 function hypertyLoaded(result) {
-  console.log(result)
-
   let hypertyInfo = '<span class="white-text">' +
                     '<b>Name:</b> ' + result.name + '</br>' +
                     '<b>Status:</b> ' + result.status + '</br>' +
@@ -237,13 +220,20 @@ function hypertyLoaded(result) {
   let createBtn = $('.create-room-btn');
   let joinBtn = $('.join-room-btn');
 
-  createBtn.on('click', createRoom);
+  let createRoomModal = $('.create-chat');
+  let createRoomBtn = createRoomModal.find('.btn-create');
+  let addParticipantBtn = createRoomModal.find('.btn-add');
+
+  addParticipantBtn.on('click', addParticipantEvent);
+  createRoomBtn.on('click', createRoomEvent);
+/*  createBtn.on('click', createRoom);*/
 }
 
 /*
   Create Room actions
  */
-function createRoom(event) {
+/*function createRoom(event) {
+  console.log()
   event.preventDefault();
 
   let createRoomModal = $('.create-chat');
@@ -253,8 +243,8 @@ function createRoom(event) {
   addParticipantBtn.on('click', addParticipantEvent);
   createRoomBtn.on('click', createRoomEvent);
 
-  createRoomModal.openModal();
-}
+/!*  createRoomModal.openModal();*!/
+}*/
 
 function addParticipantEvent(event) {
 
@@ -282,16 +272,20 @@ function addParticipantEvent(event) {
 }
 
 function createRoomEvent(event) {
+  console.log("new chatroom")
   event.preventDefault();
 
   let createRoomModal = $('.create-chat');
   let participantsForm = createRoomModal.find('.participants-form');
 
   let participants = [];
-  let serializedObject = $(participantsForm).serializeObjectArray();
+  console.log($(participantsForm));
+  let serializedObject = $(participantsForm);
 
   // Prepare the chat
   let name = createRoomModal.find('.input-name').val();
+  participants.push({email: "leolileoo@gmail.com", domain: "google.com/stub/8450"});
+
 
   console.log(serializedObject);
 
@@ -316,14 +310,14 @@ function createRoomEvent(event) {
 
 function prepareChat(chatGroup) {
   console.log('Chat Group Controller: ', chatGroup);
-
+ console.log("PREPARE CHAt WAS CALLLED")
   chatGroup.onMessage(function(message) {
     console.info('new message recived: ', message);
     processMessage(message);
   });
 
 
-  Handlebars.getTemplate('group-chat/chat-section').then(function(html) {
+  Handlebars.getTemplate('rethink/chat-section').then(function(html) {
     $('.chat-section').append(html);
 
     chatManagerReady(chatGroup);
@@ -353,6 +347,22 @@ function chatManagerReady(chatGroup) {
 
   messageForm.on('submit', function(event) {
     event.preventDefault();
+
+    $.fn.serializeObject = function() {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+        if (o[this.name]) {
+          if (!o[this.name].push) {
+            o[this.name] = [o[this.name]];
+          }
+          o[this.name].push(this.value || '');
+        } else {
+          o[this.name] = this.value || '';
+        }
+      });
+      return o;
+    };
 
     let object = $(this).serializeObject();
     let message = object.message;
@@ -426,6 +436,7 @@ function removeParticipant(item) {
 }
 
 Handlebars.getTemplate = function(name) {
+  console.log(name)
 
   return new Promise(function(resolve, reject) {
 
