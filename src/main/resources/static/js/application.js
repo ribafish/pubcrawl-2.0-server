@@ -7,7 +7,7 @@ if (window) {
 
 var pubApp = angular.module('pubApp', ['ngCookies', 'ngResource', 'ngRoute', 'naif.base64', 'ngMap', 'LocalStorageModule']);
 
-pubApp.config(['$httpProvider','$routeProvider','$locationProvider', 'localStorageServiceProvider', function ($httpProvider,$routeProvider, $locationProvider, localStorageServiceProvider) {
+pubApp.config(['$httpProvider', '$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($httpProvider, $routeProvider, $locationProvider, localStorageServiceProvider) {
     $routeProvider.when("/", {
         templateUrl: 'home/home.html',
         controller: 'homeController'
@@ -23,8 +23,14 @@ pubApp.config(['$httpProvider','$routeProvider','$locationProvider', 'localStora
     }).when("/login", {
         templateUrl: 'login/login.html',
         controller: 'loginController'
+    }).when("/rethink", {
+        templateUrl: 'rethink/rethink.html',
+        controller: 'rethinkController'
     }).otherwise({
-        redirectTo: '/'
+        controller: function () {
+            window.location.replace('/');
+        },
+        template: "<div></div>"
     });
 
     localStorageServiceProvider
@@ -36,10 +42,10 @@ pubApp.config(['$httpProvider','$routeProvider','$locationProvider', 'localStora
 }]);
 
 pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $location, CrawlerFac) {
-    $rootScope.$on('$routeChangeStart', function (event,next,current) {
+    $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
-        if(!CrawlerFac.getAuthenticated()) {
-            if(next.$$route.originalPath=='/login'){
+        if (!CrawlerFac.getAuthenticated()) {
+            if (next.$$route.originalPath == '/login') {
                 $location.path('/login');
                 return
             }

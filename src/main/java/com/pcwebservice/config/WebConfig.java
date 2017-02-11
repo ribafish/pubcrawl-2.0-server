@@ -34,7 +34,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/create",
                 "/event",
                 "/register",
-                "/login"
+                "/login",
+                "/rethink"
         })
         public String index() {
             return "forward:/index.html";

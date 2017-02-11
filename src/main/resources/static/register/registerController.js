@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('registerController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($scope, $http, CrawlerFac, EventFac, PubFac, $q) {
+        .controller('registerController', ['$timeout','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($timeout,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page3';
 
             /*Diverse Helpers to get things going*/
@@ -14,35 +14,12 @@
                 $scope.objMapa = map;
             });
 
-            /*Basic Variables we will need to get the Data from Forms and Google maps*/
-
-            $scope.pub =
-            {
-                pubName: null,
-                price: 0,
-                rating: 0,
-                size: 0,
-                description: null,
-                lat: null,
-                lng: null,
-                adress: null,
-                openingTime: null,
-                closingTime: null,
-                topsList: [],
-                eventsList: [],
-                pubOwner: null
-            };
-
-            $scope.timer = {openingTime:null,closingTime:null};
-
-            var init = function () {
+            $scope.init = function () {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
 
-
                         $scope.pub.lat = position.coords.latitude;
                         $scope.pub.lng = position.coords.longitude;
-                        console.log(position);
 
                     }, function () {
                         ///handleLocationError(true, infoWindow, map.getCenter());
@@ -59,11 +36,42 @@
                         'Error: Your browser doesn\'t support geolocation.');
                 }
             };
-            init();
+            $scope.init();
 
-            $scope.marker = new google.maps.Marker({
-                position: {lat: $scope.pub.lat, lng: $scope.pub.lng}
-            });
+            /*Basic Variables we will need to get the Data from Forms and Google maps*/
+
+            $scope.pub =
+            {
+                pubName: null,
+                price: 0,
+                rating: 0,
+                size: 0,
+                description: null,
+                lat: navigator.geolocation.getCurrentPosition(function (position) {
+                    return position.coords.latitude;
+                }, function () {
+                }),
+                lng: navigator.geolocation.getCurrentPosition(function (position) {
+                    return position.coords.longitude;
+                }, function () {
+                }),
+                adress: null,
+                openingTime: null,
+                closingTime: null,
+                topsList: [],
+                eventsList: [],
+                pubOwner: null
+            };
+
+            $scope.timer = {openingTime: null, closingTime: null};
+
+
+            $timeout(function() {
+                $scope.marker = new google.maps.Marker({
+                    position: {lat: $scope.pub.lat, lng: $scope.pub.lng}
+                });
+            }, 500)
+
 
             $scope.getCoords = function (event) {
                 $scope.pub.lat = event.latLng.lat();
@@ -81,7 +89,6 @@
                 console.log($scope.pub);
                 PubFac.allPubs.save($scope.pub).$promise.then(function (data) {
                     console.log(data);
-                    //console.log($scope.event._links.self.href);
                 });
             };
 
@@ -100,7 +107,7 @@
 
             var geocodeLatLng = function () {
                 var geocoder = new google.maps.Geocoder;
-                var latlng = {lat:$scope.pub.lat, lng:$scope.pub.lng};
+                var latlng = {lat: $scope.pub.lat, lng: $scope.pub.lng};
                 geocoder.geocode({'location': latlng}, function (results, status) {
                     if (status === 'OK') {
                         if (results[1]) {
@@ -113,18 +120,6 @@
                         window.alert('Geocoder failed due to: ' + status);
                     }
                 });
-            };
-
-            $scope.showInfoWindow = function (event, mark) {
-                var infowindow = new google.maps.InfoWindow();
-                var center = new google.maps.LatLng(mark.lat, mark.lng);
-
-                infowindow.setContent(
-                    '<table><tbody><tr><td><h6>' + mark.pubName + '</h6></td><td></td></tr><tr><td>Prices: ' + mark.prices + '</td><td></td></tr><tr><td>Rating: ' + mark.rating + '</td><td><a class="waves-effect waves-light btn" ng-click="deleteFromOpens(' + mark + ')">add</a></td></tr></tbody></table>'
-                );
-
-                infowindow.setPosition(center);
-                infowindow.open($scope.objMapa);
             };
         }
         ])

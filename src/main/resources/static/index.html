@@ -33,13 +33,14 @@
 <script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
 <script type="text/javascript" src="js/materialize/materialize.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
 
 
 
-<!--<script src="config/env.js"></script>-->
-<script src="config/prod.js"></script>
+<script src="config/env.js"></script>
+<!--<script src="config/prod.js"></script>-->
 <script src="js/application.js"></script>
 
 <!--Services-->
@@ -55,38 +56,15 @@
 <script src="create/createController.js"></script>
 <script src="home/homeController.js"></script>
 <script src="nav/navController.js"></script>
-<!--
+<script src="rethink/rethinkController.js"></script>
+
+
 <script src="rethink/.well-known/runtime/rethink.js"></script>
-<script src="rethink/.well-known/runtime/core.js"></script>-->
-<!--<script src="rethink/helloWorldHypertyClient.js"></script>-->
+<script src="rethink/.well-known/runtime/core.js"></script>
+<script src="rethink/groupChat.js"></script>
 
 <div ng-include="'nav/nav.html'" ng-controller="navController as navController"></div>
 
-<!--<div class="progress"><div class="indeterminate"></div></div>-->
-<!--
-<div>
-    This Example will show you (please click on the link):
-    <ul class="collection">
-    </ul>
-</div>
-<div class="runtime-panel">
-</div>
-
-<div class="hyperty-panel">
-</div>
-
-<div class="invitation-panel">
-</div>
-
-<div class="hello-panel">
-</div>
-
-<div class="bye-panel">
-</div>
-
-<div class="msg-panel">
-</div>
--->
 <div ng-view></div>
 
 </body>

@@ -1,5 +1,5 @@
 (function (angular) {
-    var crawlerFactory = function ($resource, $http, $location) {
+    var crawlerFactory = function ($resource, $http) {
 
         var currentUser = null;
 
@@ -27,14 +27,11 @@
             setUser: function () {
                 $http({
                     method: 'GET',
-                    url: "https://134.158.74.243:8443/user",
+                    url: __env.apiUrl + "/user",
                 }).then(function successCallback(response) {
                     currentUser = response.data;
-                    setAuthenticated(true);
-                    $location.path('/');
                 }, function errorCallback(response) {
                     location.reload();
-
                 });
             },
             getCurrentUser: getCurrentUser,
@@ -46,6 +43,6 @@
         }
     };
 
-    crawlerFactory.$inject = ['$resource', '$http', '$location'];
+    crawlerFactory.$inject = ['$resource', '$http'];
     angular.module("pubApp").factory("CrawlerFac", crawlerFactory);
 }(angular));
