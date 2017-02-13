@@ -6,16 +6,22 @@
  */
 (function () {
     'use strict';
-    angular.module('pubApp').controller('navController', ['localStorageService','$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function (localStorageService,$location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
+    angular.module('pubApp').controller('navController', ['$window', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($window, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
 
-        $scope.$watch(function(){return CrawlerFac.getAuthenticated()}, function() {
+        $scope.$watch(function () {
+            return CrawlerFac.getAuthenticated()
+        }, function () {
             $scope.authenticated = CrawlerFac.getAuthenticated();
         });
 
         $scope.logout = function () {
-            localStorageService.set("authenticated",false);
+            localStorageService.set("authenticated", false);
+            CrawlerFac.setAuthenticated(false);
+            CrawlerFac.setCurrentUser(null);
+            localStorageService.set("token", false);
+            $http.defaults.headers.common.Authorization = null;
             $http.post('/logout', {}).success(function () {
-                CrawlerFac.setAuthenticated(false);
+                $window.location.reload();
                 $location.path("/");
             }).error(function (data) {
                 console.log(data)

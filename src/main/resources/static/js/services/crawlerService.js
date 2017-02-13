@@ -1,9 +1,9 @@
 (function (angular) {
-    var crawlerFactory = function ($resource, $http) {
+    var crawlerFactory = function ($rootScope,$resource, $http) {
 
         var currentUser = null;
 
-        var authenticated = false;
+        var authenticated = false;1
 
         var getCurrentUser = function () {
             return currentUser
@@ -24,25 +24,13 @@
         return {
             getAuthenticated: getAuthenticated,
             setAuthenticated: setAuthenticated,
-            setUser: function () {
-                $http({
-                    method: 'GET',
-                    url: __env.apiUrl + "/user",
-                }).then(function successCallback(response) {
-                    currentUser = response.data;
-                }, function errorCallback(response) {
-                    location.reload();
-                });
-            },
             getCurrentUser: getCurrentUser,
             setCurrentUser: setCurrentUser,
-            allCrawlers: $resource('/crawlers/', {}),
-            joinEvent: $resource('/crawlers/:userId/eventsList',
-                {},
-                {update: {method: 'PATCH', params: {userId: '@userId'}}})
+            allCrawlers: $resource('/crawlers/', {},{}),
+            joinEvent: $resource('/crawlers/:userId/eventsList',{},{update: {method: 'PATCH', params: {userId: '@userId'}}})
         }
     };
 
-    crawlerFactory.$inject = ['$resource', '$http'];
+    crawlerFactory.$inject = ['$rootScope','$resource', '$http'];
     angular.module("pubApp").factory("CrawlerFac", crawlerFactory);
 }(angular));

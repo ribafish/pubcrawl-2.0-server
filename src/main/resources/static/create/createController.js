@@ -8,6 +8,10 @@
         .controller('createController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page2';
 
+            if(CrawlerFac.getAuthenticated()==false){
+                $location.path("/");
+            }
+
             /*Diverse Helpers to get things going*/
 
             $(document).ready(function () {
@@ -33,7 +37,8 @@
                 description: null,
                 tracked: false,
                 timeslotList: [],
-                eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href
+                eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href,
+                //pubsList:["https://localhost:8443/pubs/4","https://localhost:8443/pubs/5"]
             };
 
             $scope.openPubs = [];

@@ -8,6 +8,9 @@
         .controller('registerController', ['$timeout','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($timeout,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page3';
 
+            if(CrawlerFac.getAuthenticated()==false){
+                $location.path("/");
+            }
             /*Diverse Helpers to get things going*/
 
             $scope.$on('mapInitialized', function (event, map) {

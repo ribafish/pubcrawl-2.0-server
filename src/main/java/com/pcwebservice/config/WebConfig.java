@@ -35,6 +35,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/event",
                 "/register",
                 "/login",
+                /*"/login/login.html",*/
                 "/rethink"
         })
         public String index() {

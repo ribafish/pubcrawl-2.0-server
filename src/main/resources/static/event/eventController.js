@@ -7,6 +7,11 @@
     angular.module('pubApp')
         .controller('eventController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
 
+
+            if(CrawlerFac.getAuthenticated()==false){
+                $location.path("/");
+            }
+
             $scope.event = [];
             $scope.wayPoints = [];
 
@@ -83,6 +88,7 @@
             };
 
             $scope.enterPubcrawl = function () {
+                console.log(CrawlerFac.getCurrentUser());
                 $http({
                     method: 'PATCH',
                     url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),

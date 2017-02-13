@@ -5,9 +5,16 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('loginController', ['CrawlerFac','localStorageService', function (CrawlerFac,localStorageService) {
+        .controller('loginController', ['CrawlerFac','localStorageService','$http', function (CrawlerFac,localStorageService,$http) {
+            $http({
+                method: 'GET',
+                url: __env.apiUrl + "/user",
+            }).then(function successCallback(response) {
+               console.log(response)
+            }, function errorCallback(response) {
+                location.reload();
+            });
             localStorageService.set("authenticated", true);
-            CrawlerFac.setUser();
         }])
 })();
 

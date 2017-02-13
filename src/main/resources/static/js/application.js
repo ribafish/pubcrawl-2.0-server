@@ -41,7 +41,7 @@ pubApp.config(['$httpProvider', '$routeProvider', '$locationProvider', 'localSto
     $locationProvider.html5Mode(true);
 }]);
 
-pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $location, CrawlerFac) {
+/*pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $location, CrawlerFac) {
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
 
         if (!CrawlerFac.getAuthenticated()) {
@@ -52,7 +52,7 @@ pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $loca
             $location.path('/');
         }
     });
-}]);
+}]);*/
 
 // Register environment in AngularJS as constant
 pubApp.constant('__env', env);

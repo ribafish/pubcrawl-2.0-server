@@ -2,7 +2,7 @@
  * Created by Leo on 07.12.2016.
  */
 (function (angular) {
-    var eventFactory = function ($resource, $http) {
+    var eventFactory = function ($resource, $http, $rootScope) {
 
         var currentEvent = null;
 
@@ -31,15 +31,11 @@
             getCurrentEvent: getCurrentEvent,
             setCurrentEvent: setCurrentEvent,
             allEvents: $resource('/events/', {}),
-            getPubsList : $resource('/events/:eventId/pubsList',
-                {},
-                { get: { method: 'GET', params: {eventId: '@eventId'}}}),
-            getParticipantsList : $resource('/events/:eventId/participantsList',
-                {},
-                { get: { method: 'GET', params: {eventId: '@eventId'}}})
+            getPubsList : $resource('/events/:eventId/pubsList',{},{ get: { method: 'GET',params: {eventId: '@eventId'}}}),
+            getParticipantsList : $resource('/events/:eventId/participantsList',{},{ get: { method: 'GET' ,params: {eventId: '@eventId'}}})
         }
     };
 
-    eventFactory.$inject = ['$resource', '$http'];
+    eventFactory.$inject = ['$resource', '$http','$rootScope'];
     angular.module("pubApp").factory("EventFac", eventFactory);
 }(angular));

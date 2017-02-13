@@ -285,7 +285,7 @@ function createRoomEvent(event) {
   // Prepare the chat
   let name = createRoomModal.find('.input-name').val();
   participants.push({email: "leolileoo@gmail.com", domain: "google.com/stub/8450"});
-
+  participants.push({email: "tupubcrawl@gmail.com", domain: "google.com/stub/8450"});
 
   console.log(serializedObject);
 
@@ -310,7 +310,7 @@ function createRoomEvent(event) {
 
 function prepareChat(chatGroup) {
   console.log('Chat Group Controller: ', chatGroup);
- console.log("PREPARE CHAt WAS CALLLED")
+
   chatGroup.onMessage(function(message) {
     console.info('new message recived: ', message);
     processMessage(message);
@@ -328,6 +328,7 @@ function prepareChat(chatGroup) {
 }
 
 function chatManagerReady(chatGroup) {
+
 
   let chatSection = $('.chat-section');
   let addParticipantModal = $('.add-participant');

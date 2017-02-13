@@ -6,8 +6,6 @@
 
     angular.module('pubApp')
         .controller('rethinkController', ['CrawlerFac','localStorageService', function (CrawlerFac,localStorageService) {
-            localStorageService.set("authenticated", true);
-            CrawlerFac.setUser();
         }])
 })();
 
