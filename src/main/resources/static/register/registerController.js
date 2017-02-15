@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('registerController', ['$timeout','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($timeout,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
+        .controller('registerController', ['$location','$timeout','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location,$timeout,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page3';
 
             if(CrawlerFac.getAuthenticated()==false){

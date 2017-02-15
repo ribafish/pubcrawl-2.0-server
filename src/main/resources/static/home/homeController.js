@@ -4,11 +4,11 @@
 (function () {
     'use strict';
 })();
-angular.module('pubApp').controller('homeController', ['$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
+angular.module('pubApp').controller('homeController', ['$window','$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($window,$timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
     $scope.currentNavItem = 'page1';
     $scope.allEvent = [];
 
-    if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == true) {
+    if (localStorageService.get("authenticated") == true) {
         EventFac.allEvents.get().$promise.then(function (data) {
             $scope.allEvent = data._embedded.events;
         });

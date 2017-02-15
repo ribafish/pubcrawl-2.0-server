@@ -27,6 +27,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     /**
      * Maps all AngularJS routes to index so that they work with direct linking.
      */
+
+
     @Controller
     static class Routes {
 
@@ -35,16 +37,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 "/event",
                 "/register",
                 "/login",
-                "/googleRedirect",
                 "/rethink"
         })
-      /*  public ModelAndView redirection(ModelMap model, @ModelAttribute("Principal") Principal Principal) {
-            model.addAttribute("Principal", Principal);
-            return new ModelAndView("forward:/index.html", model);
-        }*/
         public String index() {
             return "forward:/index.html";
         }
     }
-
 }

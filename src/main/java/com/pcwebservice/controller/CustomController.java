@@ -21,7 +21,6 @@ public class CustomController {
 
     @RequestMapping("/user")
     public Principal user(Principal principal) {
-        System.out.println(principal.toString());
         return principal;
     }
 
@@ -30,9 +29,9 @@ public class CustomController {
         return crawlerRepository.findTitleById(1L);
     }
 
-/*
-    @RequestMapping("/token")
-    public String token() throws IOException {
+
+ /*   @RequestMapping("/googleRedirect")
+    public String token(@RequestParam String code) throws IOException {
         GoogleTokenResponse tokenResponse =
                 new GoogleAuthorizationCodeTokenRequest(
                         new NetHttpTransport(),
@@ -40,10 +39,8 @@ public class CustomController {
                         "https://www.googleapis.com/oauth2/v4/token",
                         "649804390923-7mov7q7g42kbod1do8ikvhtgdu0m58ai.apps.googleusercontent.com",
                         "3zRUO4fOIBwLlIU8VntClGB6",
-                        "4/bDmdrbyR1uxhvRoDnNQEdgjVCYkCkKDYlxxQcuIHb1Q",
-                        "https://developers.google.com/oauthplayground")  // Specify the same redirect URI that you use with your web
-                        // app. If you don't have a web version of your app, you can
-                        // specify an empty string.
+                        code,
+                        "https://localhost:8443/googleRedirect")
                         .execute();
 
         String accessToken = tokenResponse.getAccessToken();
@@ -52,13 +49,6 @@ public class CustomController {
         // Use access token to call API
         GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
         System.out.println(credential.toString());
-        */
-/*Drive drive =
-                new Drive.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
-                        .setApplicationName("Auth Code Exchange Demo")
-                        .build();
-        File file = drive.files().get("appfolder").execute();*//*
-
 
         // Get profile info from ID token
         GoogleIdToken idToken = tokenResponse.parseIdToken();
@@ -73,8 +63,7 @@ public class CustomController {
         String familyName = (String) payload.get("family_name");
         String givenName = (String) payload.get("given_name");
         return userId;
-    }
-*/
+    }*/
 
 
 

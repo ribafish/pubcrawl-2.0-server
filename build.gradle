@@ -39,7 +39,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-web-services')
     compile('org.springframework.data:spring-data-rest-hal-browser')
     // https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2
-    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.0.7.RELEASE'
+    compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.0.12.RELEASE'
     compile 'com.google.apis:google-api-services-oauth2:v1-rev129-1.22.0'
     runtime('org.postgresql:postgresql')
 

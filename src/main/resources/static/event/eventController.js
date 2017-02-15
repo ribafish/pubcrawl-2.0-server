@@ -5,7 +5,7 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('eventController', ['$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
+        .controller('eventController', ['$location','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($location,$scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
 
 
             if(CrawlerFac.getAuthenticated()==false){
