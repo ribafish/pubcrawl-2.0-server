@@ -3,7 +3,7 @@
 
         var currentUser = null;
 
-        var authenticated = false;1
+        var authenticated = false;
 
         var getCurrentUser = function () {
             return currentUser

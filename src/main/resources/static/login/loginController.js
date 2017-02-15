@@ -8,7 +8,7 @@
         .controller('loginController', ['CrawlerFac','localStorageService','$http', function (CrawlerFac,localStorageService,$http) {
             $http({
                 method: 'GET',
-                url: __env.apiUrl + "/user",
+                url: __env.apiUrl + "/callGoogle",
             }).then(function successCallback(response) {
                console.log(response)
             }, function errorCallback(response) {

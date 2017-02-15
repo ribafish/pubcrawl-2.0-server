@@ -21,6 +21,7 @@ public class CustomController {
 
     @RequestMapping("/user")
     public Principal user(Principal principal) {
+        System.out.println(principal.toString());
         return principal;
     }
 

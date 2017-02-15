@@ -8,18 +8,21 @@ angular.module('pubApp').controller('homeController', ['$timeout', 'localStorage
     $scope.currentNavItem = 'page1';
     $scope.allEvent = [];
 
-    EventFac.allEvents.get().$promise.then(function (data) {
-        $scope.allEvent = data._embedded.events;
-    });
+    if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == true) {
+        EventFac.allEvents.get().$promise.then(function (data) {
+            $scope.allEvent = data._embedded.events;
+        });
+    }
 
-    if (localStorageService.get("authenticated")==true && CrawlerFac.getAuthenticated()==false) {
+
+    if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
             method: 'GET',
-            url: __env.apiUrl + "/user"
+            url: __env.apiUrl + "user"
         }).then(function successCallback(response) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.details.tokenValue;
             CrawlerFac.setCurrentUser(response.data.userAuthentication);
-            localStorageService.set("token",true);
+            localStorageService.set("token", true);
         }, function errorCallback(response) {
             location.reload();
         });
@@ -28,7 +31,7 @@ angular.module('pubApp').controller('homeController', ['$timeout', 'localStorage
     $scope.$watch(function () {
         return localStorageService.get("token");
     }, function () {
-        if(localStorageService.get("token")==true && CrawlerFac.getAuthenticated()==false) {
+        if (localStorageService.get("token") == true && CrawlerFac.getAuthenticated() == false) {
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 var openCrawlers = data._embedded.crawlers;
                 var user = CrawlerFac.getCurrentUser();
