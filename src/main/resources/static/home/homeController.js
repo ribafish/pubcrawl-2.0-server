@@ -18,13 +18,13 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
     if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
             method: 'GET',
-            url: __env.apiUrl + "user"
+            url: __env.apiUrl + "/user"
         }).then(function successCallback(response) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.details.tokenValue;
             CrawlerFac.setCurrentUser(response.data.userAuthentication);
             localStorageService.set("token", true);
         }, function errorCallback(response) {
-            location.reload();
+           console.log(response)
         });
     }
 
