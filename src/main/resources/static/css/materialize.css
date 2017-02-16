@@ -4009,7 +4009,7 @@ input[type=range] + .thumb {
 
 nav {
   color: #fff;
-  background-color: #ee6e73;
+  background-color: rgba(255, 177, 18, 0.8);
   width: 100%;
   height: 56px;
   line-height: 56px;
@@ -4245,7 +4245,7 @@ a {
 
 html {
   line-height: 1.5;
-  font-family: "Roboto", sans-serif;
+  font-family: "Calibri Light", sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87);
 }
@@ -4954,7 +4954,7 @@ small {
 .btn, .btn-large {
   text-decoration: none;
   color: #fff;
-  background-color: #26a69a;
+  background-color: rgb(135, 135, 135);
   text-align: center;
   letter-spacing: .5px;
   transition: .2s ease-out;
@@ -4962,7 +4962,7 @@ small {
 }
 
 .btn:hover, .btn-large:hover {
-  background-color: #2bbbad;
+  background-color: #adadad;
 }
 
 .btn-floating {

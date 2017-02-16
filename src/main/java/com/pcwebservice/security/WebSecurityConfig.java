@@ -16,7 +16,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/nav/**", "/config/**","/","/login/**","/bower_components/**", "/js/**", "/home/**", "/rethink/**","/index.html","/user").permitAll()
+                .antMatchers("/nav/**", "/config/**","/css/**","/login/**","/bower_components/**", "/js/**", "/home/**", "/rethink/**","/index.html","/user").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterAfter(new ApiTokenAccessFilter(tokenServices), AbstractPreAuthenticatedProcessingFilter.class);
         http.logout().logoutSuccessUrl("/").permitAll()

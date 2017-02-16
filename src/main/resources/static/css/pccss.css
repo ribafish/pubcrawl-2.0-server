@@ -1,5 +1,7 @@
 html, body {
     height: 100%;
+    background-color: #f8e7c3;
+    /*background-image: url("images/beer.jpg");*/
 }
 
 #right {
@@ -41,4 +43,13 @@ footer.page-footer {
 .material-icons.pubicon {
     display: inline-block;
     width: 15px;
+}
+
+.card.sticky-action {
+    margin-right: 2px;
+    padding: 0;
+}
+
+.nav{
+    background-color: rgba(255, 177, 18, 0.8);
 }
