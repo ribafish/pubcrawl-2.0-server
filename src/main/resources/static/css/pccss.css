@@ -20,8 +20,6 @@ footer.page-footer {
 }
 
 #eventList {
-    height: 325px;
-    overflow-y: auto;
     margin-top: 0px;
     box-shadow: none !important;
     border: none !important

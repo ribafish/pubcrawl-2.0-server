@@ -2919,7 +2919,7 @@ thead {
 
 td, th {
   padding: 15px 5px;
-  display: table-cell;
+  display: inline-flex;
   text-align: left;
   vertical-align: middle;
   border-radius: 2px;
@@ -5448,8 +5448,6 @@ button.btn-floating {
   min-height: 3rem;
   line-height: 3rem;
   padding: 0 1rem;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
 }
 
 .collapsible-header i {

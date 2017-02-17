@@ -27,8 +27,8 @@ public class Crawler implements Serializable {
     private String userName;
 
     /*@NotNull*/
-    @Column(name = "profile")
-    private String profile;
+    @Column(name = "profileID")
+    private String profileID;
 
     @Column(name = "userImage")
     private String userImage;
@@ -53,9 +53,9 @@ public class Crawler implements Serializable {
     protected Crawler() {
     }
 
-    public Crawler(String userName, String profile, String userImage) {
+    public Crawler(String userName, String profileID, String userImage) {
         this.userName = userName;
-        this.profile = profile;
+        this.profileID = profileID;
         this.userImage = userImage;
     }
 
@@ -64,7 +64,7 @@ public class Crawler implements Serializable {
         return "Crawler{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
-                ", profile='" + profile + '\'' +
+                ", profileID='" + profileID + '\'' +
                 '}';
     }
 
@@ -86,12 +86,12 @@ public class Crawler implements Serializable {
         this.userName = userName;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getProfileID() {
+        return profileID;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setProfileID(String profileID) {
+        this.profileID = profileID;
     }
 
     public List<Crawler> getFriendsList() {

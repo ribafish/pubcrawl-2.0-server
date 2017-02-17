@@ -5,7 +5,64 @@
     <!--{{event.timeslotList}}-->
     <!--{{pubs}}-->
     <div class="row">
-        <div class="col s7 m7 l7" style="height: 100%" id="addPubs">
+        <div class="col s6 m6 l6">
+            <label><h5>Timetable</h5></label>
+            <label ng-if="pubs.length==0"><h6>None yet, is this still a Pubcrawl?</h6></label>
+            <ol ng-if="pubs.length!=0" id="eventList" class="collapsible"
+                data-collapsible="accordion">
+                <li type="A" ng-repeat="pub in pubs" class="">
+                    <div class="collapsible-header">
+                        <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
+                             data-err-src="images/png/avatar.png"/>
+                        <p><h5>{{pub.pubName}}</h5>
+                        <h6 ng-if="event.timeslotList[$index].startingTime!=event.timeslotList[$index].endingTime">
+                            {{event.timeslotList[$index].startingTime
+                            | date:'shortTime'}} - {{event.timeslotList[$index].endingTime | date:'shortTime'}}
+                        </h6></p>
+                    </div>
+                    <div class="collapsible-body">
+                        <table style="margin: 5px; width:50%;">
+                            <tr>
+                                <td id="tableD"><i class="material-icons">info</i></td>
+                                <td id="tableD">{{pub.description}}</td>
+                            </tr>
+                            <tr>
+                                <td id="tableD"><i class="material-icons">euro_symbol</i></td>
+                                <td id="tableD">{{pub.prices}}</td>
+                            </tr>
+                            <tr>
+                                <td id="tableD"><i class="material-icons">favorite</i></td>
+                                <td id="tableD">{{pubs.rating}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </li>
+            </ol>
+        </div>
+        <div class="col s6 m6 l6">
+            <div class="content" style="text-align: right">
+                <label><h5>Participants</h5></label>
+                <label ng-if="participants.length==0"><h6>None yet, be the first!</h6></label>
+                <ul ng-if="participants.length!=0" id="eventList" class="collapsible"
+                    data-collapsible="accordion">
+                    <li ng-repeat="person in participants">
+                        <div class="collapsible-header">
+                            <table>
+                                <tr>
+                                    <td><img class="circle" style="height:30px;" ng-src="{{person.userImage}}"
+                                                         err-src="images/png/avatar.png"/></td>
+                                    <td>{{person.userName}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="collapsible-body"><p><a href="{{person.profile}}">My Google page</a></p></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12" style="height: 100%" id="addPubs">
             <ng-map id="map" zoom="13" center="current-position" style="height:400px">
                 <directions
                         draggable="false"
@@ -21,41 +78,6 @@
                                         on-click="showInfoWindow(event,mark)"></marker>-->
             </ng-map>
         </div>
-        <div class="col s5 m5 l5">
-            <div class="content">
-                <label><h5>Timetable</h5></label>
-                <label ng-if="pubs.length==0"><h6>None yet, is this still a Pubcrawl?</h6></label>
-                <ol ng-if="pubs.length!=0" id="eventList" class="collapsible"
-                    data-collapsible="accordion">
-                    <li type="A" ng-repeat="pub in pubs" class="">
-                        <div class="collapsible-header">
-                            <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
-                                 data-err-src="images/png/avatar.png"/>
-                            <strong ng-if="event.timeslotList[$index].startingTime!=event.timeslotList[$index].endingTime">{{event.timeslotList[$index].startingTime
-                                | date:'shortTime'}} - {{event.timeslotList[$index].endingTime | date:'shortTime'}}
-                                in</strong>
-                            <br>{{pub.pubName}}
-                        </div>
-                        <div class="collapsible-body">
-                            <table style="margin: 5px; width:50%;">
-                                <tr>
-                                    <td id="tableD"><i class="material-icons">info</i></td>
-                                    <td id="tableD">{{pub.description}}</td>
-                                </tr>
-                                <tr>
-                                    <td id="tableD"><i class="material-icons">euro_symbol</i></td>
-                                    <td id="tableD">{{pub.prices}}</td>
-                                </tr>
-                                <tr>
-                                    <td id="tableD"><i class="material-icons">favorite</i></td>
-                                    <td id="tableD">{{pubs.rating}}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </li>
-                </ol>
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col s6 m6 l6">
@@ -70,23 +92,6 @@
                     <label><h5>Description</h5></label>
                     <p><h6>{{event.description}}</h6></p>
                 </div>
-            </div>
-        </div>
-        <div class="col s6 m6 l6">
-            <div class="content">
-                <label><h5>Participants</h5></label>
-                <label ng-if="participants.length==0"><h6>None yet, be the first!</h6></label>
-                <ul ng-if="participants.length!=0" id="eventList" class="collapsible"
-                    data-collapsible="accordion">
-                    <li ng-repeat="person in participants">
-                        <div class="collapsible-header">
-                            <img class="circle" style="height:30px;" ng-src="{{person.userImage}}"
-                                 err-src="images/png/avatar.png"/>
-                            {{person.userName}}
-                        </div>
-                        <div class="collapsible-body"><p><a href="{{person.profile}}">My Google page</a></p></div>
-                    </li>
-                </ul>
             </div>
         </div>
         <div ng-if="!owner" class="col s12 m12 l12">

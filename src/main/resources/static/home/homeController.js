@@ -36,18 +36,19 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
                 var openCrawlers = data._embedded.crawlers;
                 var user = CrawlerFac.getCurrentUser();
                 for (var i = 0; i < openCrawlers.length; i++) {
-                    if (user.details.profile === openCrawlers[i].profile) {
+                    if (user.details.id === openCrawlers[i].profileID) {
                         CrawlerFac.setCurrentUser(openCrawlers[i]);
                         CrawlerFac.setAuthenticated(true);
                         Materialize.toast('Welcome back ' + openCrawlers[i].userName + '!!', 1000);
+                        return;
                     } else if (i === openCrawlers.length - 1) {
                         var crawlerToSave = {
-                            userName: user.name,
-                            profile: user.details.profile,
+                            userName: user.details.name,
+                            profileID: user.details.id,
                             userImage: user.details.picture
                         };
                         CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
-                            Materialize.toast('Welcome to Pubcrawl2.0' + user.name + '!!', 1000);
+                            Materialize.toast('Welcome to Pubcrawl2.0 ' + user.details.name + '!!', 1000);
                             CrawlerFac.setAuthenticated(true);
                         });
                         CrawlerFac.setCurrentUser(crawlerToSave);
@@ -55,12 +56,12 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
                 }
                 if (openCrawlers.length === 0) {
                     var crawlerToSave = {
-                        userName: user.name,
-                        profile: user.details.profile,
+                        userName: user.details.name,
+                        profileID: user.details.id,
                         userImage: user.details.picture
                     };
                     CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
-                        Materialize.toast('Welcome to Pubcrawl2.0' + user.name + '!!', 1000);
+                        Materialize.toast('Welcome to Pubcrawl2.0 ' + user.details.name + '!!', 1000);
                         CrawlerFac.setAuthenticated(true);
                     });
                     CrawlerFac.setCurrentUser(crawlerToSave);
@@ -83,8 +84,6 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
             }
         });
     };
-
-    $scope.credentials = {};
 
     /*        $http({
      method: 'GET',
