@@ -5,6 +5,6 @@
     window.__env = window.__env || {};
 
     // API url
-    window.__env.apiUrl = 'https://localhost:8443/';
+    window.__env.apiUrl = 'https://localhost:8443';
 
 }(this));

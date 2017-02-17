@@ -108,6 +108,7 @@
 
                 $(document).ready(function () {
                     $('.collapsible').collapsible();
+                    $('.chips').material_chip();
                 });
 
                 var toLocal = function (key, value) {

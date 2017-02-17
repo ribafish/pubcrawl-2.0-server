@@ -8,6 +8,11 @@
     'use strict';
     angular.module('pubApp').controller('navController', ['$window', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($window, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
 
+        $(document).ready(function () {
+            $(".button-collapse").sideNav();
+        });
+
+
         $scope.$watch(function () {
             return CrawlerFac.getAuthenticated()
         }, function () {

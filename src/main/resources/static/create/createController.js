@@ -8,7 +8,7 @@
         .controller('createController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page2';
 
-            if(CrawlerFac.getAuthenticated()==false){
+            if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
 
@@ -21,7 +21,7 @@
 
             window.picker = $('.datepicker').pickadate({
                 selectYears: 16,
-                format: 'yyyy-mm-dd'
+                format: 'dd.mm.yyyy'
             });
 
             $scope.$on('mapInitialized', function (event, map) {
@@ -38,8 +38,9 @@
                 tracked: false,
                 timeslotList: [],
                 eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href,
-                //pubsList:["https://localhost:8443/pubs/4","https://localhost:8443/pubs/5"]
             };
+
+            $scope.picture = null;
 
             $scope.openPubs = [];
             $scope.usedPubs = [];
@@ -103,6 +104,20 @@
 
             };
 
+            $scope.upPic = function () {
+                $scope.event.eventImage =
+                    console.log($scope.event.eventImage)
+                /*    $http({
+                 method: 'POST',
+                 url: __env.apiUrl + 'image/crawler/1',
+                 data: $scope.image.base64
+                 }).then(function successCallback(response) {
+                 console.log(response);
+                 }, function errorCallback(response) {
+                 console.log("Help");
+                 });*/
+            };
+
             $scope.uploadPub = function () {
                 $scope.usedPubs.reduce(function (p, currentValue) {
                     $scope.event.timeslotList.push({
@@ -144,13 +159,18 @@
 
 
             $scope.saveEvent = function () {
-                $scope.event.date = new Date($('.datepicker').val()).getTime();
+                var dateParts = $('.datepicker').val().split(".");
+                $scope.event.date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]).getTime();
+                if ($scope.picture != null) {
+                    $scope.event.eventImage = $scope.picture.base64;
+                }
                 Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
                     //console.log($scope.event._links.self.href);
                 });
             };
+
 
 
             /*Helper Methods*/

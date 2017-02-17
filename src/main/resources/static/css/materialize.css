@@ -2919,7 +2919,6 @@ thead {
 
 td, th {
   padding: 15px 5px;
-  display: inline-flex;
   text-align: left;
   vertical-align: middle;
   border-radius: 2px;
@@ -3070,7 +3069,7 @@ td, th {
 .collection a.collection-item {
   display: block;
   transition: .25s;
-  color: #26a69a;
+  color: #000000;
 }
 
 .collection a.collection-item:not(.active):hover {
@@ -3093,7 +3092,7 @@ td, th {
 
 .secondary-content {
   float: right;
-  color: #26a69a;
+  color: #c53636;
 }
 
 .collapsible .collection {
@@ -4061,9 +4060,7 @@ nav .button-collapse i {
 }
 
 nav .brand-logo {
-  position: absolute;
   color: #fff;
-  display: inline-block;
   font-size: 2.1rem;
   padding: 0;
   white-space: nowrap;
@@ -4598,6 +4595,7 @@ small {
   top: 0;
   bottom: 0;
   width: 100%;
+  height: 12rem;
 }
 
 .card .card-image .card-title {
@@ -5537,7 +5535,7 @@ button.btn-floating {
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
-  background-color: #e4e4e4;
+  background-color: #eaeaea;
   margin-bottom: 5px;
   margin-right: 5px;
 }
@@ -5794,8 +5792,8 @@ input[type=tel]:focus:not([readonly]),
 input[type=number]:focus:not([readonly]),
 input[type=search]:focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-  border-bottom: 1px solid #26a69a;
-  box-shadow: 0 1px 0 0 #26a69a;
+  border-bottom: 1px solid rgba(255, 177, 18, 0.8);
+  box-shadow: 0 1px 0 0 rgba(255, 177, 18, 0.8);
 }
 
 input:not([type]):focus:not([readonly]) + label,
@@ -5811,7 +5809,7 @@ input[type=tel]:focus:not([readonly]) + label,
 input[type=number]:focus:not([readonly]) + label,
 input[type=search]:focus:not([readonly]) + label,
 textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #26a69a;
+  color: rgba(255, 177, 18, 0.8);
 }
 
 input:not([type]).valid, input:not([type]):focus.valid,
@@ -8280,7 +8278,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 .picker__date-display {
   text-align: center;
-  background-color: #26a69a;
+  background-color: rgba(255, 177, 18, 0.8);
   color: #fff;
   padding-bottom: 15px;
   font-weight: 300;
@@ -8294,7 +8292,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .picker__weekday-display {
-  background-color: #1f897f;
+  background-color: #ffd488;
   padding: 10px;
   font-weight: 200;
   letter-spacing: .5;
@@ -8343,7 +8341,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .picker__day.picker__day--today {
-  color: #26a69a;
+  color: #ff8a39;
 }
 
 .picker__day.picker__day--today.picker__day--selected {
@@ -8360,7 +8358,7 @@ input[type=range]:focus::-ms-fill-upper {
   border-radius: 50%;
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-  background-color: #26a69a;
+  background-color: #ff8a39;
   color: #ffffff;
 }
 
@@ -8378,7 +8376,7 @@ input[type=range]:focus::-ms-fill-upper {
 .picker__close, .picker__today {
   font-size: 1.1rem;
   padding: 0 1rem;
-  color: #26a69a;
+  color: #000000;
 }
 
 .picker__nav--prev:before,

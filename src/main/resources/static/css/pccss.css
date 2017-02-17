@@ -15,6 +15,10 @@ html, body {
     height: 300px;
 }
 
+.participant-table {
+    display: inline-flex;
+}
+
 footer.page-footer {
     margin-top: 0px;
 }
@@ -37,17 +41,50 @@ footer.page-footer {
     background-color: #00b0ff;
 }
 
-
 .material-icons.pubicon {
     display: inline-block;
     width: 15px;
 }
 
 .card.sticky-action {
-    margin-right: 2px;
+    border: 1px solid wheat;
     padding: 0;
 }
 
-.nav{
+.create {
     background-color: rgba(255, 177, 18, 0.8);
+}
+
+.create .btn:hover, .btn-large:hover {
+    background-color: rgb(0, 160, 70);
+}
+
+.nav {
+    background-color: rgba(255, 177, 18, 0.8);
+}
+
+.pubslist {
+    background-color: #eaeaea;
+}
+
+.collection-item.pubslist {
+    background-color: #f7f7f7;
+}
+
+.collection-item.avatar.pubslistitem {
+    border: 1px solid #e0e0e0;
+    background-color: #f7f7f7;
+}
+
+.getbordered {
+    border: 1px solid #bdbdbd
+}
+
+.section.ower {
+    padding-left: 50px;
+    padding-top: 40px;
+}
+
+.row.container.ower {
+    padding-top: 30px;
 }

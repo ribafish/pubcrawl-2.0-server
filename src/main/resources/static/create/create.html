@@ -1,40 +1,52 @@
-<div class="parallax-container">
-    <div class="parallax"><img src="images/lights.jpg"></div>
-</div>
 <div class="content">
-    <div class="section white" style="padding-left: 50px">
+    <div class="section ower">
         <h5>Add Details</h5>
-        <div class="row container">
-            <div class="row">
-                <form class="col s12" id="createEvent">
-                    <div class="row">
-                        <div class="input-field col s6 m6 l6">
-                            <input id="eventName" type="text" class="validate" ng-model="event.eventName">
-                            <label for="eventName">PubCrawl Name</label>
-                        </div>
-                        <div class="input-field col s3 m3 l3">
-                            <input type="text" class="datepicker">
-                        </div>
-                        <div class="input-field col s3 m3 l3">
-                            <input type="checkbox" class="filled-in" id="tracker" ng-model="event.tracked"/>
-                            <label for="tracker">Should your PubCrawl be trackable?</label>
+        <div class="row container ower">
+            <form class="col s12" id="createEvent">
+                <div class="row">
+                    <div class="col offset-l4 offset-m4 offset-s4 s4 m4 l4">
+                        <img style="height: 150px" ng-if="picture!=null" data-ng-src="data:image/jpeg;base64,{{picture.base64}}"
+                             data-err-src="/images/lights.jpg"/>
+                        <img style="height: 150px" ng-if="picture==null" src="/images/lights.jpg">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col offset-l3 offset-m3 offset-s3  s4 m4 l4">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>File</span>
+                                <input type="file" ng-model='picture' base-sixty-four-input>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="pictuuure" placeholder="Select a Picture" class="file-path" type="text">
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
+                </div>
+                <div class="row">
+                    <div class="input-field col s6 m6 l6">
+                        <input id="eventName" type="text" ng-model="event.eventName">
+                        <label for="eventName">PubCrawl Name</label>
+                    </div>
+                    <div class="input-field col offset-l3 offset-m3 offset-s3 s3 m3 l3">
+                        <input id="eventdate" type="text" class="datepicker">
+                        <label for="eventdate">Pick a date</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 m12 l12">
                             <textarea id="descriptor" class="materialize-textarea"
                                       ng-model="event.description"></textarea>
-                            <label for="descriptor">Description</label>
-                        </div>
+                        <label for="descriptor">Description</label>
                     </div>
-                    <div class="row">
-                        <div class="col s12 m12 l12">
-                            <a class="waves-effect waves-light btn-large" ng-click="saveEvent()">Create
-                                Event</a>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m12 l12">
+                        <a class="create waves-effect waves-light btn-large right" ng-click="saveEvent()">Create
+                            Event</a>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -42,12 +54,12 @@
     <div class="parallax"><img src="images/lights2.jpg"></div>
 </div>
 <div class="content">
-    <div class="section white" style="padding-left: 50px">
+    <div class="section ower">
         <h5>Select your Pubs</h5>
-        <div class="row container">
+        <div class="row container ower">
             <div class="row">
                 <div class="col s12 m8 l8" style="height: 100%" id="addPubs">
-                    <ng-map id="map" zoom="13" center="current-position" style="height:400px">
+                    <ng-map class="getbordered" id="map" zoom="13" center="current-position" style="height:400px">
                         <directions
                                 draggable="false"
                                 panel="directions-panel"
@@ -65,10 +77,10 @@
                         {{map.directionsRenderers[0].directions.routes[0].overview_path.length}}-->
                 </div>
 
-                <div class="col s12 m4 l4">
+                <div class="getbordered pubslist col s12 m4 l4">
                     <input placeholder="Search" type="text" class="validate" ng-model="searchText">
-                    <div class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
-                        <a href="" class="collection-item" ng-repeat="pub in openPubs | filter:searchText"
+                    <div class="getbordered collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
+                        <a href="" class="collection-item pubslist" ng-repeat="pub in openPubs | filter:searchText"
                            ng-click="deleteFromOpens(pub)">{{pub.pubName}}
                         </a>
                     </div>
@@ -77,9 +89,11 @@
             </div>
             <div class="row">
                 <div class="col s12 m12 l12">
-                    <ul class="collection">
-                        <li class="collection-item avatar" ng-repeat="pubs in usedPubs"
-                            style="margin-bottom: -15px">
+                    <ul class="getbordered collection">
+                        <li class="collection-item pubslistitem">
+                            Selected Pubs:
+                        </li>
+                        <li class="collection-item avatar pubslistitem" ng-repeat="pubs in usedPubs">
                             <img src="" alt="" class="circle">
                             <div class="row" style="margin-bottom: 0px">
                                 <div class="col s12 m5 l7">
@@ -88,13 +102,16 @@
                                 </div>
                                 <div class="col s5 m3 l2">
                                     <form name="timeForm" ng-controller="createController">
+                                        <label for="startingTime">Arriving around:</label>
                                         <input type="time" id="startingTime" name="input"
                                                ng-model="pubs.startingTime" min="00:00:00"
                                                max="23:59:59"/>
+
                                     </form>
                                 </div>
                                 <div class="col s5 m3 l2">
                                     <form name="timeForm" ng-controller="createController">
+                                        <label for="startingTime">Leaving around:</label>
                                         <input type="time" id="endingTime" name="input"
                                                ng-model="pubs.endingTime" min="00:00:00"
                                                max="23:59:59"/>
@@ -111,7 +128,7 @@
             </div>
             <div class="row">
                 <div class="col s12 m12 l12">
-                    <a class="waves-effect waves-light btn-large" ng-click="uploadPub()">Save Pubs</a>
+                    <a class="create waves-effect waves-light btn-large right" ng-click="uploadPub()">Save Pubs</a>
                 </div>
             </div>
         </div>
@@ -121,14 +138,14 @@
     <div class="parallax"><img src="images/lights.jpg"></div>
 </div>
 <div class="content">
-    <div class="section white" style="padding-left: 50px">
+    <div class="section ower">
         <h5>Invite People</h5>
-        <div class="row container">
+        <div class="row container ower">
             <div class="row">
-                <div class="col s5 m5 l5">
+                <div class="getbordered pubslist col s5 m5 l5">
                     <input placeholder="Search" type="text" class="validate" ng-model="searchText">
                     <div id="addUsers" class="collection"
-                         style="height: 325px; overflow-y: auto; margin-top: 0px">
+                         style="height: 310px; overflow-y: auto; margin-top: 0px">
                         <a href="" class="collection-item"
                            ng-repeat="crawler in openCrawlers | filter:searchText"
                            ng-click="addCrawler(crawler)">{{crawler.userName}}
@@ -137,24 +154,33 @@
                 </div>
                 <div class="col s1 m1 l1">
                 </div>
-                <div class="col s6 m6 l6" style="margin-top: 20px">
+                <div class="getbordered pubslist col s6 m6 l6">
                     <label class="header-panel"><h5>Participants</h5></label>
                     <ul class="collection" style="height: 325px; overflow-y: auto; margin-top: 0px">
-                        <li class="collection-item avatar" ng-repeat="crawler in usedCrawlers"
-                            style="margin-bottom: -15px">
-                            <img ng-src="{{crawler.userImage}}"
-                                 err-src="images/png/avatar.png" alt="" class="circle"/>
-                            <span class="title">{{crawler.userName}}</span>
-                            <p>{{crawler.description}}</p>
-                            <a href="" class="secondary-content" ng-click="delCrawler(crawler)"><i
-                                    class="material-icons">delete</i></a>
+                        <li class="collection-item pubslist" ng-repeat="crawler in usedCrawlers">
+                            <table>
+                                <tr>
+                                    <td class="participant-table">
+                                        <img style="height: 30px" class="circle" ng-src="{{crawler.userImage}}"
+                                             err-src="images/png/avatar.png"/>
+                                    </td>
+                                    <td class="participant-table">
+                                        {{crawler.userName}}
+                                    </td>
+                                    <td class="participant-table right">
+                                        <a href="" class="secondary-content" ng-click="delCrawler(crawler)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="row">
-                <div class="col offset-s8 offset-m9 offset-l10">
-                    <a class="waves-effect waves-light btn-large" ng-href="/" ng-click="uploadUser()">Send
+                <div class="col s12 m12 l12">
+                    <a class="create waves-effect waves-light btn-large right" ng-href="/" ng-click="uploadUser()">Send
                         Invitation</a>
                 </div>
             </div>
