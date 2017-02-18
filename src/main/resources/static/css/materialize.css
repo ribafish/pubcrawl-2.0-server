@@ -3001,10 +3001,11 @@ td, th {
 
 .collection {
   margin: 0.5rem 0 1rem 0;
-  border: 1px solid #e0e0e0;
+  border: 2px solid #c5c5c5;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
+
 }
 
 .collection .collection-item {
@@ -4266,7 +4267,7 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
+  /*font-weight: 400;*/
   line-height: 1.1;
 }
 
@@ -4471,7 +4472,7 @@ small {
   padding: 20px;
   margin: 0.5rem 0 1rem 0;
   border-radius: 2px;
-  background-color: #fff;
+  background-color: #f0f0f0;
 }
 
 .card {

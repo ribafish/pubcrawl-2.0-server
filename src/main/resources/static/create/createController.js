@@ -65,7 +65,7 @@
 
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 data._embedded.crawlers.forEach(function (crawler) {
-                    if (crawler.profile == CrawlerFac.getCurrentUser().profile) {
+                    if (crawler.profileID == CrawlerFac.getCurrentUser().profileID) {
                         $scope.addCrawler(crawler);
                     } else {
                         $scope.openCrawlers.push(crawler)

@@ -6,7 +6,8 @@
     <div class="row">
         <div class="card sticky-action col s6 m4 l3" ng-repeat="event in allEvent">
             <div class="card-image">
-                <img ng-if="event.eventImage!=null" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}" data-err-src="/images/lights.jpg"/>
+                <img ng-if="event.eventImage!=null" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
+                     data-err-src="/images/lights.jpg"/>
                 <img ng-if="event.eventImage==null" src="/images/lights.jpg">
             </div>
             <div class="card-content">

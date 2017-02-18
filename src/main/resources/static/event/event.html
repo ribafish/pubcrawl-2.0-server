@@ -1,60 +1,37 @@
-<div class="container">
+<div class="container" style="padding-top: 50px">
     <div class="row">
-        <div ng-if="event.eventImage!=null" class="col s4 m4 l4">
-            <img style="height: 300px" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"/>
+        <!--<div ng-if="event.eventImage!=null" class="col s4 m4 l4">
+            <img class="getbordered" style="height: 200px" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"/>
+        </div>-->
+        <div class="col s4 m4 l4">
+            <label><h5>Name</h5></label>
+            <h6>{{event.eventName}}</h6>
+            <label><h5>Date</h5></label>
+            <h6>{{event.date | date : 'dd.MM.yyyy'}}</h6>
         </div>
         <div class="col s8 m8 l8">
-            <h1>{{event.eventName}}</h1>
-            <h2>{{event.date | date : 'dd.MM.yyyy'}}</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s6 m6 l6">
-            <label><h5>Timetable</h5></label>
-            <label ng-if="pubs.length==0"><h6>None yet, is this still a Pubcrawl?</h6></label>
-            <ol ng-if="pubs.length!=0" id="eventList" class="collapsible"
-                data-collapsible="accordion">
-                <li type="A" ng-repeat="pub in pubs" class="">
-                    <div class="collapsible-header">
-                        <img class="circle" data-ng-src="data:image/jpeg;base64,{{pub.userImage}}"
-                             data-err-src="images/png/avatar.png"/>
-                        <p><h5>{{pub.pubName}}</h5>
-                        <h6 ng-if="event.timeslotList[$index].startingTime!=event.timeslotList[$index].endingTime">
-                            {{event.timeslotList[$index].startingTime
-                            | date:'shortTime'}} - {{event.timeslotList[$index].endingTime | date:'shortTime'}}
-                        </h6></p>
-                    </div>
-                    <div class="collapsible-body">
-                        <table style="margin: 5px; width:50%;">
-                            <tr>
-                                <td id="tableD"><i class="material-icons">info</i></td>
-                                <td id="tableD">{{pub.description}}</td>
-                            </tr>
-                            <tr>
-                                <td id="tableD"><i class="material-icons">euro_symbol</i></td>
-                                <td id="tableD">{{pub.prices}}</td>
-                            </tr>
-                            <tr>
-                                <td id="tableD"><i class="material-icons">favorite</i></td>
-                                <td id="tableD">{{pubs.rating}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </li>
-            </ol>
-        </div>
-
-
-
-        <div class="col s6 m6 l6">
             <div class="content" style="text-align: right">
                 <label><h5>Participants</h5></label>
                 <label ng-if="participants.length==0"><h6>None yet, be the first!</h6></label>
-                <div class="chip" ng-repeat="person in participants">
+                <div class="getbordered chip" ng-repeat="person in participants">
                     <img class="circle" style="height:30px;" ng-src="{{person.userImage}}"/>
                     {{person.userName}}
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <section id="timeline">
+                <article>
+                    <div class="inner" ng-repeat="pub in pubs">
+                        <h2 class="getbordered">{{pub.pubName}}</h2>
+                        <p>{{event.timeslotList[$index].startingTime
+                            | date:'shortTime'}} - {{event.timeslotList[$index].endingTime | date:'shortTime'}}
+                        </p>
+                    </div>
+                </article>
+            </section>
         </div>
     </div>
     <div class="row">
@@ -77,24 +54,24 @@
     </div>
     <div class="row">
         <div class="col s6 m6 l6">
-            <div class="row">
-                <div class="col l12 m12 s12">
-                    <label><h5>Eventowner</h5></label>
-                    <p><h6>{{event.eventOwner.userName}}</h6></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col l12 m12 s12">
-                    <label><h5>Description</h5></label>
-                    <p><h6>{{event.description}}</h6></p>
-                </div>
+            <label><h5>Description</h5></label>
+            <div class="card-panel">
+                <span class=".blue-grey-text.text-lighten-5">{{event.description}}</span>
             </div>
         </div>
-        <div ng-if="!owner" class="col s12 m12 l12">
-            <a ng-href="/" ng-click="enterPubcrawl()" class="waves-effect waves-light btn-large">Join Pubcrawl</a>
-        </div>
-        <div ng-if="owner" class="col s12 m12 l12">
-            <a ng-href="/" ng-click="leavePubcrawl()" class="waves-effect waves-light btn-large red">Leave Pubcrawl</a>
+        <div class="col s6 m6 l6" style="text-align: right">
+            <label><h5>Eventowner</h5></label>
+            <div class="getbordered chip">
+                <img class="circle" style="height:30px;" ng-src="{{event.eventOwner.userImage}}"/>
+                {{event.eventOwner.userName}}
+            </div>
         </div>
     </div>
+    <div ng-if="!owner" class="col s12 m12 l12">
+        <a ng-href="/" ng-click="enterPubcrawl()" class="waves-effect waves-light btn-large">Join Pubcrawl</a>
+    </div>
+    <div ng-if="owner" class="col s12 m12 l12">
+        <a ng-href="/" ng-click="leavePubcrawl()" class="waves-effect waves-light btn-large red">Leave Pubcrawl</a>
+    </div>
+</div>
 </div>
