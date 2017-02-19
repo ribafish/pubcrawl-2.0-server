@@ -28,32 +28,46 @@ public class PcwebserviceApplication extends WebSecurityConfig {
     public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
 		return (args) -> {
             // save a couple of customers
-            /*
-            repository.save(new Crawler("WebApplikation", "leolileoo@gmail.com","asdasdasdasd"));
+            Crawler dummy = new Crawler("Admin", "00000000000000000000000","http://www.knowmuhammad.org/img/noavatarn.png");
+            repository.save(dummy);
+            Pub d1 = new Pub("Molly Mallones", 52.525387, 13.385950);
+            d1.setPubOwner(dummy);
+            Pub d2 = new Pub("Harfe", 52.523546, 13.385199);
+            d2.setPubOwner(dummy);
+            Pub d3 = new Pub("Diagon Alley", 52.528282, 13.393073);
+            d3.setPubOwner(dummy);
+            Pub d4 = new Pub("Nordbahnhof", 52.531591, 13.387613);
+            d4.setPubOwner(dummy);
+            Pub d5 = new Pub("Phuket Pub", 52.527409, 13.382590);
+            d5.setPubOwner(dummy);
+            Pub d6 = new Pub("Grimm Center", 52.521500, 13.391271);
+            d6.setPubOwner(dummy);
+            Pub d7 = new Pub("37min drive", 52.522017, 13.381914);
+            d7.setPubOwner(dummy);
+            Pub d8 = new Pub("Travellers Hostel", 52.522639, 13.387967);
+            d8.setPubOwner(dummy);
+            pubRepository.save(d1);
+            pubRepository.save(d2);
+            pubRepository.save(d3);
+            pubRepository.save(d4);
+            pubRepository.save(d5);
+            pubRepository.save(d6);
+            pubRepository.save(d7);
+            pubRepository.save(d8);
 
-            repository.save(new Crawler("Chloe", "O'Brian"));
-            repository.save(new Crawler("Kim", "Bauer"));
-            repository.save(new Crawler("David", "Palmer"));
-            repository.save(new Crawler("Michelle", "Dessler"));*/
 
-            eventRepository.save(new Event("PubEvent1", 1483885590L , repository.findByuserName("Jack"), null));
+
+
+
+/*
+
+           /* eventRepository.save(new Event("PubEvent1", 1483885590L , repository.findByuserName("Jack"), null));
             eventRepository.save(new Event("PubEvent2", 1483833490L, repository.findByuserName("Kim"), null));
             eventRepository.save(new Event("PubEvent3", 1483883412L, repository.findByuserName("Michelle"), null));
-
-
-            pubRepository.save(new Pub("Molly Mallones", 52.525387, 13.385950));
-            pubRepository.save(new Pub("Harfe", 52.523546, 13.385199));
-            pubRepository.save(new Pub("Travellers Hostel", 52.522639, 13.387967));
-
-            pubRepository.save(new Pub("Diagon Alley", 52.528282, 13.393073));
-            pubRepository.save(new Pub("Nordbahnhof", 52.531591, 13.387613));
-            pubRepository.save(new Pub("Phuket Pub", 52.527409, 13.382590));
-            pubRepository.save(new Pub("37min drive", 52.522017, 13.381914));
-            pubRepository.save(new Pub("Grimm Center", 52.521500, 13.391271));
-
+*/
 
             // fetch all customers
-            log.info("Customers found with findAll():");
+/*            log.info("Customers found with findAll():");
             log.info("-------------------------------");
             for (Crawler Crawler : repository.findAll()) {
                 log.info(Crawler.toString());
@@ -65,7 +79,7 @@ public class PcwebserviceApplication extends WebSecurityConfig {
             log.info("Customer found with findOne(1L):");
             log.info("--------------------------------");
             //log.info(Crawler.toString());
-            log.info("");
+            log.info("");*/
 
             // fetch customers by last name
 /*			log.info("Customer found with findByLastName('Bauer'):");
