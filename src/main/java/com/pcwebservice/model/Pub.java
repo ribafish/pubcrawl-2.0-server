@@ -79,16 +79,12 @@ public class Pub implements Serializable {
         return "Pub{" +
                 "id=" + id +
                 ", pubName='" + pubName + '\'' +
-                /*", timesList=" + timesList +*/
                 ", price=" + price +
                 ", rating=" + rating +
                 ", lat=" + lat +
                 ", lng=" + lng +
                 ", description='" + description + '\'' +
                 ", size=" + size +
-                ", topsList=" + topsList +
-                ", eventsList=" + eventsList +
-                ", pubOwner=" + pubOwner +
                 '}';
     }
 
@@ -204,5 +200,13 @@ public class Pub implements Serializable {
 
     public void setEventsList(List<Event> eventsList) {
         this.eventsList = eventsList;
+    }
+
+    public Crawler getPubOwner() {
+        return pubOwner;
+    }
+
+    public void setPubOwner(Crawler pubOwner) {
+        this.pubOwner = pubOwner;
     }
 }

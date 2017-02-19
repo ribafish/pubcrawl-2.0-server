@@ -54,6 +54,9 @@
 
             $scope.startPub = null;
             $scope.endPub = null;
+            $scope.created = false;
+            $scope.added =false;
+
 
             $scope.timer = {
                 startingTime: null,
@@ -104,26 +107,12 @@
 
             };
 
-            $scope.upPic = function () {
-                $scope.event.eventImage =
-                    console.log($scope.event.eventImage)
-                /*    $http({
-                 method: 'POST',
-                 url: __env.apiUrl + 'image/crawler/1',
-                 data: $scope.image.base64
-                 }).then(function successCallback(response) {
-                 console.log(response);
-                 }, function errorCallback(response) {
-                 console.log("Help");
-                 });*/
-            };
-
             $scope.uploadPub = function () {
                 $scope.usedPubs.reduce(function (p, currentValue) {
                     $scope.event.timeslotList.push({
                         startingTime: timeNow(currentValue.startingTime),
                         endingTime: timeNow(currentValue.endingTime),
-                        pubId: currentValue.pub._links.self.href
+                        pubId: currentValue.pub._links.self.href.substr(currentValue.pub._links.self.href.lastIndexOf("/") + 1)
                     });
 
                     return p.then(function () {
@@ -138,6 +127,7 @@
                         })
                     })
                         .then(function (result) {
+                            $scope.added = true;
                             //console.log(result);
                         });
                 }, $q.when());
@@ -167,7 +157,7 @@
                 Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
-                    //console.log($scope.event._links.self.href);
+                    $scope.created = true;
                 });
             };
 

@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" ng-if="!created">
     <div class="section ower">
         <h5>Add Details</h5>
         <div class="row container ower">
@@ -46,10 +46,7 @@
         </div>
     </div>
 </div>
-<div class="parallax-container">
-    <div class="parallax"><img src="images/lights2.jpg"></div>
-</div>
-<div class="content">
+<div class="content" ng-if="created && !added">
     <div class="section ower">
         <h5>Select your Pubs</h5>
         <div class="row container ower">
@@ -130,10 +127,7 @@
         </div>
     </div>
 </div>
-<div class="parallax-container">
-    <div class="parallax"><img src="images/lights.jpg"></div>
-</div>
-<div class="content">
+<div class="content" ng-if="added">
     <div class="section ower">
         <h5>Invite People</h5>
         <div class="row container ower">

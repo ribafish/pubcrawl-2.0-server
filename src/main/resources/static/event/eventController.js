@@ -5,10 +5,10 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('eventController', ['$location','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($location,$scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
+        .controller('eventController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
 
 
-            if(CrawlerFac.getAuthenticated()==false){
+            if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
 
@@ -58,7 +58,6 @@
             };
 
             $scope.leavePubcrawl = function () {
-                console.log(CrawlerFac.getCurrentUser())
                 $http({
                     method: 'GET',
                     url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),
@@ -66,7 +65,9 @@
                     var array = [];
                     for (var i = 0; i <= response.data._embedded.events.length - 1; i++) {
                         if (i == response.data._embedded.events.length - 1) {
-                            console.log(array)
+                            if (response.data._embedded.events[i]._links.event.href != $scope.event._links.event.href) {
+                                array.push(response.data._embedded.events[i]._links.event.href)
+                            }
                             $http({
                                 method: 'PUT',
                                 url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),
@@ -78,7 +79,8 @@
                             });
                             Materialize.toast('Successfully left Pubcrawl', 1000);
                         } else {
-                            array.push(response.data._embedded.events[i]._links.event.href)
+                            if (response.data._embedded.events[i]._links.event.href != $scope.event._links.event.href)
+                            {array.push(response.data._embedded.events[i]._links.event.href)}
                         }
                     }
 
@@ -88,7 +90,6 @@
             };
 
             $scope.enterPubcrawl = function () {
-                console.log(CrawlerFac.getCurrentUser());
                 $http({
                     method: 'PATCH',
                     url: String(CrawlerFac.getCurrentUser()._links.eventsList.href),

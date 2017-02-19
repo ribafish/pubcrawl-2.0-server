@@ -79,9 +79,6 @@ public class Event implements Serializable {
                 ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 ", tracked=" + tracked +
-                ", participantsList=" + participantsList +
-                ", eventOwner=" + eventOwner +
-                ", pubsList=" + pubsList +
                 '}';
     }
 
