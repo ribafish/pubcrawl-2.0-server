@@ -5,10 +5,10 @@
     'use strict';
 
     angular.module('pubApp')
-        .controller('registerController', ['$location','$timeout','$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location,$timeout,$scope, $http, CrawlerFac, EventFac, PubFac, $q) {
+        .controller('registerController', ['$location', '$timeout', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $timeout, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
             $scope.currentNavItem = 'page3';
 
-            if(CrawlerFac.getAuthenticated()==false){
+            if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
             /*Diverse Helpers to get things going*/
@@ -63,13 +63,13 @@
                 closingTime: null,
                 topsList: [],
                 eventsList: [],
-                pubOwner: null
+                pubOwner: CrawlerFac.getCurrentUser()._links.crawler.href
             };
 
             $scope.timer = {openingTime: null, closingTime: null};
 
 
-            $timeout(function() {
+            $timeout(function () {
                 $scope.marker = new google.maps.Marker({
                     position: {lat: $scope.pub.lat, lng: $scope.pub.lng}
                 });
@@ -85,17 +85,21 @@
             /*Persist our items*/
 
             $scope.saveEvent = function () {
+                geocodeLatLng();
                 $scope.pub.openingTime = timeNow($scope.timer.openingTime);
                 $scope.pub.closingTime = timeNow($scope.timer.closingTime);
-                if($scope.pub.pubImage!=null){
+                if ($scope.pub.pubImage != null) {
                     $scope.pub.pubImage = $scope.pub.pubImage.base64;
                 }
-                geocodeLatLng();
-                PubFac.allPubs.save($scope.pub).$promise.then(function (data) {
-                    Materialize.toast('Pub registered', 1000);
-                }, function errorCallback(response) {
-                    Materialize.toast('Error!', 1000);
-                });
+                $timeout(function () {
+                    PubFac.allPubs.save($scope.pub).$promise.then(function (data) {
+                        $location.path("/");
+                        Materialize.toast('Pub registered', 1000);
+                    }, function errorCallback(response) {
+                        Materialize.toast('Error!', 1000);
+                    });
+                }, 500)
+
             };
 
 
@@ -117,8 +121,8 @@
                 geocoder.geocode({'location': latlng}, function (results, status) {
                     if (status === 'OK') {
                         if (results[1]) {
-                            /*                            console.log(results[1].formatted_address);*/
                             $scope.pub.adress = results[1].formatted_address;
+                            /*console.log(results[1].formatted_address);*/
                         } else {
                             window.alert('No results found');
                         }
