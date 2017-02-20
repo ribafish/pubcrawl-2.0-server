@@ -37,7 +37,12 @@
                 description: null,
                 timeslotList: [],
                 eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href,
-            };
+                latmax: 0,
+                latmin: 0,
+                lngmax: 0,
+                lngmin: 0,
+            }
+            ;
 
             /*The scope variable to get the base64 image representation*/
             $scope.pictureEve = null;
@@ -64,9 +69,9 @@
 
 
             /*$scope.timer = {
-                startingTime: null,
-                endingTime: null
-            };*/
+             startingTime: null,
+             endingTime: null
+             };*/
 
             /*Using the REST Controller to get Data from DB and save it*/
             /*Get all need things*/
@@ -119,12 +124,23 @@
             /*We persist all pubs on our created event*/
             $scope.uploadPub = function () {
                 $scope.usedPubs.reduce(function (p, currentValue) {
+                    if ( parseFloat(currentValue.pub.lat) >= $scope.event.latmax) {
+                        $scope.event.latmax =  parseFloat(currentValue.pub.lat);
+                    }
+                    if ( parseFloat(currentValue.pub.lat) <= $scope.event.latmin || $scope.event.latmin ==0) {
+                        $scope.event.latmin =  parseFloat(currentValue.pub.lat);
+                    }
+                    if ( parseFloat(currentValue.pub.lng) >= $scope.event.lngmax) {
+                        $scope.event.lngmax =  parseFloat(currentValue.pub.lng);
+                    }
+                    if ( parseFloat(currentValue.pub.lng) <= $scope.event.lngmin || $scope.event.lngmin ==0) {
+                        $scope.event.lngmin =  parseFloat(currentValue.pub.lng);
+                    }
                     $scope.event.timeslotList.push({
                         startingTime: timeNow(currentValue.startingTime),
                         endingTime: timeNow(currentValue.endingTime),
                         pubId: currentValue.pub._links.self.href.substr(currentValue.pub._links.self.href.lastIndexOf("/") + 1)
                     });
-
                     return p.then(function () {
                         return $http({
                             method: 'PATCH',
@@ -138,22 +154,59 @@
                     })
                         .then(function (result) {
                             $scope.added = true;
-                            //console.log(result);
                         });
                 }, $q.when());
-                console.log($scope.event);
                 Materialize.toast('Pubs added', 1000);
                 $scope.usedPubs = [];
                 $http({
                     method: 'PATCH',
                     url: String($scope.event._links.self.href),
                     data: {
-                        timeslotList: $scope.event.timeslotList
+                        latmax: $scope.event.latmax
                     }
                 }).then(function successCallback(response) {
-                    console.log(response);
+                    $http({
+                        method: 'PATCH',
+                        url: String($scope.event._links.self.href),
+                        data: {
+                            latmin: $scope.event.latmin
+                        }
+                    }).then(function successCallback(response) {
+                        $http({
+                            method: 'PATCH',
+                            url: String($scope.event._links.self.href),
+                            data: {
+                                lngmax: $scope.event.lngmax
+                            }
+                        }).then(function successCallback(response) {
+                            $http({
+                                method: 'PATCH',
+                                url: String($scope.event._links.self.href),
+                                data: {
+                                    lngmin: $scope.event.lngmin
+                                }
+                            }).then(function successCallback(response) {
+                                $http({
+                                    method: 'PATCH',
+                                    url: String($scope.event._links.self.href),
+                                    data: {
+                                        timeslotList: $scope.event.timeslotList
+                                    }
+                                }).then(function successCallback(response) {
+                                }, function errorCallback(response) {
+                                    console.log("Problem updating TimeslotList" + response);
+                                });
+                            }, function errorCallback(response) {
+                                console.log("Problem updating LNGMIN" + response);
+                            });
+                        }, function errorCallback(response) {
+                            console.log("Problem updating LNGMAX" + response);
+                        });
+                    }, function errorCallback(response) {
+                        console.log("Problem updating LATMIN" + response);
+                    });
                 }, function errorCallback(response) {
-                    console.log("Problem updating TimeslotList" + response);
+                    console.log("Problem updating LATMAX" + response);
                 });
             };
 
@@ -166,7 +219,6 @@
                     $scope.event.eventImage = $scope.event.eventImage.base64;
                 }
                 Materialize.toast('Event created', 1000);
-                console.log($scope.event);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
                     $scope.created = true;

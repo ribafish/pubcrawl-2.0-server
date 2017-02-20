@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="input-field col s4 m4 l4">
                         <input id="pubName" type="text" class="validate" ng-model="pub.pubName">
-                        <label for="pubName">PubCrawl Name</label>
+                        <label for="pubName">Pubname</label>
                     </div>
                 </div>
                 <div class="row">
@@ -77,6 +77,9 @@
         <h5>Select the location</h5>
         <div class="row container ower">
             <div class="col s12 m12 l12" style="height: 100%" id="addPubs">
+                <label for="adrss">Type here the adress we will find it for you : </label>
+                <input id="adrss" placeholder="" ng-model="marker.position"/>
+                <br/>
                 <ng-map class="getbordered" id="map" zoom="13" center="{{marker.position}}" style="height:300px">
                     <marker position="{{marker.position}}"
                             draggable="true"
@@ -84,9 +87,6 @@
                             title="Drag me to the Pub :)">
                     </marker>
                 </ng-map>
-                <br/>
-                <label for="adrss">Type here the adress we will find it for you : </label>
-                <input id="adrss" placeholder="" ng-model="marker.position"/>
             </div>
         </div>
         <div class="row container ower">
