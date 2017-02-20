@@ -81,7 +81,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col s12 m12 l12">
@@ -90,7 +89,8 @@
                             Selected Pubs:
                         </li>
                         <li class="collection-item avatar pubslistitem" ng-repeat="pubs in usedPubs">
-                            <img src="" alt="" class="circle">
+                            <img class="circle" style="height: 30px" ng-if="pubs.pub.pubImage!=null" data-ng-src="data:image/jpeg;base64,{{pubs.pub.pubImage}}"/>
+                            <img class="circle" style="height: 30px" ng-if="pubs.pub.pubImage==null" src="/images/beermug.png">
                             <div class="row" style="margin-bottom: 0px">
                                 <div class="col s12 m5 l7">
                                     <span class="title">{{pubs.pub.pubName}}</span>

@@ -1,3 +1,11 @@
+<div class="content" ng-if="notauthenticted">
+    <div class="section ower" style="text-align: center;">
+        <h2>Welcome to Pubcrawl 2.0 </h2>
+        <div class="row container ower">
+            <h3>Please login to use our awesome features!</h3>
+        </div>
+    </div>
+</div>
 <div class="content" ng-if="myEvents.length != 0">
     <div class="section ower">
         <h4>Youre own Events:</h4>
@@ -45,7 +53,7 @@
         </div>
     </div>
 </div>
-<div class="content">
+<div class="content" ng-if="allEvent.length != 0">
     <div class="section ower">
         <h4>Join other Pubcrawls: </h4>
         <div class="row container ower">

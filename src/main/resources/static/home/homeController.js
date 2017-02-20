@@ -4,18 +4,19 @@
 (function () {
     'use strict';
 })();
-angular.module('pubApp').controller('homeController', ['$interval','$window', '$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ( $interval,$window, $timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
-    $scope.currentNavItem = 'page1';
+angular.module('pubApp').controller('homeController', ['$interval', '$window', '$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($interval, $window, $timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
     $scope.allEvent = [];
 
     $scope.myEvents = [];
     $scope.myPubs = [];
 
-    if (localStorageService.get("authenticated") == false) {
+
+    $scope.notauthenticted = true;
+/*    if (localStorageService.get("authenticated") == false) {
         EventFac.allEvents.get().$promise.then(function (data) {
             $scope.allEvent = data._embedded.events;
         });
-    }
+    }*/
 
     if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
@@ -41,6 +42,7 @@ angular.module('pubApp').controller('homeController', ['$interval','$window', '$
                     if (user.details.id === openCrawlers[i].profileID) {
                         CrawlerFac.setCurrentUser(openCrawlers[i]);
                         CrawlerFac.setAuthenticated(true);
+                        $scope.notauthenticted = false;
                         Materialize.toast('Welcome back ' + openCrawlers[i].userName + '!!', 1000);
                         return;
                     } else if (i === openCrawlers.length - 1) {
@@ -52,6 +54,7 @@ angular.module('pubApp').controller('homeController', ['$interval','$window', '$
                         CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
                             Materialize.toast('Welcome to Pubcrawl2.0 ' + user.details.name + '!!', 1000);
                             CrawlerFac.setAuthenticated(true);
+                            $scope.notauthenticted = false;
                             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                                 var openCrawlers = data._embedded.crawlers;
                                 var user = CrawlerFac.getCurrentUser();
@@ -73,6 +76,7 @@ angular.module('pubApp').controller('homeController', ['$interval','$window', '$
                     CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
                         Materialize.toast('Welcome to Pubcrawl2.0 ' + user.details.name + '!!', 1000);
                         CrawlerFac.setAuthenticated(true);
+                        $scope.notauthenticted = false;
                     });
                     CrawlerFac.setCurrentUser(crawlerToSave);
                 }
@@ -84,49 +88,55 @@ angular.module('pubApp').controller('homeController', ['$interval','$window', '$
     $scope.$watch(function () {
         return CrawlerFac.getAuthenticated()
     }, function () {
-        if(CrawlerFac.getAuthenticated()==true){
-            if (localStorageService.get("authenticated") == false) {
-                EventFac.allEvents.get().$promise.then(function (data) {
-                    $scope.allEvent = data._embedded.events;
+        if (CrawlerFac.getAuthenticated() == true) {
+            $scope.notauthenticted = false;
+            EventFac.allEvents.get().$promise.then(function (data) {
+                $http({
+                    method: 'GET',
+                    url: String(CrawlerFac.getCurrentUser()._links.ownEvents.href)
+                }).then(function successCallback(response) {
+                    if(response.data._embedded.events.length==0){
+                        $scope.allEvent = data._embedded.events;
+                    }else{
+                        data._embedded.events.forEach(function (event) {
+                            for (var k = 0; k <= response.data._embedded.events.length-1;k++) {
+                                if (response.data._embedded.events[k]._links.event.href === event._links.event.href) {
+                                    $scope.myEvents.push(event);
+                                    break;
+                                }
+                                if(k === response.data._embedded.events.length-1) {
+                                    $scope.allEvent.push(event);
+                                }
+                            }
+                        })
+                    }
+                }, function errorCallback(response) {
+                    console.log("NO events " + response);
                 });
-            }
-        $http({
-            method: 'GET',
-            url: String(CrawlerFac.getCurrentUser()._links.ownEvents.href)
-        }).then(function successCallback(response) {
-            response.data._embedded.events.forEach(function (event) {
-                $scope.myEvents.push(event);
-                $scope.allEvent.forEach(function (data) {
-                   if(data._links.event.href == event._links.event.href){
-                       $scope.allEvent.splice($scope.allEvent.indexOf(data),1)
-                   }
-                });
-            })
-        }, function errorCallback(response) {
-            console.log("NO events " + response);
-        });
-        $http({
-            method: 'GET',
-            url: String(CrawlerFac.getCurrentUser()._links.ownPubs.href)
-        }).then(function successCallback(response) {
-            response.data._embedded.pubs.forEach(function (pub) {
-                $scope.myPubs.push(pub);
-            })
-        }, function errorCallback(response) {
-            console.log("no pubs " + response);
-        });
-        $scope.authenticated = CrawlerFac.getAuthenticated();}
+            });
+            $http({
+                method: 'GET',
+                url: String(CrawlerFac.getCurrentUser()._links.ownPubs.href)
+            }).then(function successCallback(response) {
+                response.data._embedded.pubs.forEach(function (pub) {
+                    $scope.myPubs.push(pub);
+                })
+            }, function errorCallback(response) {
+                console.log("no pubs " + response);
+            });
+            $scope.authenticated = CrawlerFac.getAuthenticated();
+        }
     });
-    
+
     $scope.deletePub = function (link) {
         $scope.myPubs.forEach(function (pub) {
-            if(pub._links.self.href === link){
-                $scope.myPubs.splice($scope.myPubs.indexOf(pub),1);
+            if (pub._links.self.href === link) {
+                $scope.myPubs.splice($scope.myPubs.indexOf(pub), 1);
             }
         });
         $http({
             method: 'DELETE',
-            url:String(link)
+            url: String(link)
         }).then(function successCallback(response) {
             Materialize.toast('Pub deleted!', 1000);
             console.log(response)
@@ -137,34 +147,13 @@ angular.module('pubApp').controller('homeController', ['$interval','$window', '$
 
     $scope.deleteEve = function (link) {
         $scope.myEvents.forEach(function (event) {
-            if(event._links.self.href === link){
-                $scope.myEvents.splice($scope.myEvents.indexOf(event),1);
+            if (event._links.self.href === link) {
+                $scope.myEvents.splice($scope.myEvents.indexOf(event), 1);
             }
         });
-        /*$http({
-            method: 'GET',
-            url:String(link) + "/participantsList"
-        }).then(function successCallback(response) {
-            response.data._embedded.forEach(function (crawler) {
-                $http({
-                    method: 'GET',
-                    url:String(crawler._links.eventsList)
-                }).then(function successCallback(events) {
-                    events.data._embedded.forEach(function (event) {
-                        if(event._l inks.self.href!=link){
-
-                        }
-                    })
-                }, function errorCallback(response) {
-                    console.log("Delelting failed " + response);
-                });
-            })
-        }, function errorCallback(response) {
-            console.log("Delelting failed " + response);
-        });*/
         $http({
             method: 'DELETE',
-            url:String(link)
+            url: String(link)
         }).then(function successCallback(response) {
             Materialize.toast('Event deleted', 1000);
         }, function errorCallback(response) {
