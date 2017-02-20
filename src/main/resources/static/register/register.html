@@ -1,12 +1,39 @@
-<div class="container">
-    <div class="content">
+<div class="content">
+    <div class="section ower">
         <h5>Add Details</h5>
-        <div class="row">
+        <div class="row container ower">
             <form class="col s12 m12 l12" id="createEvent">
                 <div class="row">
-                    <div class="input-field col s12 m12 l12">
+                    <div class="col s6 m4 l2">
+                        <img class="getbordered" style="height: 150px" ng-if="pub.pubImage!=null"
+                             data-ng-src="data:image/jpeg;base64,{{pub.pubImage.base64}}"
+                             data-err-src="/images/beermug.png"/>
+                        <img class="getbordered" style="height: 150px" ng-if="pub.pubImage==null"
+                             src="/images/beermug.png">
+                    </div>
+                    <div class="col s4 m4 l4">
+                        <div class="file-field input-field" style="top: 92px;">
+                            <div class="btn">
+                                <span>File</span>
+                                <input type='file' ng-model='pub.pubImage' base-sixty-four-input>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="pictuuure" placeholder="Select a Picture" class="file-path" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s4 m4 l4">
                         <input id="pubName" type="text" class="validate" ng-model="pub.pubName">
                         <label for="pubName">PubCrawl Name</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s8 m8 l8">
+                            <textarea id="descriptor" class="materialize-textarea"
+                                      ng-model="pub.description"></textarea>
+                        <label for="descriptor">Description</label>
                     </div>
                 </div>
                 <div class="row">
@@ -43,34 +70,29 @@
                                max="23:59:59"/>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="input-field col s12">
-                            <textarea id="descriptor" class="materialize-textarea"
-                                      ng-model="pub.description"></textarea>
-                        <label for="descriptor">Description</label>
-                    </div>
-                </div>
             </form>
         </div>
     </div>
-    <div class="content">
-        <h5>Select your Pubs</h5>
-        <div class="row">
+    <div class="section ower">
+        <h5>Select the location</h5>
+        <div class="row container ower">
             <div class="col s12 m12 l12" style="height: 100%" id="addPubs">
-                <ng-map id="map" zoom="13" center="{{marker.position}}" style="height:300px">
+                <ng-map class="getbordered" id="map" zoom="13" center="{{marker.position}}" style="height:300px">
                     <marker position="{{marker.position}}"
                             draggable="true"
                             on-dragend="getCoords()"
                             title="Drag me to the Pub :)">
                     </marker>
                 </ng-map>
-                <br/>Address : <input ng-model="marker.position"/>
+                <br/>
+                <label for="adrss">Type here the adress we will find it for you : </label>
+                <input id="adrss" placeholder="" ng-model="marker.position"/>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col s12 m12 l12">
-            <a class="waves-effect waves-light btn-large" ng-click="saveEvent()">Register Pub</a>
+        <div class="row container ower">
+            <div class="col s12 m12 l12">
+                <a class="create waves-effect waves-light btn-large right" ng-click="saveEvent()">Register Pub</a>
+            </div>
         </div>
     </div>
 </div>

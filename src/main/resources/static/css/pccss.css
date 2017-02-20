@@ -52,7 +52,7 @@ footer.page-footer {
 }
 
 .create {
-    margin-right: -10px;
+/*    margin-right: -10px;*/
     background-color: rgba(255, 177, 18, 0.8);
 }
 
@@ -92,43 +92,10 @@ footer.page-footer {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*html, body {
-    margin: 0;
-    padding: 0;
-    font-family: Helvetica, sans-serif;
-}
-body {
-    background: #25303B;
-}*/
 section#timeline {
     margin-left: -20px;
     position: relative;
 }
-/*section#timeline:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 0;
-    margin: 10px 0 0 0;
-    width: 10px;
-    height: 100%;
-    background: rgb(212, 212, 212);
-    border: 1px solid rgba(134, 134, 134, 0.49);
-}*/
 section#timeline article {
     width: 100%;
     position: relative;
@@ -213,32 +180,3 @@ section#timeline article div.inner h2 {
 section#timeline article div.inner h2:after {
     background: #fdbb35;
 }
-
-/*section#timeline article:last-child div.inner h2:after {
-     background: #fd6c45;
- }*/
-/*section#timeline article:nth-child(2) div.inner h2 {
-     background: #fdbb35;
- }
-section#timeline article:nth-child(2) div.inner h2:after {
-    background: #fdbb35;
-}
-/*
-section#timeline article:nth-child(3) div.inner h2 {
-    background: #e67e22;
-}
-section#timeline article:nth-child(3) div.inner h2:after {
-    background: #e67e22;
-}
-section#timeline article:nth-child(4) div.inner h2 {
-    background: #1abc9c;
-}
-section#timeline article:nth-child(4) div.inner h2:after {
-    background: #1abc9c;
-}
-section#timeline article:nth-child(5) div.inner h2 {
-    background: #9b59b6;
-}
-section#timeline article:nth-child(5) div.inner h2:after {
-    background: #9b59b6;
-}*/

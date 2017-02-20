@@ -21,24 +21,27 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="col s4 m4 l4">
-                            <img class="getbordered" style="height: 150px" ng-if="picture!=null" data-ng-src="data:image/jpeg;base64,{{picture.base64}}"
-                                 data-err-src="/images/lights.jpg"/>
-                            <img class="getbordered" style="height: 150px" ng-if="picture==null" src="/images/lights.jpg">
-                        </div>
-                        <div class="col s4 m4 l4">
-                            <div class="file-field input-field" style="top: 92px;">
-                                <div class="btn">
-                                    <span>File</span>
-                                    <input type="file" ng-model='picture' base-sixty-four-input>
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input id="pictuuure" placeholder="Select a Picture" class="file-path" type="text">
-                                </div>
+                    <div class="col s4 m4 l4">
+                        <img class="getbordered" style="height: 150px" ng-if="event.eventImage!=null"
+                             data-ng-src="data:image/jpeg;base64,{{event.eventImage.base64}}"
+                             data-err-src="/images/lights.jpg"/>
+                        <img class="getbordered" style="height: 150px" ng-if="event.eventImage==null"
+                             src="/images/lights.jpg">
+                    </div>
+                    <div class="col s4 m4 l4">
+                        <div class="file-field input-field" style="top: 92px;">
+                            <div class="btn">
+                                <span>File</span>
+                                <input type='file' ng-model='event.eventImage' base-sixty-four-input>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="pictuuure" placeholder="Select a Picture" class="file-path" type="text">
                             </div>
                         </div>
+                    </div>
                     <div class="col s4 m4 l4">
-                        <a class="create waves-effect waves-light btn-large right" style="top: 97px;" ng-click="saveEvent()">Create
+                        <a class="create waves-effect waves-light btn-large right" style="top: 97px;"
+                           ng-click="saveEvent()">Create
                             Event</a>
                     </div>
                 </div>

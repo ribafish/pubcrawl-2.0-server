@@ -87,11 +87,14 @@
             $scope.saveEvent = function () {
                 $scope.pub.openingTime = timeNow($scope.timer.openingTime);
                 $scope.pub.closingTime = timeNow($scope.timer.closingTime);
+                if($scope.pub.pubImage!=null){
+                    $scope.pub.pubImage = $scope.pub.pubImage.base64;
+                }
                 geocodeLatLng();
-                Materialize.toast('Pub registered', 1000);
-                console.log($scope.pub);
                 PubFac.allPubs.save($scope.pub).$promise.then(function (data) {
-                    console.log(data);
+                    Materialize.toast('Pub registered', 1000);
+                }, function errorCallback(response) {
+                    Materialize.toast('Error!', 1000);
                 });
             };
 

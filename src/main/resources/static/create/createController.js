@@ -6,66 +6,72 @@
 
     angular.module('pubApp')
         .controller('createController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
-            $scope.currentNavItem = 'page2';
 
+            /*If no crawle is authenticated get redirected to home*/
             if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
 
             /*Diverse Helpers to get things going*/
 
+            /*Initialize Datepicker*/
             $(document).ready(function () {
-                $('.parallax').parallax();
+                window.picker = $('.datepicker').pickadate({
+                    selectYears: 16,
+                    format: 'dd.mm.yyyy'
+                });
             });
 
-
-            window.picker = $('.datepicker').pickadate({
-                selectYears: 16,
-                format: 'dd.mm.yyyy'
-            });
-
+            /*Initialize Map*/
             $scope.$on('mapInitialized', function (event, map) {
                 $scope.objMapa = map;
             });
 
             /*Basic Variables we will need to get the Data from Forms and Google maps*/
 
+            /*Our Event to create*/
             $scope.event =
             {
                 eventName: null,
                 date: new Date().getTime(),
                 description: null,
-                tracked: false,
                 timeslotList: [],
                 eventOwner: CrawlerFac.getCurrentUser()._links.crawler.href,
             };
 
-            $scope.picture = null;
+            /*The scope variable to get the base64 image representation*/
+            $scope.pictureEve = null;
 
+            /*List of Pubs one we are selected one which arent*/
             $scope.openPubs = [];
             $scope.usedPubs = [];
 
 
+            /*List of Crawlers to invite and list of all crawlers*/
             $scope.openCrawlers = [];
             $scope.usedCrawlers = [];
 
-
+            /*Waypoints for our map*/
             $scope.wayPoints = [];
 
+            /*End and start pub needed for the right order of pubs*/
             $scope.startPub = null;
             $scope.endPub = null;
+
+            /*Variables to control the shown template in created.html*/
             $scope.created = false;
-            $scope.added =false;
+            $scope.added = false;
 
 
-            $scope.timer = {
+            /*$scope.timer = {
                 startingTime: null,
                 endingTime: null
-            };
+            };*/
 
             /*Using the REST Controller to get Data from DB and save it*/
             /*Get all need things*/
 
+            /*Get all Crawlers*/
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 data._embedded.crawlers.forEach(function (crawler) {
                     if (crawler.profileID == CrawlerFac.getCurrentUser().profileID) {
@@ -77,6 +83,7 @@
 
             });
 
+            /*Gett all Pubs*/
             PubFac.allPubs.get().$promise.then(function (data) {
                 $scope.openPubs = data._embedded.pubs;
             });
@@ -84,6 +91,7 @@
 
             /*Persist our items*/
 
+            /*We upload all Users we invite to the events*/
             $scope.uploadUser = function () {
                 $scope.usedCrawlers.reduce(function (p, currentValue) {
                     return p.then(function () {
@@ -98,6 +106,7 @@
                         })
                     })
                         .then(function (result) {
+                            console.log($scope.event);
                             //console.log(result);
                         });
                 }, $q.when());
@@ -107,6 +116,7 @@
 
             };
 
+            /*We persist all pubs on our created event*/
             $scope.uploadPub = function () {
                 $scope.usedPubs.reduce(function (p, currentValue) {
                     $scope.event.timeslotList.push({
@@ -131,7 +141,7 @@
                             //console.log(result);
                         });
                 }, $q.when());
-
+                console.log($scope.event);
                 Materialize.toast('Pubs added', 1000);
                 $scope.usedPubs = [];
                 $http({
@@ -148,13 +158,15 @@
             };
 
 
+            /*We generate a new Event with the given data*/
             $scope.saveEvent = function () {
                 var dateParts = $('.datepicker').val().split(".");
                 $scope.event.date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]).getTime();
-                if ($scope.picture != null) {
-                    $scope.event.eventImage = $scope.picture.base64;
+                if ($scope.event.eventImage != null) {
+                    $scope.event.eventImage = $scope.event.eventImage.base64;
                 }
                 Materialize.toast('Event created', 1000);
+                console.log($scope.event);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
                     $scope.event = data;
                     $scope.created = true;
@@ -162,12 +174,12 @@
             };
 
 
-
             /*Helper Methods*/
 
+            /*parsing the starting and endingtime of our pubs*/
             function timeNow(i) {
                 if (i == null) {
-                    return $scope.event.date
+                    return null;
                 }
                 var h = (i.getHours() < 10 ? '0' : '') + i.getHours();
                 var m = (i.getMinutes() < 10 ? '0' : '') + i.getMinutes();
@@ -179,7 +191,7 @@
                 }
             }
 
-
+            /*Basic geocoding to get address*/
             var geocodeLatLng = function (value) {
                 var geocoder = new google.maps.Geocoder;
                 var latlng = {lat: value.lat, lng: value.lng};
@@ -197,6 +209,8 @@
                 });
             };
 
+
+            /*The windows in our map openend when clicked on a marker*/
             $scope.showInfoWindow = function (event, mark) {
                 var infowindow = new google.maps.InfoWindow();
                 var center = new google.maps.LatLng(mark.lat, mark.lng);
@@ -212,12 +226,14 @@
 
             /*Main Methods*/
 
+            /*We select a crawler into the list of invited crawlers*/
             $scope.addCrawler = function (crawler) {
                 var index = $scope.openCrawlers.indexOf(crawler);
                 $scope.openCrawlers.splice(index, 1);
                 $scope.usedCrawlers.push(crawler);
             };
 
+            /*We delete a crawler from the list of invited crawlers*/
             $scope.delCrawler = function (crawler) {
                 var index = $scope.usedCrawlers.indexOf(crawler);
                 $scope.usedCrawlers.splice(index, 1);
@@ -225,11 +241,11 @@
             };
 
 
+            /*we select a pub from openpubs and put it in our list of pubs we like to visit*/
             $scope.deleteFromOpens = function (value) {
                 var index = $scope.openPubs.indexOf(value);
                 $scope.openPubs.splice(index, 1);
                 $scope.usedPubs.push({pub: value, startingTime: null, endingTime: null});
-                console.log($scope.usedPubs)
                 geocodeLatLng(value);
                 if ($scope.startPub == null) {
                     $scope.startPub = {lat: value.lat, lng: value.lng};
@@ -237,7 +253,6 @@
                     if ($scope.endPub == null) {
                         $scope.endPub = {lat: value.lat, lng: value.lng};
                     } else {
-                        //console.log($scope.wayPoints);
                         $scope.wayPoints.push({
                             location: {lat: $scope.endPub.lat, lng: $scope.endPub.lng},
                             stopover: true
@@ -247,10 +262,9 @@
                 }
             };
 
+            /*deleting a pub from the list of pubs we like to visit*/
             $scope.deleteFromUsed = function (value) {
                 $scope.usedPubs.forEach(function (pubs) {
-                    console.log(pubs)
-                    console.log(value)
                     if (pubs.pub._links.self.href == value._links.self.href) {
                         var index = $scope.usedPubs.indexOf(pubs);
                         $scope.usedPubs.splice(index, 1);
