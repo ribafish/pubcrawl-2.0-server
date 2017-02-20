@@ -4,16 +4,18 @@
 (function () {
     'use strict';
 })();
-angular.module('pubApp').controller('homeController', ['$window','$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($window,$timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
+angular.module('pubApp').controller('homeController', ['$interval','$window', '$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ( $interval,$window, $timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
     $scope.currentNavItem = 'page1';
     $scope.allEvent = [];
 
-    if (localStorageService.get("authenticated") == true) {
+    $scope.myEvents = [];
+    $scope.myPubs = [];
+
+    if (localStorageService.get("authenticated") == false) {
         EventFac.allEvents.get().$promise.then(function (data) {
             $scope.allEvent = data._embedded.events;
         });
     }
-
 
     if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
@@ -24,7 +26,7 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
             CrawlerFac.setCurrentUser(response.data.userAuthentication);
             localStorageService.set("token", true);
         }, function errorCallback(response) {
-           console.log(response)
+            console.log(response)
         });
     }
 
@@ -50,8 +52,16 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
                         CrawlerFac.allCrawlers.save(crawlerToSave).$promise.then(function (data) {
                             Materialize.toast('Welcome to Pubcrawl2.0 ' + user.details.name + '!!', 1000);
                             CrawlerFac.setAuthenticated(true);
+                            CrawlerFac.allCrawlers.get().$promise.then(function (data) {
+                                var openCrawlers = data._embedded.crawlers;
+                                var user = CrawlerFac.getCurrentUser();
+                                for (var i = 0; i < openCrawlers.length; i++) {
+                                    if (user.details.id === openCrawlers[i].profileID) {
+                                        CrawlerFac.setCurrentUser(openCrawlers[i]);
+                                    }
+                                }
+                            })
                         });
-                        CrawlerFac.setCurrentUser(crawlerToSave);
                     }
                 }
                 if (openCrawlers.length === 0) {
@@ -74,8 +84,93 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
     $scope.$watch(function () {
         return CrawlerFac.getAuthenticated()
     }, function () {
-        $scope.authenticated = CrawlerFac.getAuthenticated();
+        if(CrawlerFac.getAuthenticated()==true){
+            if (localStorageService.get("authenticated") == false) {
+                EventFac.allEvents.get().$promise.then(function (data) {
+                    $scope.allEvent = data._embedded.events;
+                });
+            }
+        $http({
+            method: 'GET',
+            url: String(CrawlerFac.getCurrentUser()._links.ownEvents.href)
+        }).then(function successCallback(response) {
+            response.data._embedded.events.forEach(function (event) {
+                $scope.myEvents.push(event);
+                $scope.allEvent.forEach(function (data) {
+                   if(data._links.event.href == event._links.event.href){
+                       $scope.allEvent.splice($scope.allEvent.indexOf(data),1)
+                   }
+                });
+            })
+        }, function errorCallback(response) {
+            console.log("NO events " + response);
+        });
+        $http({
+            method: 'GET',
+            url: String(CrawlerFac.getCurrentUser()._links.ownPubs.href)
+        }).then(function successCallback(response) {
+            response.data._embedded.pubs.forEach(function (pub) {
+                $scope.myPubs.push(pub);
+            })
+        }, function errorCallback(response) {
+            console.log("no pubs " + response);
+        });
+        $scope.authenticated = CrawlerFac.getAuthenticated();}
     });
+    
+    $scope.deletePub = function (link) {
+        $scope.myPubs.forEach(function (pub) {
+            if(pub._links.self.href === link){
+                $scope.myPubs.splice($scope.myPubs.indexOf(pub),1);
+            }
+        });
+        $http({
+            method: 'DELETE',
+            url:String(link)
+        }).then(function successCallback(response) {
+            Materialize.toast('Pub deleted!', 1000);
+            console.log(response)
+        }, function errorCallback(response) {
+            console.log("Delelting failed " + response);
+        });
+    };
+
+    $scope.deleteEve = function (link) {
+        $scope.myEvents.forEach(function (event) {
+            if(event._links.self.href === link){
+                $scope.myEvents.splice($scope.myEvents.indexOf(event),1);
+            }
+        });
+        /*$http({
+            method: 'GET',
+            url:String(link) + "/participantsList"
+        }).then(function successCallback(response) {
+            response.data._embedded.forEach(function (crawler) {
+                $http({
+                    method: 'GET',
+                    url:String(crawler._links.eventsList)
+                }).then(function successCallback(events) {
+                    events.data._embedded.forEach(function (event) {
+                        if(event._l inks.self.href!=link){
+
+                        }
+                    })
+                }, function errorCallback(response) {
+                    console.log("Delelting failed " + response);
+                });
+            })
+        }, function errorCallback(response) {
+            console.log("Delelting failed " + response);
+        });*/
+        $http({
+            method: 'DELETE',
+            url:String(link)
+        }).then(function successCallback(response) {
+            Materialize.toast('Event deleted', 1000);
+        }, function errorCallback(response) {
+            console.log("Delelting failed " + response);
+        });
+    };
 
     $scope.setCurrentEvent = function (event) {
         $scope.allEvent.forEach(function (value) {
@@ -84,37 +179,12 @@ angular.module('pubApp').controller('homeController', ['$window','$timeout', 'lo
             }
         });
     };
+    $scope.setCurrentEvent2 = function (event) {
+        $scope.myEvents.forEach(function (value) {
+            if (value._links.self.href == event) {
+                EventFac.setCurrentEvent(value)
+            }
+        });
+    };
 
-    /*        $http({
-     method: 'GET',
-     url: '/hello'
-     }).then(function successCallback(response) {
-     $scope.greeting = response;
-     }, function errorCallback(response) {
-     console.log("Help");
-     });*/
-
-    /*
-     $http({
-     method: 'GET',
-     url: __env.apiUrl + 'image/crawler/1'
-     }).then(function successCallback(response) {
-     $scope.image = response.data;
-     }, function errorCallback(response) {
-     console.log("Picture couldnt load");
-     });
-     */
-
-
-    /*        $scope.submit = function () {
-     $http({
-     method: 'POST',
-     url: __env.apiUrl + 'image/crawler/1',
-     data: $scope.image.base64
-     }).then(function successCallback(response) {
-     console.log(response);
-     }, function errorCallback(response) {
-     console.log("Help");
-     });
-     }*/
-}])
+}]);

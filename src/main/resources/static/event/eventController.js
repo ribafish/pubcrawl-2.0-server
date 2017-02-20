@@ -23,7 +23,7 @@
                 } else {
                     $http({
                         method: 'GET',
-                        url: __env.apiUrl + "/pubs/" + String($scope.event.timeslotList[0].pubId)
+                        url:__env.apiUrl + "/pubs/" + String($scope.event.timeslotList[0].pubId)
                     }).then(function successCallback(response) {
                         $scope.startPub = {lat: response.data.lat, lng: response.data.lng};
                     }, function errorCallback(response) {
@@ -32,7 +32,7 @@
 
                     $http({
                         method: 'GET',
-                        url: __env.apiUrl + "/pubs/" + String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
+                        url:__env.apiUrl + "/pubs/" + String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
                     }).then(function successCallback(response) {
                         $scope.endPub = {lat: response.data.lat, lng: response.data.lng};
                     }, function errorCallback(response) {
@@ -120,7 +120,6 @@
                     return localStorageService.get(key)
                 };
 
-                $scope.currentNavItem = 'page3';
                 if (EventFac.getCurrentEvent() == null) {
                     $scope.event = fromLocal("eve");
                     setWaypoints();

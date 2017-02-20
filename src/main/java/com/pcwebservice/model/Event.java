@@ -52,6 +52,13 @@ public class Event implements Serializable {
     @ManyToMany(mappedBy = "eventsList")
     private List<Crawler> participantsList;
 
+    @PreRemove
+    private void removeCrawlerfromParticipants() {
+        for (Crawler u : participantsList) {
+            u.getEventsList().remove(this);
+        }
+    }
+
     @ManyToMany
     private List <Pub> pubsList;
 

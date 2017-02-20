@@ -1,48 +1,68 @@
-<div class="container">
-    <div class="row">
-        <h1>Welcome to PubCrawl 2.0</h1>
-        <h2>Here are some awesome Pubcrawls:</h2>
-    </div>
-    <div class="row">
-        <div class="card sticky-action col s6 m4 l3" ng-repeat="event in allEvent">
-            <div class="card-image">
-                <img ng-if="event.eventImage!=null" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
-                     data-err-src="/images/lights.jpg"/>
-                <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+<div class="content" ng-if="myEvents.length != 0">
+    <div class="section ower">
+        <h4>Youre own Events:</h4>
+        <div class="row container ower">
+            <div class="card sticky-action col s6 m4 l3" ng-repeat="event in myEvents">
+                <div class="card-image">
+                    <img ng-if="event.eventImage!=null" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
+                         data-err-src="/images/lights.jpg"/>
+                    <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+                </div>
+                <div class="card-content">
+                    <p class="activator grey-text text-darken-4">{{event.eventName}}</p>
+                    <p>{{event.date | date : 'dd.MM.yyyy'}}</p>
+                </div>
+                <div ng-if="authenticated" class="card-action ">
+                    <a ng-click="setCurrentEvent2(event._links.self.href)" ng-href="/event">Go to Event</a>
+                    <a ng-click="deleteEve(event._links.self.href)">Delete</a>
+                </div>
             </div>
-            <div class="card-content">
-                <p class="activator grey-text text-darken-4">{{event.eventName}}</p>
-                <p>{{event.date | date : 'dd.MM.yyyy'}}</p>
-            </div>
-            <div ng-if="authenticated" class="card-action ">
-                <a ng-click="setCurrentEvent(event._links.self.href)" ng-href="/event">Go to Event</a>
-            </div>
-            <!--<div class="card-reveal">
-                <span class="card-title grey-text text-darken-4"><i
-                        class="material-icons right">close</i></span>
-                <table>
-                    <tr>
-                        <td></td>
-                        <td>{{event.eventName}}</td>
-                    </tr>
-                    <tr>
-                        <td><i class="material-icons">face</i></td>
-                        <td>{{event._links.eventOwner}}</td>
-                    </tr>
-                    <tr>
-                        <td><i class="material-icons">announcement</i></td>
-                        <td>{{event.description}}</td>
-                    </tr>
-                </table>
-            </div>-->
         </div>
     </div>
 </div>
-<!--
-<form ng-submit="submit()" ng-controller="homeController">
-    <input type='file' ng-model='image' base-sixty-four-input>
-    <input type="submit" id="submit" value="Submit"/>
-</form>
-
-<img data-ng-src="data:image/jpeg;base64,{{image}}" data-err-src="images/png/avatar.png"/>
--->
+<div class="content" ng-if="myPubs.length != 0">
+    <div class="section ower">
+        <h4>Youre own Pubs:</h4>
+        <div class="row container ower">
+            <div class="card sticky-action col s6 m4 l3" ng-repeat="event in myPubs">
+                <div class="card-image">
+                    <img ng-if="event.pubImage!=null" data-ng-src="data:image/jpeg;base64,{{event.pubImage}}"
+                         data-err-src="/images/beermug.png"/>
+                    <img ng-if="event.pubImage==null" src="/images/beermug.png">
+                </div>
+                <div class="card-content">
+                    <p class="activator grey-text text-darken-4">{{event.pubName}}</p>
+                    <p class="activator grey-text text-darken-4">{{event.size}}</p>
+                    <p class="activator grey-text text-darken-4">{{event.price}}</p>
+                    <p class="activator grey-text text-darken-4">{{event.adress}}</p>
+                    <p class="activator grey-text text-darken-4">{{event.openingTime}} -  {{event.closingTime}}</p>
+                </div>
+                <div ng-if="authenticated" class="card-action ">
+                    <a ng-click="deletePub(event._links.self.href)" ng-href="/">Edit this Pub</a>
+                    <a ng-click="deletePub(event._links.self.href)">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="section ower">
+        <h4>Join other Pubcrawls: </h4>
+        <div class="row container ower">
+            <div class="card sticky-action col s6 m4 l3" ng-repeat="event in allEvent">
+                <div class="card-image">
+                    <img ng-if="event.eventImage!=null" data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
+                         data-err-src="/images/lights.jpg"/>
+                    <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+                </div>
+                <div class="card-content">
+                    <p class="activator grey-text text-darken-4">{{event.eventName}}</p>
+                    <p>{{event.date | date : 'dd.MM.yyyy'}}</p>
+                </div>
+                <div ng-if="authenticated" class="card-action ">
+                    <a ng-click="setCurrentEvent(event._links.self.href)" ng-href="/event">Go to Event</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
