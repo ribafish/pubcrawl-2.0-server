@@ -68,22 +68,13 @@
             $scope.added = false;
 
 
-            /*$scope.timer = {
-             startingTime: null,
-             endingTime: null
-             };*/
-
             /*Using the REST Controller to get Data from DB and save it*/
             /*Get all need things*/
 
             /*Get all Crawlers*/
             CrawlerFac.allCrawlers.get().$promise.then(function (data) {
                 data._embedded.crawlers.forEach(function (crawler) {
-                    if (crawler.profileID == CrawlerFac.getCurrentUser().profileID) {
-                        $scope.addCrawler(crawler);
-                    } else {
-                        $scope.openCrawlers.push(crawler)
-                    }
+                    $scope.openCrawlers.push(crawler)
                 })
 
             });
