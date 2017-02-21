@@ -98,28 +98,19 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
         if (CrawlerFac.getAuthenticated() == true) {
             $scope.notauthenticted = false;
             EventFac.allEvents.get().$promise.then(function (data) {
-                $http({
-                    method: 'GET',
-                    url: String(CrawlerFac.getCurrentUser()._links.ownEvents.href)
-                }).then(function successCallback(response) {
-                    if(response.data._embedded.events.length==0){
-                        $scope.allEvent = data._embedded.events;
-                    }else{
-                        data._embedded.events.forEach(function (event) {
-                            for (var k = 0; k <= response.  data._embedded.events.length-1;k++) {
-                                if (response.data._embedded.events[k]._links.event.href === event._links.event.href) {
-                                    $scope.myEvents.push(event);
-                                    break;
-                                }
-                                if(k === response.data._embedded.events.length-1) {
-                                    $scope.allEvent.push(event);
-                                }
-                            }
-                        })
-                    }
-                }, function errorCallback(response) {
-                    console.log("NO events " + response);
-                });
+                data._embedded.events.forEach(function (event) {
+                    $scope.allEvent.push(event);
+                })
+            });
+            $http({
+                method: 'GET',
+                url: String(CrawlerFac.getCurrentUser()._links.ownEvents.href)
+            }).then(function successCallback(response) {
+                response.data._embedded.events.forEach(function (sadeevent) {
+                    $scope.myEvents.push(sadeevent);
+                    })
+            },function errorCallback(response) {
+                console.log("no Ownevents " + response);
             });
             $http({
                 method: 'GET',
@@ -180,6 +171,13 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
 
     $scope.setCurrentEvent = function (event) {
         $scope.allEvent.forEach(function (value) {
+            if (value._links.self.href == event) {
+                EventFac.setCurrentEvent(value)
+            }
+        });
+    };
+    $scope.setCurrentEvent2 = function (event) {
+        $scope.myEvents.forEach(function (value) {
             if (value._links.self.href == event) {
                 EventFac.setCurrentEvent(value)
             }
