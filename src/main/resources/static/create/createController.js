@@ -123,18 +123,22 @@
 
             /*We persist all pubs on our created event*/
             $scope.uploadPub = function () {
+                if($scope.usedPubs.length==0){
+                    Materialize.toast('Please enter at least one pub', 1000, 'alertToast');
+                    return
+                }
                 $scope.usedPubs.reduce(function (p, currentValue) {
-                    if ( parseFloat(currentValue.pub.lat) >= $scope.event.latmax) {
-                        $scope.event.latmax =  parseFloat(currentValue.pub.lat);
+                    if (parseFloat(currentValue.pub.lat) >= $scope.event.latmax) {
+                        $scope.event.latmax = parseFloat(currentValue.pub.lat);
                     }
-                    if ( parseFloat(currentValue.pub.lat) <= $scope.event.latmin || $scope.event.latmin ==0) {
-                        $scope.event.latmin =  parseFloat(currentValue.pub.lat);
+                    if (parseFloat(currentValue.pub.lat) <= $scope.event.latmin || $scope.event.latmin == 0) {
+                        $scope.event.latmin = parseFloat(currentValue.pub.lat);
                     }
-                    if ( parseFloat(currentValue.pub.lng) >= $scope.event.lngmax) {
-                        $scope.event.lngmax =  parseFloat(currentValue.pub.lng);
+                    if (parseFloat(currentValue.pub.lng) >= $scope.event.lngmax) {
+                        $scope.event.lngmax = parseFloat(currentValue.pub.lng);
                     }
-                    if ( parseFloat(currentValue.pub.lng) <= $scope.event.lngmin || $scope.event.lngmin ==0) {
-                        $scope.event.lngmin =  parseFloat(currentValue.pub.lng);
+                    if (parseFloat(currentValue.pub.lng) <= $scope.event.lngmin || $scope.event.lngmin == 0) {
+                        $scope.event.lngmin = parseFloat(currentValue.pub.lng);
                     }
                     $scope.event.timeslotList.push({
                         startingTime: timeNow(currentValue.startingTime),
@@ -215,14 +219,25 @@
             $scope.saveEvent = function () {
                 var dateParts = $('.datepicker').val().split(".");
                 $scope.event.date = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]).getTime();
+                if($scope.event.date < (new Date().getTime()-80000000)){
+                    Materialize.toast('Back in time, you want to go ? :)', 1000, 'alertToast');
+                    return;
+                }
+                if(isNaN($scope.event.date)){
+                    Materialize.toast('Please enter a date', 1000, 'alertToast');
+                    return;
+                }
                 if ($scope.event.eventImage != null) {
                     $scope.event.eventImage = $scope.event.eventImage.base64;
                 }
-                Materialize.toast('Event created', 1000);
                 EventFac.allEvents.save($scope.event).$promise.then(function (data) {
-                    $scope.event = data;
-                    $scope.created = true;
-                });
+                        Materialize.toast('Event created', 1000);
+                        $scope.event = data;
+                        $scope.created = true;
+                    },
+                    function (error) {
+                        Materialize.toast('Please enter name', 1000, 'alertToast');
+                    })
             };
 
 
@@ -268,9 +283,7 @@
                 var center = new google.maps.LatLng(mark.lat, mark.lng);
 
                 infowindow.setContent(
-                    '<table><tbody><tr><td><h6>' + mark.pubName + '</h6></td><td></td></tr><tr><td>Prices: ' + mark.price + "/5" + '</td><td></td></tr><tr><td>Size: ' + mark.size + "/5" + '</td></tr><tr><td>Usually open from: ' + mark.openingTime + " to" + mark.closingTime + '</td></tr></tbody></table>'
-                );
-
+                    '<table><tbody><tr><td><h6>' + mark.pubName + '</h6></td><td></td></tr><tr><td>Prices: ' + mark.price + "/5" + '</td><td><img class="circle" style="height: 30px" src="/images/beermug.png" data-ng-src="data:image/jpeg;base64,{{' + mark.pubImage + '}}"/></td></tr><tr><td>Size: ' + mark.size + "/5" + '</td><td></td></tr><tr><td>Usually open from: ' + mark.openingTime + " to" + mark.closingTime + '</td><td></td></tr></tbody></table>');
                 infowindow.setPosition(center);
                 infowindow.open($scope.objMapa);
             };

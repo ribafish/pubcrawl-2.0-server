@@ -84,7 +84,14 @@ footer.page-footer {
 
 .section.ower {
     padding-left: 50px;
-    padding-top: 40px;
+}
+
+.tutorial{
+    padding: 150px;
+}
+
+.alertToast{
+    background-color: darkred;
 }
 
 .row.container.ower {

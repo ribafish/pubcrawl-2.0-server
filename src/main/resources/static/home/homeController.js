@@ -5,18 +5,25 @@
     'use strict';
 })();
 angular.module('pubApp').controller('homeController', ['$interval', '$window', '$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($interval, $window, $timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
+
+    $(document).ready(function(){
+        $('.carousel').carousel();
+        $('.carousel.carousel-slider').carousel({fullWidth: true});
+        $('ul.tabs').tabs();
+    });
+
+    $scope.currentTub = 3;
+    $scope.changeTab = function (data) {
+        $scope.currentTub = data;
+    };
+
     $scope.allEvent = [];
 
     $scope.myEvents = [];
     $scope.myPubs = [];
-
+    $scope.joinedEvents = [];
 
     $scope.notauthenticted = true;
-/*    if (localStorageService.get("authenticated") == false) {
-        EventFac.allEvents.get().$promise.then(function (data) {
-            $scope.allEvent = data._embedded.events;
-        });
-    }*/
 
     if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
@@ -99,7 +106,7 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
                         $scope.allEvent = data._embedded.events;
                     }else{
                         data._embedded.events.forEach(function (event) {
-                            for (var k = 0; k <= response.data._embedded.events.length-1;k++) {
+                            for (var k = 0; k <= response.  data._embedded.events.length-1;k++) {
                                 if (response.data._embedded.events[k]._links.event.href === event._links.event.href) {
                                     $scope.myEvents.push(event);
                                     break;
@@ -123,6 +130,16 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
                 })
             }, function errorCallback(response) {
                 console.log("no pubs " + response);
+            });
+            $http({
+                method: 'GET',
+                url: String(CrawlerFac.getCurrentUser()._links.eventsList.href)
+            }).then(function successCallback(response) {
+                response.data._embedded.events.forEach(function (event) {
+                    $scope.joinedEvents.push(event);
+                })
+            }, function errorCallback(response) {
+                console.log("no joinedevents " + response);
             });
             $scope.authenticated = CrawlerFac.getAuthenticated();
         }
@@ -168,8 +185,9 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
             }
         });
     };
-    $scope.setCurrentEvent2 = function (event) {
-        $scope.myEvents.forEach(function (value) {
+
+    $scope.setCurrentEvent3 = function (event) {
+        $scope.joinedEvents.forEach(function (value) {
             if (value._links.self.href == event) {
                 EventFac.setCurrentEvent(value)
             }

@@ -24,7 +24,7 @@ public class Event implements Serializable {
     @Column(name = "eventImage")
     private byte [] eventImage;
 
-    /*@NotNull*/
+    @NotNull
     @Column(name = "date")
     private Long date;
 
