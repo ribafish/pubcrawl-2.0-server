@@ -2,17 +2,17 @@
     <div class="section ower" style="text-align: center;">
         <h2>Welcome to Pubcrawl 2.0 </h2>
         <h4>Download our app here!</h4>
-        <a target="_self" href="/images/Pubcrawl2.0.apk" download="Pubcrawl2.0.apk"><i class="large material-icons" style="color: #00C853">android</i></a>
+        <a target="_self" href="/static/images/Pubcrawl2.0.apk" download="Pubcrawl2.0.apk"><i class="large material-icons" style="color: #00C853">android</i></a>
         <h4>Create your own Pubcrawl in 5 Minutes!</h4>
     </div>
     <div class="carousel" style="margin-bottom: -175px">
-        <div class="carousel-item"><h5>Add some basic information</h5><img class="getbordered" src="/images/stepone.jpg"></div>
+        <div class="carousel-item"><h5>Add some basic information</h5><img class="getbordered" src="/images/stepone.JPG"></div>
         <div class="carousel-item"><h5>Select the pubs you will visist</h5><img class="getbordered" src="/images/steptwo.jpg"></div>
         <div class="carousel-item"><h5>Invite people to your pubcrawl</h5><img class="getbordered" src="/images/stepthree.jpg"></div>
-        <div class="carousel-item"><h5>Have an overview of your event</h5><img class="getbordered" src="/images/mainevent.jpg"></div>
-        <div class="carousel-item"><h5>You can even add pubs!</h5><img class="getbordered" src="/images/register.jpg"></div>
+        <div class="carousel-item"><h5>Have an overview of your event</h5><img class="getbordered" src="/images/mainevent.JPG"></div>
+        <div class="carousel-item"><h5>You can even add pubs!</h5><img class="getbordered" src="/images/register.JPG"></div>
         <div class="carousel-item"><h5>And they can be used from everyone</h5><img class="getbordered" src="/images/ownpub.jpg"></div>
-        <div class="carousel-item"><h5>Get an overview of all pubcrawls</h5><img class="getbordered" src="/images/allevents.jpg"></div>
+        <div class="carousel-item"><h5>Get an overview of all pubcrawls</h5><img class="getbordered" src="/images/allevents.JPG"></div>
     </div>
 </div>
 
@@ -44,7 +44,7 @@
                                 <img ng-if="event.eventImage!=null"
                                      data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
                                      data-err-src="/images/lights.jpg"/>
-                                <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+                                <img ng-if="event.eventImage==null" src="/static/images/lights.jpg">
                             </div>
                             <div class="card-content" style="text-align: left">
                                 <p class="activator grey-text text-darken-4"><h6>{{event.eventName}}</h6></p>
@@ -68,7 +68,7 @@
                                 <img ng-if="event.eventImage!=null"
                                      data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
                                      data-err-src="/images/lights.jpg"/>
-                                <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+                                <img ng-if="event.eventImage==null" src="/static/images/lights.jpg">
                             </div>
                             <div class="card-content" style="text-align: left">
                                 <p class="activator grey-text text-darken-4"><h6>{{event.eventName}}</h6></p>
@@ -93,7 +93,7 @@
                                 <img ng-if="event.eventImage!=null"
                                      data-ng-src="data:image/jpeg;base64,{{event.eventImage}}"
                                      data-err-src="/images/lights.jpg"/>
-                                <img ng-if="event.eventImage==null" src="/images/lights.jpg">
+                                <img ng-if="event.eventImage==null" src="/static/images/lights.jpg">
                             </div>
                             <div class="card-content" style="text-align: left">
                                 <p class="activator grey-text text-darken-4"><h6>{{event.eventName}}</h6></p>
@@ -117,7 +117,7 @@
                                 <img ng-if="event.pubImage!=null"
                                      data-ng-src="data:image/jpeg;base64,{{event.pubImage}}"
                                      data-err-src="/images/beermug.png"/>
-                                <img ng-if="event.pubImage==null" src="/images/beermug.png">
+                                <img ng-if="event.pubImage==null" src="/static/images/beermug.png">
                             </div>
                             <div class="card-content" style="text-align: left">
                                 <p class="activator grey-text text-darken-4">Name : {{event.pubName}}</p>
