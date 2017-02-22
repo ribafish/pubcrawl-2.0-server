@@ -7,7 +7,10 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 
 /**
  * Created by Leo on 12.02.2017.
+ *
+ * Filter to validate incoming Requests containing Bearer Tokens.
  */
+
 public class ApiTokenAccessFilter extends OAuth2AuthenticationProcessingFilter {
 
     public ApiTokenAccessFilter(ResourceServerTokenServices resourceServerTokenServices) {

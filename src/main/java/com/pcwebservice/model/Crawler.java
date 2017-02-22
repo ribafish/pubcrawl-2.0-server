@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,9 +11,6 @@ import java.util.List;
  */
 
 @Entity
-@NamedQuery(name = "Crawler.findByTitleIs" ,
-        query = "SELECT c FROM Crawler c WHERE userName = 'Jack'"
-)
 @Table(name = "crawler")
 public class Crawler implements Serializable {
 
@@ -26,7 +22,7 @@ public class Crawler implements Serializable {
     @Column(name = "userName")
     private String userName;
 
-    /*@NotNull*/
+    @NotNull
     @Column(name = "profileID")
     private String profileID;
 

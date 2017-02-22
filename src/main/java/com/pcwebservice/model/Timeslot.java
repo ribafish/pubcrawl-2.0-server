@@ -14,15 +14,12 @@ public class Timeslot implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    /*@NotNull*/
     @Column(name = "startingTime")
     private long startingTime;
 
-/*    @NotNull*/
     @Column(name = "endingTime")
     private long endingTime;
 
-  /*  @NotNull*/
     @Column(name = "pubId")
     private String pubId;
 

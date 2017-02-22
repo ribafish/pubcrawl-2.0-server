@@ -7,6 +7,7 @@
         <ul id="nav-mobile" class="right hide-on-small-only">
             <li ng-if="authenticated"><a ng-href="/create">Create PubCrawl</a></li>
             <li ng-if="authenticated"><a ng-href="/register">Register Pub</a></li>
+            <!--uncomment to get the link displayed-->
             <!--<li><a ng-href="/rethink">Rethink Integration</a></li>-->
             <li ng-if="!authenticated"><a ng-href="/login" class="waves-effect waves-light btn">Login</a></li>
             <li ng-if="authenticated"><a ng-click="logout()" class="waves-effect waves-light btn">Logout</a></li>

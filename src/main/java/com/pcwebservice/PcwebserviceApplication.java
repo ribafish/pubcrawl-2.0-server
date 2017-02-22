@@ -18,17 +18,18 @@ public class PcwebserviceApplication extends WebSecurityConfig {
 
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SpringApplication.run(PcwebserviceApplication.class, args);
-
     }
 
+    /*
+    * Creating dummy data here using the defined repositories
+    * */
     @Bean
     public CommandLineRunner demo(CrawlerRepository repository, EventRepository eventRepository, PubRepository pubRepository) {
-		return (args) -> {
-            // save a couple of customers
-            Crawler dummy = new Crawler("Admin", "00000000000000000000000","http://www.knowmuhammad.org/img/noavatarn.png");
+        return (args) -> {
+
+            Crawler dummy = new Crawler("Admin", "00000000000000000000000", "http://www.knowmuhammad.org/img/noavatarn.png");
             repository.save(dummy);
             Pub d1 = new Pub("Molly Mallones", 52.525387, 13.385950);
             d1.setPubOwner(dummy);
@@ -56,38 +57,36 @@ public class PcwebserviceApplication extends WebSecurityConfig {
             pubRepository.save(d8);
 
 
-
-
-
 /*
+            //Development functions.
 
-           /* eventRepository.save(new Event("PubEvent1", 1483885590L , repository.findByuserName("Jack"), null));
+            eventRepository.save(new Event("PubEvent1", 1483885590L, repository.findByuserName("Jack"), null));
             eventRepository.save(new Event("PubEvent2", 1483833490L, repository.findByuserName("Kim"), null));
             eventRepository.save(new Event("PubEvent3", 1483883412L, repository.findByuserName("Michelle"), null));
-*/
 
-            // fetch all customers
-/*            log.info("Customers found with findAll():");
+            log.info("Customers found with findAll():");
             log.info("-------------------------------");
             for (Crawler Crawler : repository.findAll()) {
                 log.info(Crawler.toString());
             }
             log.info("");
 
-            // fetch an individual customer by ID
-            //Crawler Crawler = repository.findOne(1L);
-            log.info("Customer found with findOne(1L):");
-            log.info("--------------------------------");
-            //log.info(Crawler.toString());
+            log.info("Pubs found with findAll():");
+            log.info("-------------------------------");
+            for (Pub pub : pubRepository.findAll()) {
+                log.info(pub.toString());
+            }
+            log.info("");
+
+
+            log.info("Customers found with findAll():");
+            log.info("-------------------------------");
+            for (Event event : eventRepository.findAll()) {
+                log.info(event.toString());
+            }
             log.info("");*/
 
-            // fetch customers by last name
-/*			log.info("Customer found with findByLastName('Bauer'):");
-			log.info("--------------------------------------------");
-			for (Crawler bauer : repository.findByuserName("Bauer")) {
-				log.info(bauer.toString());
-			}
-			log.info("");*/
-		};
-        }
+
+        };
+    }
 }

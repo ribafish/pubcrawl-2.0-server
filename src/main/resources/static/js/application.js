@@ -5,8 +5,10 @@ if (window) {
     Object.assign(env, window.__env);
 }
 
+//Setup modules needed in our application
 var pubApp = angular.module('pubApp', ['ngCookies', 'ngResource', 'ngRoute', 'naif.base64', 'ngMap', 'LocalStorageModule']);
 
+//Setup routes
 pubApp.config(['$httpProvider', '$routeProvider', '$locationProvider', 'localStorageServiceProvider', function ($httpProvider, $routeProvider, $locationProvider, localStorageServiceProvider) {
     $routeProvider.when("/", {
         templateUrl: 'home/home.html',
@@ -33,6 +35,7 @@ pubApp.config(['$httpProvider', '$routeProvider', '$locationProvider', 'localSto
         template: "<div></div>"
     });
 
+    //create a localStorage to simplify the authentication
     localStorageServiceProvider
         .setPrefix('holy')
         .setStorageType('localStorage')
@@ -40,19 +43,6 @@ pubApp.config(['$httpProvider', '$routeProvider', '$locationProvider', 'localSto
 
     $locationProvider.html5Mode(true);
 }]);
-
-/*pubApp.run(['$rootScope', '$location', 'CrawlerFac', function ($rootScope, $location, CrawlerFac) {
-    $rootScope.$on('$routeChangeStart', function (event, next, current) {
-
-        if (!CrawlerFac.getAuthenticated()) {
-            if (next.$$route.originalPath == '/login') {
-                $location.path('/login');
-                return
-            }
-            $location.path('/');
-        }
-    });
-}]);*/
 
 // Register environment in AngularJS as constant
 pubApp.constant('__env', env);

@@ -6,18 +6,22 @@
 
     angular.module('pubApp')
         .controller('registerController', ['$location', '$timeout', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', '$q', function ($location, $timeout, $scope, $http, CrawlerFac, EventFac, PubFac, $q) {
-            $scope.currentNavItem = 'page3';
 
+
+            /*if the user is not authenticated redirect home*/
             if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
             /*Diverse Helpers to get things going*/
 
+            /*create a new map scope to use in controller*/
             $scope.$on('mapInitialized', function (event, map) {
                 $scope.objMapa = map;
             });
 
+
             $scope.init = function () {
+                /*get currentlocation for map and set the geocode of pub/marker there*/
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -28,7 +32,7 @@
                         ///handleLocationError(true, infoWindow, map.getCenter());
                     });
                 } else {
-                    // Browser doesn't support Geolocation
+                    //Browser doesn't support Geolocation
                     //handleLocationError(false, infoWindow, map.getCenter());
                 }
 
@@ -43,6 +47,7 @@
 
             /*Basic Variables we will need to get the Data from Forms and Google maps*/
 
+            /*scope which represents the new registered pub*/
             $scope.pub =
             {
                 pubName: null,
@@ -68,14 +73,14 @@
 
             $scope.timer = {openingTime: null, closingTime: null};
 
-
+            /*setting the marker with delay to allow google getting the location*/
             $timeout(function () {
                 $scope.marker = new google.maps.Marker({
                     position: {lat: $scope.pub.lat, lng: $scope.pub.lng}
                 });
             }, 500)
 
-
+            /*get the lat and lng of the marker*/
             $scope.getCoords = function (event) {
                 $scope.pub.lat = event.latLng.lat();
                 $scope.pub.lng = event.latLng.lng();
@@ -84,6 +89,7 @@
 
             /*Persist our items*/
 
+            /*save the pub name confusing here soory!*/
             $scope.saveEvent = function () {
                 geocodeLatLng();
                 $scope.pub.openingTime = timeNow($scope.timer.openingTime);
@@ -91,6 +97,7 @@
                 if ($scope.pub.pubImage != null) {
                     $scope.pub.pubImage = $scope.pub.pubImage.base64;
                 }
+                /*need to be later to get an adress from google api*/
                 $timeout(function () {
                     PubFac.allPubs.save($scope.pub).$promise.then(function (data) {
                         $location.path("/");
@@ -105,6 +112,7 @@
 
             /*Helper Methods*/
 
+            /*convert times*/
             function timeNow(i) {
                 if (i == null) {
                     return "00:00:00"
@@ -114,7 +122,7 @@
                 return h + ':' + m + ':00';
             }
 
-
+            /*geocoder to get address*/
             var geocodeLatLng = function () {
                 var geocoder = new google.maps.Geocoder;
                 var latlng = {lat: $scope.pub.lat, lng: $scope.pub.lng};

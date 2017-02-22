@@ -1,5 +1,5 @@
 (function (angular) {
-    var crawlerFactory = function ($rootScope,$resource, $http) {
+    var crawlerFactory = function ($rootScope,$resource) {
 
         var currentUser = null;
 
@@ -31,6 +31,6 @@
         }
     };
 
-    crawlerFactory.$inject = ['$rootScope','$resource', '$http'];
+    crawlerFactory.$inject = ['$rootScope','$resource'];
     angular.module("pubApp").factory("CrawlerFac", crawlerFactory);
 }(angular));

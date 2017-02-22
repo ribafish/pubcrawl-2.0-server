@@ -86,7 +86,7 @@ function loadHyperty(){
     status++;
     if (! reporterLoaded) {
       let collection = $('.collection');
-/*      collection.append('<a  onclick="createNewchat();"  class="collection-item">Create new Groupchat</li>') ;
+/*    collection.append('<a  onclick="createNewchat();"  class="collection-item">Create new Groupchat</li>') ;
       collection.append('<a  onclick="getMessage();"  class="collection-item">Get Messages</li>') ;*/
       reporterLoaded = true;
     }
@@ -94,110 +94,6 @@ function loadHyperty(){
 
   });
 }
-
-/*
-function createNewchat() {
-  var participants = [{email:"leolileoo@gmail.com", domain:"google.com"}];
-  hypertyReporter.instance.create("EventGroupchat", participants)
-      .then((groupChat)=>{
-        groupChat.sendMessage('hi')
-            .then((message)=>{
-              console.log(message)
-            })
-      })
-}
-
-function getMessage() {
-  hypertyReporter.instance.EventGroupchat(toHyperty).then(function(chat) {
-    toHyperty.onMessage((message)=>{
-      console.log(message)
-    });
-    console.log(groupChat)
-    $('.runtime-panel').append('<p><b>'
-        +'Get Messages <br>'+
-        '<hr style="border:1px solid;"/></b></p>');
-    $('.runtime-panel').append('<p>Observer Url: '+ toHyperty+'</p>');
-    let collection = $('.collection');
-    let hello = $('.hello-panel');
-    hello.addClass('hide');
-    /!*    if (!sent) {
-     collection.append('<a  onclick="fillSayBye();"  class="collection-item">How to say Bye to a Hyperty.</li>') ;
-     sent = true;
-     }*!/
-  }).catch(function(reason) {
-    console.error(reason);
-  });
-}
-
-function fillSayHelloToRemoteHyperty()
-{
-  let hello = $('.hello-panel');
-
-  if(firstContactRemote) {
-    let sayHelloTo = '<form class="say-hello"> Hyperty URL: <input class="to-hyperty-input" type="text" name="toHyperty"><br><input type="submit" value="Say Hello"></form>'
-
-    hello.append(sayHelloTo);
-
-    $('.say-hello').on('submit', sayHelloToRemoteHyperty);
-    firstContactRemote = false;
-  }
-  else {
-    hello.removeClass('hide');
-  }
-
-}
-
-function sayHelloToRemoteHyperty(event) {
-  event.preventDefault();
-  console.log('event->',event);
-
-  let toHypertyForm = $(event.currentTarget);
-
-  toHyperty = toHypertyForm.find('.to-hyperty-input').val();
-
-  console.log(toHyperty);
-
-  hypertyReporter.instance.hello(toHyperty).then(function(helloObject) {
-    $('.runtime-panel').append('<p><b>'
-        +' Event: Hello sent to Remote Hyperty <br>'+
-        '<hr style="border:1px solid;"/></b></p>');
-    $('.runtime-panel').append('<p>Observer Url: '+ toHyperty+'</p>');
-    let collection = $('.collection');
-    let hello = $('.hello-panel');
-    hello.addClass('hide');
-    /!*    if (!sent) {
-     collection.append('<a  onclick="fillSayBye();"  class="collection-item">How to say Bye to a Hyperty.</li>') ;
-     sent = true;
-     }*!/
-  }).catch(function(reason) {
-    console.error(reason);
-  });
-}
-/!**
- * Call back after hyperty is loaded
- *!/
-function hypertyDeployed(result) {
-  let hypertyObserver;
-
-  hypertyObserver = result.instance;
-
-  console.log(hypertyObserver);
-
-  $('.selection-panel').hide();
-
-  $('.runtime-panel').append('<p>Hyperty Observer URL: ' + result.runtimeHypertyURL + '</p>');
-
-
-};
-*/
-
-
-//////////////////////////////////////////old
-
-
-
-
-
 
 function hypertyLoaded(result) {
   let hypertyInfo = '<span class="white-text">' +
@@ -228,23 +124,6 @@ function hypertyLoaded(result) {
   createRoomBtn.on('click', createRoomEvent);
 /*  createBtn.on('click', createRoom);*/
 }
-
-/*
-  Create Room actions
- */
-/*function createRoom(event) {
-  console.log()
-  event.preventDefault();
-
-  let createRoomModal = $('.create-chat');
-  let createRoomBtn = createRoomModal.find('.btn-create');
-  let addParticipantBtn = createRoomModal.find('.btn-add');
-
-  addParticipantBtn.on('click', addParticipantEvent);
-  createRoomBtn.on('click', createRoomEvent);
-
-/!*  createRoomModal.openModal();*!/
-}*/
 
 function addParticipantEvent(event) {
 

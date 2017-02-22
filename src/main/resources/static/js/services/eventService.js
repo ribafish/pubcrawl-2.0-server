@@ -2,7 +2,7 @@
  * Created by Leo on 07.12.2016.
  */
 (function (angular) {
-    var eventFactory = function ($resource, $http, $rootScope) {
+    var eventFactory = function ($resource, $http) {
 
         var currentEvent = null;
 
@@ -36,6 +36,6 @@
         }
     };
 
-    eventFactory.$inject = ['$resource', '$http','$rootScope'];
+    eventFactory.$inject = ['$resource', '$http'];
     angular.module("pubApp").factory("EventFac", eventFactory);
 }(angular));

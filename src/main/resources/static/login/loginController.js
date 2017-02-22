@@ -6,6 +6,8 @@
 
     angular.module('pubApp')
         .controller('loginController', ['$window', '$location', 'CrawlerFac', 'localStorageService', '$http', function ($window, $location, CrawlerFac, localStorageService, $http) {
+
+            /*because google redirects here we have to send the user to home and reload the page to recieve the data TODO!*/
             if (localStorageService.get("authenticated") == true) {
                 console.log(window.location.href);
                 $http({
@@ -18,6 +20,7 @@
                     location.reload();
                 });
             } else {
+                /*intial call to a secured url which will lead to a redirect to the google login page ugly...*/
                 localStorageService.set("authenticated", true);
                 $http({
                     method: 'GET',

@@ -112,7 +112,7 @@
 
             };
 
-            /*We persist all pubs on our created event*/
+            /*We persist all pubs on our created event quite ugly!*/
             $scope.uploadPub = function () {
                 if($scope.usedPubs.length==0){
                     Materialize.toast('Please enter at least one pub', 1000, 'alertToast');

@@ -6,25 +6,27 @@
 })();
 angular.module('pubApp').controller('homeController', ['$interval', '$window', '$timeout', 'localStorageService', '$location', '$cookies', '$rootScope', '$scope', '$http', 'CrawlerFac', 'EventFac', function ($interval, $window, $timeout, localStorageService, $location, $cookies, $rootScope, $scope, $http, CrawlerFac, EventFac) {
 
+    /*initialize some materialize componentes*/
     $(document).ready(function(){
         $('.carousel').carousel();
         $('.carousel.carousel-slider').carousel({fullWidth: true});
         $('ul.tabs').tabs();
     });
 
+    /*making sure only the right tab is displayed*/
     $scope.currentTub = 3;
     $scope.changeTab = function (data) {
         $scope.currentTub = data;
     };
 
+    /*scopes to use in template*/
     $scope.allEvent = [];
-
     $scope.myEvents = [];
     $scope.myPubs = [];
     $scope.joinedEvents = [];
-
     $scope.notauthenticted = true;
 
+    /*getting the principal of an authenticated user*/
     if (localStorageService.get("authenticated") == true && CrawlerFac.getAuthenticated() == false) {
         $http({
             method: 'GET',
@@ -38,6 +40,7 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
         });
     }
 
+    /*react after the token key changed to set the current user and if he is new create a new crawler*/
     $scope.$watch(function () {
         return localStorageService.get("token");
     }, function () {
@@ -92,6 +95,7 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
     });
 
 
+    /*getting data if the user is authenticated means all events, joined events, own events and own pubs*/
     $scope.$watch(function () {
         return CrawlerFac.getAuthenticated()
     }, function () {
@@ -136,6 +140,7 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
         }
     });
 
+    /*delete a pub*/
     $scope.deletePub = function (link) {
         $scope.myPubs.forEach(function (pub) {
             if (pub._links.self.href === link) {
@@ -153,6 +158,7 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
         });
     };
 
+    /*delete an event*/
     $scope.deleteEve = function (link) {
         $scope.myEvents.forEach(function (event) {
             if (event._links.self.href === link) {
@@ -169,6 +175,8 @@ angular.module('pubApp').controller('homeController', ['$interval', '$window', '
         });
     };
 
+
+    /*all methods are used to set the event which will be displayed in the eventview should be done with rest!*/
     $scope.setCurrentEvent = function (event) {
         $scope.allEvent.forEach(function (value) {
             if (value._links.self.href == event) {

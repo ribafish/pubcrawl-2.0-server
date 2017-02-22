@@ -142,7 +142,8 @@
                          style="height: 310px; overflow-y: auto; margin-top: 0px">
                         <a href="" class="collection-item"
                            ng-repeat="crawler in openCrawlers | filter:searchText"
-                           ng-click="addCrawler(crawler)">{{crawler.userName}}
+                           ng-click="addCrawler(crawler)">
+                            {{crawler.userName}}
                         </a>
                     </div>
                 </div>

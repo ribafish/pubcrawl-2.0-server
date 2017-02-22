@@ -7,23 +7,23 @@
     angular.module('pubApp')
         .controller('eventController', ['$location', '$scope', '$http', 'CrawlerFac', 'EventFac', 'PubFac', 'localStorageService', function ($location, $scope, $http, CrawlerFac, EventFac, PubFac, localStorageService) {
 
-
+            /*if the user is not authenticated redirect to home*/
             if (CrawlerFac.getAuthenticated() == false) {
                 $location.path("/");
             }
-
+            /*scopes to use in our templates*/
             $scope.event = [];
             $scope.wayPoints = [];
-
             $scope.owner = false;
 
+            /*connecting waypoints with time slots and setting start- and endpub to for google maps initialization*/
             var setWaypoints = function () {
                 if ($scope.event.timeslotList === null || $scope.event.timeslotList.length == 0) {
                     return null;
                 } else {
                     $http({
                         method: 'GET',
-                        url:__env.apiUrl + "/pubs/" + String($scope.event.timeslotList[0].pubId)
+                        url: __env.apiUrl + "/pubs/" + String($scope.event.timeslotList[0].pubId)
                     }).then(function successCallback(response) {
                         $scope.startPub = {lat: response.data.lat, lng: response.data.lng};
                     }, function errorCallback(response) {
@@ -32,7 +32,7 @@
 
                     $http({
                         method: 'GET',
-                        url:__env.apiUrl + "/pubs/" + String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
+                        url: __env.apiUrl + "/pubs/" + String($scope.event.timeslotList[$scope.event.timeslotList.length - 1].pubId)
                     }).then(function successCallback(response) {
                         $scope.endPub = {lat: response.data.lat, lng: response.data.lng};
                     }, function errorCallback(response) {
@@ -57,6 +57,7 @@
 
             };
 
+            /*leaving a pubcrawl means to delete the event from his eventslist DELETE is realized through PUT with all other elements*/
             $scope.leavePubcrawl = function () {
                 $http({
                     method: 'GET',
@@ -79,8 +80,9 @@
                             });
                             Materialize.toast('Successfully left Pubcrawl', 1000);
                         } else {
-                            if (response.data._embedded.events[i]._links.event.href != $scope.event._links.event.href)
-                            {array.push(response.data._embedded.events[i]._links.event.href)}
+                            if (response.data._embedded.events[i]._links.event.href != $scope.event._links.event.href) {
+                                array.push(response.data._embedded.events[i]._links.event.href)
+                            }
                         }
                     }
 
@@ -89,6 +91,7 @@
                 });
             };
 
+            /*entering an evente means adding the event to the eventslist*/
             $scope.enterPubcrawl = function () {
                 $http({
                     method: 'PATCH',
@@ -105,6 +108,7 @@
                 });
             };
 
+            /*initilization function*/
             var init = function () {
 
                 $(document).ready(function () {
@@ -112,6 +116,7 @@
                     $('.chips').material_chip();
                 });
 
+                /*localstorage functions*/
                 var toLocal = function (key, value) {
                     return localStorageService.set(key, value);
                 };
@@ -120,6 +125,7 @@
                     return localStorageService.get(key)
                 };
 
+                /*getting the event from localstorage*/
                 if (EventFac.getCurrentEvent() == null) {
                     $scope.event = fromLocal("eve");
                     setWaypoints();
@@ -137,6 +143,7 @@
                     setWaypoints();
                 }
 
+                /*getting all participants of the event aswell as owner*/
                 EventFac.getter($scope.event._links.participantsList.href).then(function (result) {
                     $scope.participants = result._embedded.crawlers;
                     $scope.participants.forEach(function (user) {
@@ -146,6 +153,7 @@
                     })
                 });
 
+                /*getting all pubs the pubcrawl is visiting*/
                 EventFac.getter($scope.event._links.pubsList.href).then(function (result) {
                     $scope.pubs = result._embedded.pubs;
                 });
